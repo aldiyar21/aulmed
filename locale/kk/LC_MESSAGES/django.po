@@ -113,3 +113,54 @@ msgstr "Қызметкерлер жүктемесі"
 
 msgid "After visits appear, workload distribution will be shown here."
 msgstr "Қабылдаулар пайда болғаннан кейін мұнда жүктеменің бөлінуі көрсетіледі."
+
+msgid "Pagination"
+msgstr "Беттер"
+
+msgid "Back"
+msgstr "Артқа"
+
+msgid "Next"
+msgstr "Келесі"
+
+msgid "Patient registry"
+msgstr "Пациенттер тізілімі"
+
+msgid "Search, filter and open patient records without extra steps."
+msgstr "Пациент карталарын артық әрекетсіз іздеңіз, сүзгілеңіз және ашыңыз."
+
+msgid "Export CSV"
+msgstr "CSV экспорттау"
+
+msgid "New patient"
+msgstr "Жаңа пациент"
+
+msgid "Apply filters"
+msgstr "Сүзгілерді қолдану"
+
+msgid "Full name"
+msgstr "Толық аты-жөні"
+
+msgid "IIN"
+msgstr "ЖСН"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Settlement"
+msgstr "Елді мекен"
+
+msgid "Facility"
+msgstr "Медициналық ұйым"
+
+msgid "Risk level"
+msgstr "Қауіп деңгейі"
+
+msgid "No patients found."
+msgstr "Пациенттер табылған жоқ."
+
+msgid "Fill out the patient card in a clear structure without unnecessary fields on one screen."
+msgstr "Пациент картасын бір экранда артық өрістерсіз түсінікті құрылыммен толтырыңыз."
+
+msgid "Save"
+msgstr "Сақтау"

@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from apps.core.i18n import lang_text
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -58,9 +58,13 @@ def patient_create(request):
         form.fields["facility"].initial = request.user.employee_profile.facility_id
     if request.method == "POST" and form.is_valid():
         patient = create_patient(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Пациент успешно создан.")
+        messages.success(request, lang_text("Пациент успешно создан.", "Пациент сәтті құрылды."))
         return redirect("patient-detail", pk=patient.pk)
-    return render(request, "patients/form.html", {"form": form, "title": "Создание пациента"})
+    return render(
+    request,
+    "patients/form.html",
+    {"form": form, "title": lang_text("Создание пациента", "Пациентті жасау")},
+)
 
 
 @roles_required("Администратор системы", "Регистратор", "Медработник")
@@ -71,9 +75,13 @@ def patient_update(request, pk: int):
         form.fields["facility"].queryset = Facility.objects.filter(pk=request.user.employee_profile.facility_id)
     if request.method == "POST" and form.is_valid():
         update_patient(user=request.user, patient=patient, cleaned_data=form.cleaned_data)
-        messages.success(request, "Данные пациента обновлены.")
+        messages.success(request, lang_text("Данные пациента обновлены.", "Пациент деректері жаңартылды."))
         return redirect("patient-detail", pk=patient.pk)
-    return render(request, "patients/form.html", {"form": form, "title": "Редактирование пациента"})
+    return render(
+    request,
+    "patients/form.html",
+    {"form": form, "title": lang_text("Редактирование пациента", "Пациентті өңдеу")},
+)
 
 
 @roles_required(*PATIENT_ALLOWED_ROLES)

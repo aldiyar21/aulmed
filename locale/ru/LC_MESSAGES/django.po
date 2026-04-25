@@ -134,3 +134,54 @@ msgstr "Нагрузка по сотрудникам"
 
 msgid "After visits appear, workload distribution will be shown here."
 msgstr "После появления посещений здесь отобразится распределение нагрузки."
+
+msgid "Pagination"
+msgstr "Пагинация"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Далее"
+
+msgid "Patient registry"
+msgstr "Реестр пациентов"
+
+msgid "Search, filter and open patient records without extra steps."
+msgstr "Ищите, фильтруйте и открывайте карточки пациентов без лишних действий."
+
+msgid "Export CSV"
+msgstr "Экспорт CSV"
+
+msgid "New patient"
+msgstr "Новый пациент"
+
+msgid "Apply filters"
+msgstr "Применить фильтры"
+
+msgid "Full name"
+msgstr "ФИО"
+
+msgid "IIN"
+msgstr "ИИН"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Settlement"
+msgstr "Населённый пункт"
+
+msgid "Facility"
+msgstr "Учреждение"
+
+msgid "Risk level"
+msgstr "Уровень риска"
+
+msgid "No patients found."
+msgstr "Пациенты не найдены."
+
+msgid "Fill out the patient card in a clear structure without unnecessary fields on one screen."
+msgstr "Заполните карточку пациента в понятной структуре без лишних полей на одном экране."
+
+msgid "Save"
+msgstr "Сохранить"

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from apps.core.i18n import lang_text
 from apps.core.models import SoftDeleteModel, TimeStampedModel
 
 
@@ -65,7 +65,14 @@ class Patient(SoftDeleteModel):
     def __str__(self) -> str:
         full_name = " ".join(part for part in [self.last_name, self.first_name, self.middle_name] if part)
         return full_name
-
+    @property
+    def risk_level_label(self) -> str:
+        labels = {
+            "low": lang_text("Низкий", "Төмен"),
+            "medium": lang_text("Средний", "Орташа"),
+            "high": lang_text("Высокий", "Жоғары"),
+        }
+        return labels.get(self.risk_level, self.get_risk_level_display())
 
 class PatientCondition(TimeStampedModel):
     patient = models.ForeignKey(
