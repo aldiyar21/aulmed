@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} | {{ APP_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-subtitle">Оформите обращение в структурированной форме с акцентом на клинический результат.</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="post" class="smart-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        {% for field in form %}
+          <div class="{% if field.name == 'reason_for_visit' or field.name == 'diagnosis_text' or field.name == 'services_provided' or field.name == 'notes' %}field-span-2{% endif %}">
+            {{ field.errors }}
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <button class="btn btn-success mt-4" type="submit">Сохранить</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card"><div class="card-body"><h1 class="h4">Просроченные профилактические мероприятия</h1>{% if page_obj %}<ul class="list-group list-group-flush">{% for item in page_obj %}<li class="list-group-item d-flex justify-content-between"><span>{{ item.patient }} - {{ item.planned_date }}</span><span class="badge bg-danger">{{ item.get_event_type_display }}</span></li>{% endfor %}</ul>{% else %}<p class="text-muted mb-0">Просроченных мероприятий нет.</p>{% endif %}</div></div>
+{% endblock %}

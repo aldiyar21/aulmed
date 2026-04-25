@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Обращения | {{ APP_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Обращения</h1>
+    <p class="page-subtitle">Все медицинские эпизоды с быстрым доступом к пациенту и результату приема.</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-secondary" href="{% url 'encounter-export' %}?{{ request.GET.urlencode }}">Экспорт CSV</a>
+    <a class="btn btn-success" href="{% url 'encounter-create' %}">Новое обращение</a>
+  </div>
+</div>
+<form class="card filter-card smart-form mb-3" method="get">
+  <div class="row g-3">
+    {% for field in form %}
+      <div class="col-md-4">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="mt-3"><button class="btn btn-primary" type="submit">Применить фильтры</button></div>
+</form>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead><tr><th>Дата</th><th>Пациент</th><th>Сотрудник</th><th>Тип</th><th>Результат</th></tr></thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item.encounter_date }}</td>
+            <td><a href="{% url 'patient-detail' item.patient.pk %}">{{ item.patient }}</a></td>
+            <td>{{ item.clinician }}</td>
+            <td>{{ item.get_encounter_type_display }}</td>
+            <td>{{ item.get_result_type_display }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="text-center text-muted py-4">Нет обращений.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}
