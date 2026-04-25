@@ -1,5 +1,4 @@
 from django import forms
-from django.utils import timezone
 
 from apps.accounts.models import EmployeeProfile
 from apps.prevention.models import PreventionEvent

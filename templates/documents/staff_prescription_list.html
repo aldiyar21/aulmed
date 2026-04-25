@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Prescriptions" %} | {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Prescriptions" %}</h1>
+    <p class="page-subtitle">{% trans "Medication plans issued by doctors after consultations and follow-up reviews." %}</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'staff-prescription-create' %}">{% trans "Create prescription" %}</a>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Number" %}</th>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Doctor" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Issued at" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prescription in page_obj %}
+          <tr>
+            <td>{{ prescription.number }}</td>
+            <td>{{ prescription.patient }}</td>
+            <td>{{ prescription.doctor.get_full_name|default:prescription.doctor.username }}</td>
+            <td><span class="badge text-bg-light">{{ prescription.get_status_display }}</span></td>
+            <td>{{ prescription.issued_at|date:"d.m.Y H:i"|default:"-" }}</td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'staff-prescription-detail' prescription.pk %}">{% trans "Open" %}</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">{% trans "No prescriptions yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

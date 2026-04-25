@@ -10,7 +10,6 @@ from apps.visits.forms import HomeVisitFilterForm, HomeVisitForm
 from apps.visits.selectors import filter_visits, visit_queryset_for_user, visits_for_today
 from apps.visits.services import create_home_visit, update_home_visit
 
-
 ALLOWED_ROLES = ("Администратор системы", "Регистратор", "Медработник", "Руководитель")
 
 
@@ -45,7 +44,7 @@ def home_visit_create(request):
         form.fields["assigned_employee"].queryset = EmployeeProfile.objects.filter(facility_id=facility_id, is_active=True)
     if request.method == "POST" and form.is_valid():
         patients = form.cleaned_data.pop("patients")
-        visit = create_home_visit(user=request.user, cleaned_data=form.cleaned_data, patients=patients)
+        create_home_visit(user=request.user, cleaned_data=form.cleaned_data, patients=patients)
         messages.success(request, "Выезд создан.")
         return redirect("visit-list")
     return render(request, "visits/form.html", {"form": form, "title": "Создание выезда"})

@@ -11,7 +11,6 @@ from apps.referrals.forms import ReferralFilterForm, ReferralForm
 from apps.referrals.selectors import filter_referrals, referral_queryset_for_user
 from apps.referrals.services import create_referral, update_referral
 
-
 ALLOWED_ROLES = ("Администратор системы", "Регистратор", "Медработник", "Руководитель")
 
 

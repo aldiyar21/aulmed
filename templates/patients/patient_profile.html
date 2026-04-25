@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header"><div><h1 class="page-title">{% trans "Patient cabinet" %}</h1><p class="page-subtitle">{% trans "Profile" %}</p></div></div>
+<div class="card"><div class="card-body"><div class="detail-grid">
+  <div class="detail-item"><span>{% trans "Full name" %}</span>{{ patient }}</div>
+  <div class="detail-item"><span>{% trans "IIN" %}</span>{{ patient.iin|default:"-" }}</div>
+  <div class="detail-item"><span>{% trans "Phone" %}</span>{{ patient.phone|default:"-" }}</div>
+  <div class="detail-item"><span>{% trans "Facility" %}</span>{{ patient.facility.name }}</div>
+</div></div></div>
+{% endblock %}

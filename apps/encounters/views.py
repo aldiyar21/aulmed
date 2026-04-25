@@ -5,12 +5,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from apps.accounts.decorators import roles_required
 from apps.accounts.models import EmployeeProfile
 from apps.core.utils import export_to_csv
-from apps.facilities.models import Facility
-from apps.patients.models import Patient
 from apps.encounters.forms import EncounterFilterForm, EncounterForm
 from apps.encounters.selectors import encounter_queryset_for_user, filter_encounters
 from apps.encounters.services import create_encounter, update_encounter
-
+from apps.facilities.models import Facility
+from apps.patients.models import Patient
 
 ALLOWED_ROLES = ("Администратор системы", "Регистратор", "Медработник", "Руководитель")
 

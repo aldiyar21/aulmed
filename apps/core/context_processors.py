@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from apps.accounts.services import get_user_role_names
+from apps.accounts.services import get_linked_patient, get_user_role_names, user_is_patient
 from apps.core.models import Notification
 
 
@@ -12,4 +12,6 @@ def app_context(request):
         "APP_NAME": settings.APP_NAME,
         "user_role_names": get_user_role_names(request.user),
         "unread_notifications": unread_notifications,
+        "linked_patient": get_linked_patient(request.user),
+        "is_patient_user": user_is_patient(request.user),
     }

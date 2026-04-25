@@ -3,12 +3,12 @@ from __future__ import annotations
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission, User
 
-
 ROLE_GROUP_MAPPING = {
     "admin": settings.ROLE_ADMIN,
     "registrar": settings.ROLE_REGISTRAR,
     "clinician": settings.ROLE_CLINICIAN,
     "manager": settings.ROLE_MANAGER,
+    "patient": settings.ROLE_PATIENT,
 }
 
 
@@ -26,6 +26,16 @@ def user_is_manager_or_admin(user: User) -> bool:
     ).exists()
 
 
+def user_is_patient(user: User) -> bool:
+    return user.is_authenticated and user.groups.filter(name=settings.ROLE_PATIENT).exists()
+
+
+def get_linked_patient(user: User):
+    if not user.is_authenticated:
+        return None
+    return getattr(user, "patient_profile", None)
+
+
 def ensure_role_groups() -> None:
     group_permissions = {
         settings.ROLE_ADMIN: Permission.objects.all(),
@@ -33,7 +43,17 @@ def ensure_role_groups() -> None:
             content_type__app_label__in=["patients", "encounters", "referrals", "visits", "facilities"]
         ),
         settings.ROLE_CLINICIAN: Permission.objects.filter(
-            content_type__app_label__in=["patients", "encounters", "visits", "prevention", "referrals"]
+            content_type__app_label__in=[
+                "patients",
+                "encounters",
+                "visits",
+                "prevention",
+                "referrals",
+                "appointments",
+                "telemedicine",
+                "documents",
+                "monitoring",
+            ]
         ),
         settings.ROLE_MANAGER: Permission.objects.filter(
             content_type__app_label__in=[
@@ -46,7 +66,14 @@ def ensure_role_groups() -> None:
                 "facilities",
                 "accounts",
                 "audit",
+                "appointments",
+                "telemedicine",
+                "documents",
+                "monitoring",
             ]
+        ),
+        settings.ROLE_PATIENT: Permission.objects.filter(
+            content_type__app_label__in=["appointments", "telemedicine", "documents", "monitoring"]
         ),
     }
     for name, permissions in group_permissions.items():

@@ -18,22 +18,24 @@ class Command(BaseCommand):
             ("registrator", "Регистратор", "registrar", settings.ROLE_REGISTRAR),
             ("doctor", "Медработник", "clinician", settings.ROLE_CLINICIAN),
             ("manager", "Руководитель", "manager", settings.ROLE_MANAGER),
+            ("patient", "Пациент", "patient", settings.ROLE_PATIENT),
         ]
         for username, first_name, role_code, group_name in users:
             user, created = User.objects.get_or_create(username=username, defaults={"first_name": first_name})
             user.first_name = first_name
             user.set_password("demo12345")
-            user.is_staff = True
+            user.is_staff = role_code != "patient"
             user.save()
             user.groups.set([Group.objects.get(name=group_name)])
-            EmployeeProfile.objects.get_or_create(
-                user=user,
-                defaults={
-                    "facility": facility,
-                    "position": first_name,
-                    "role_code": role_code,
-                    "phone": "+77000000000",
-                },
-            )
+            if role_code != "patient":
+                EmployeeProfile.objects.get_or_create(
+                    user=user,
+                    defaults={
+                        "facility": facility,
+                        "position": first_name,
+                        "role_code": role_code,
+                        "phone": "+77000000000",
+                    },
+                )
             if created:
                 self.stdout.write(self.style.SUCCESS(f"Создан пользователь {username}"))

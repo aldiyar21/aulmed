@@ -13,6 +13,7 @@ services:
       - db
     volumes:
       - .:/app
+      - ./media:/app/media
 
   db:
     image: postgres:16-alpine

@@ -7,9 +7,16 @@ from apps.accounts.models import EmployeeProfile
 from apps.core.utils import export_to_csv
 from apps.patients.models import Patient
 from apps.prevention.forms import PreventionEventForm, PreventionFilterForm
-from apps.prevention.selectors import filter_prevention, overdue_queryset, prevention_queryset_for_user
-from apps.prevention.services import create_prevention_event, mark_overdue_events, update_prevention_event
-
+from apps.prevention.selectors import (
+    filter_prevention,
+    overdue_queryset,
+    prevention_queryset_for_user,
+)
+from apps.prevention.services import (
+    create_prevention_event,
+    mark_overdue_events,
+    update_prevention_event,
+)
 
 ALLOWED_ROLES = ("Администратор системы", "Медработник", "Руководитель")
 

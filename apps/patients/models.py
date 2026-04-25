@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from apps.core.models import SoftDeleteModel, TimeStampedModel
@@ -28,6 +29,14 @@ class Patient(SoftDeleteModel):
         on_delete=models.PROTECT,
         related_name="patients",
         verbose_name="Учреждение",
+    )
+    patient_user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="patient_profile",
+        verbose_name="Пользователь пациента",
     )
     social_category = models.CharField(
         max_length=32,

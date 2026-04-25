@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header"><div><h1 class="page-title">{% trans "My referrals" %}</h1></div></div>
+<div class="card table-shell"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{% trans "Date" %}</th><th>{% trans "Specialist" %}</th><th>{% trans "Status" %}</th></tr></thead><tbody>{% for item in page_obj %}<tr><td>{{ item.referral_date }}</td><td>{{ item.destination_specialist }}</td><td>{{ item.get_status_display }}</td></tr>{% empty %}<tr><td colspan="3" class="text-center text-muted py-4">{% trans "No referrals." %}</td></tr>{% endfor %}</tbody></table></div></div>{% include "includes/pagination.html" %}
+{% endblock %}

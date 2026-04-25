@@ -13,7 +13,7 @@ from apps.audit.models import AuditLog
 def _serialize_value(value):
     if isinstance(value, models.Model):
         return {"id": value.pk, "label": str(value)}
-    if isinstance(value, (date, datetime, time)):
+    if isinstance(value, date | datetime | time):
         return value.isoformat()
     if isinstance(value, Decimal):
         return str(value)
@@ -21,7 +21,7 @@ def _serialize_value(value):
         return str(value)
     if isinstance(value, dict):
         return {key: _serialize_value(item) for key, item in value.items()}
-    if isinstance(value, (list, tuple, set)):
+    if isinstance(value, list | tuple | set):
         return [_serialize_value(item) for item in value]
     return value
 

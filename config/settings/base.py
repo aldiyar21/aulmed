@@ -31,6 +31,10 @@ INSTALLED_APPS = [
     "apps.referrals",
     "apps.reports",
     "apps.audit",
+    "apps.appointments",
+    "apps.telemedicine",
+    "apps.documents",
+    "apps.monitoring",
 ]
 
 MIDDLEWARE = [
@@ -67,7 +71,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "ru"
+LANGUAGES = [
+    ("ru", "Russian"),
+    ("kk", "Kazakh"),
+]
+LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = os.getenv("TIME_ZONE", "Asia/Almaty")
 USE_I18N = True
 USE_TZ = True
@@ -95,6 +104,12 @@ AUTH_PASSWORD_VALIDATORS = [
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+JITSI_DOMAIN = os.getenv("JITSI_DOMAIN", "meet.jit.si")
+JITSI_ROOM_PREFIX = os.getenv("JITSI_ROOM_PREFIX", "aulmed")
+MAX_UPLOAD_SIZE_MB = int(os.getenv("MAX_UPLOAD_SIZE_MB", "10"))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"
@@ -115,5 +130,6 @@ ROLE_ADMIN = "Администратор системы"
 ROLE_REGISTRAR = "Регистратор"
 ROLE_CLINICIAN = "Медработник"
 ROLE_MANAGER = "Руководитель"
+ROLE_PATIENT = "Пациент"
 
-ROLE_NAMES = [ROLE_ADMIN, ROLE_REGISTRAR, ROLE_CLINICIAN, ROLE_MANAGER]
+ROLE_NAMES = [ROLE_ADMIN, ROLE_REGISTRAR, ROLE_CLINICIAN, ROLE_MANAGER, ROLE_PATIENT]
