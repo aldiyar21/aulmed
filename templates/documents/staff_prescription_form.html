@@ -1,1 +1,24 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="page-header"><div><h1 class="page-title">{{ title }}</h1></div></div><div class="card"><div class="card-body"><form method="post" class="smart-form">{% csrf_token %}{{ form.as_p }}{{ formset.management_form }}{% for item_form in formset %}<div class="content-card p-3 mb-3">{{ item_form.as_p }}</div>{% endfor %}<button class="btn btn-success mt-3" type="submit">{% trans "Save" %}</button></form></div></div>{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-subtitle">{% trans "Create a prescription with medicines, dosage and treatment instructions." %}</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="post" class="smart-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {{ formset.management_form }}
+      {% for item_form in formset %}
+        <div class="content-card p-3 mb-3">{{ item_form.as_p }}</div>
+      {% endfor %}
+      <button class="btn btn-success mt-3" type="submit">{% trans "Save" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,1 +1,40 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="page-header"><div><h1 class="page-title">{% trans "My prescriptions" %}</h1></div></div><div class="card table-shell"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{% trans "Number" %}</th><th>{% trans "Status" %}</th><th>{% trans "Issued" %}</th><th></th></tr></thead><tbody>{% for item in page_obj %}<tr><td>{{ item.number }}</td><td>{{ item.get_status_display }}</td><td>{{ item.issued_at|default:"-" }}</td><td><a href="{% url 'patient-prescription-detail' item.pk %}">{% trans "Open" %}</a></td></tr>{% empty %}<tr><td colspan="4" class="text-center text-muted py-4">{% trans "No prescriptions." %}</td></tr>{% endfor %}</tbody></table></div></div>{% include "includes/pagination.html" %}{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "My prescriptions" %}</h1>
+    <p class="page-subtitle">{% trans "Track active and issued prescriptions from consultations." %}</p>
+  </div>
+</div>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Number" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Issued" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item.number }}</td>
+            <td>{{ item.get_status_display }}</td>
+            <td>{{ item.issued_at|default:"-" }}</td>
+            <td><a href="{% url 'patient-prescription-detail' item.pk %}">{% trans "Open" %}</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="text-center text-muted py-4">{% trans "No prescriptions yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

@@ -7,7 +7,7 @@
     <div class="page-actions mt-3">
       <a class="btn btn-success" href="{% url 'consultation-start' consultation.pk %}">{% trans "Start consultation" %}</a>
       <a class="btn btn-primary" href="{% url 'consultation-complete' consultation.pk %}">{% trans "Complete consultation" %}</a>
-      <a class="btn btn-outline-danger" href="{% url 'consultation-cancel' consultation.pk %}">{% trans "Cancel" %}</a>
+      <a class="btn btn-outline-danger" href="{% url 'consultation-cancel' consultation.pk %}">{% trans "Cancel consultation" %}</a>
     </div>
   {% endif %}
 {% endblock %}

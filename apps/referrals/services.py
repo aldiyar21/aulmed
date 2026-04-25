@@ -3,6 +3,7 @@ from __future__ import annotations
 from django.contrib.auth.models import User
 
 from apps.audit.services import log_action
+from apps.core.i18n import lang_text
 from apps.referrals.models import Referral
 
 
@@ -13,7 +14,10 @@ def create_referral(*, user: User, cleaned_data: dict) -> Referral:
         action="create",
         entity_type="Referral",
         entity_id=referral.pk,
-        description=f"Создано направление для {referral.patient}",
+        description=lang_text(
+            f"Создано направление для {referral.patient}",
+            f"Жолдама құрылды: {referral.patient}",
+        ),
         changes=cleaned_data,
     )
     return referral
@@ -30,7 +34,10 @@ def update_referral(*, user: User, referral: Referral, cleaned_data: dict) -> Re
         action=action,
         entity_type="Referral",
         entity_id=referral.pk,
-        description=f"Обновлено направление {referral.pk}",
+        description=lang_text(
+            f"Обновлено направление {referral.pk}",
+            f"Жолдама жаңартылды: {referral.pk}",
+        ),
         changes=cleaned_data,
     )
     return referral

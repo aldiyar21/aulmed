@@ -3,7 +3,6 @@ from __future__ import annotations
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from django.utils.translation import gettext_lazy as _
 
 from apps.core.i18n import lang_text_lazy
 from apps.telemedicine.models import OnlineConsultation, Teleconsilium
@@ -61,16 +60,24 @@ class ConsultationCompletionForm(ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         if not any(cleaned_data.get(field) for field in ["doctor_recommendations", "treatment_plan", "diagnosis_text"]):
-            raise forms.ValidationError(_("Fill at least one conclusion field."))
+            raise forms.ValidationError(
+                lang_text_lazy(
+                    "Заполните хотя бы одно поле заключения.",
+                    "Қорытындының кемінде бір өрісін толтырыңыз.",
+                )
+            )
         if cleaned_data.get("follow_up_required") and not cleaned_data.get("follow_up_date"):
-            self.add_error("follow_up_date", _("Choose a follow-up date."))
+            self.add_error(
+                "follow_up_date",
+                lang_text_lazy("Выберите дату повторного наблюдения.", "Қайта бақылау күнін таңдаңыз."),
+            )
         return cleaned_data
 
 
 class ConsultationFilterForm(forms.Form):
     status = forms.ChoiceField(
         required=False,
-        choices=[("", _("All"))] + list(OnlineConsultation.Status.choices),
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + list(OnlineConsultation.Status.choices),
         label=lang_text_lazy("Статус", "Күйі"),
     )
     date_from = forms.DateField(
@@ -122,5 +129,8 @@ class TeleconsiliumCompleteForm(ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         if cleaned_data.get("status") == Teleconsilium.Status.COMPLETED and not cleaned_data.get("conclusion"):
-            self.add_error("conclusion", _("Conclusion is required."))
+            self.add_error(
+                "conclusion",
+                lang_text_lazy("Необходимо заполнить заключение.", "Қорытындыны толтыру қажет."),
+            )
         return cleaned_data

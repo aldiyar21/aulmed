@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from apps.audit.services import log_action
+from apps.core.i18n import lang_text
 from apps.prevention.models import PreventionEvent
 
 
@@ -14,7 +15,10 @@ def create_prevention_event(*, user: User, cleaned_data: dict) -> PreventionEven
         action="create",
         entity_type="PreventionEvent",
         entity_id=event.pk,
-        description=f"Создано профилактическое мероприятие для {event.patient}",
+        description=lang_text(
+            f"Создано профилактическое мероприятие для {event.patient}",
+            f"Профилактикалық іс-шара құрылды: {event.patient}",
+        ),
         changes=cleaned_data,
     )
     return event
@@ -29,14 +33,16 @@ def update_prevention_event(*, user: User, event: PreventionEvent, cleaned_data:
         action="update",
         entity_type="PreventionEvent",
         entity_id=event.pk,
-        description=f"Обновлено профилактическое мероприятие {event.pk}",
+        description=lang_text(
+            f"Обновлено профилактическое мероприятие {event.pk}",
+            f"Профилактикалық іс-шара жаңартылды: {event.pk}",
+        ),
         changes=cleaned_data,
     )
     return event
 
 
 def mark_overdue_events() -> int:
-    """Переводит просроченные запланированные мероприятия в статус overdue."""
     updated = PreventionEvent.objects.filter(
         status="planned",
         planned_date__lt=timezone.localdate(),

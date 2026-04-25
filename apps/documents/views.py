@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from apps.accounts.access import require_access, staff_or_patient_resource_access
 from apps.accounts.decorators import patient_required, roles_required
 from apps.audit.services import log_action
+from apps.core.i18n import lang_text
 from apps.documents.forms import (
     MedicalDocumentForm,
     PatientFileForm,
@@ -41,23 +42,27 @@ def patient_document_detail(request, pk: int):
     return render(request, "documents/patient_document_detail.html", {"document": document})
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_document_list(request):
     page_obj = Paginator(medical_document_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
     return render(request, "documents/staff_document_list.html", {"page_obj": page_obj})
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_document_create(request):
     form = MedicalDocumentForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         document = create_medical_document(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Документ создан.")
+        messages.success(request, lang_text("Документ создан.", "Құжат құрылды."))
         return redirect("staff-document-detail", pk=document.pk)
-    return render(request, "documents/staff_document_form.html", {"form": form, "title": "Создание документа"})
+    return render(
+        request,
+        "documents/staff_document_form.html",
+        {"form": form, "title": lang_text("Создание документа", "Құжат құру")},
+    )
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_document_detail(request, pk: int):
     document = get_object_or_404(medical_document_queryset_for_user(request.user), pk=pk)
     return render(request, "documents/staff_document_detail.html", {"document": document})
@@ -83,29 +88,29 @@ def patient_prescription_detail(request, pk: int):
     return render(request, "documents/patient_prescription_detail.html", {"prescription": prescription})
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_prescription_list(request):
     page_obj = Paginator(prescription_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
     return render(request, "documents/staff_prescription_list.html", {"page_obj": page_obj})
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_prescription_create(request):
     form = PrescriptionForm(request.POST or None)
     formset = PrescriptionItemFormSet(request.POST or None, prefix="items")
     if request.method == "POST" and form.is_valid() and formset.is_valid():
         items = [item for item in formset.cleaned_data if item and not item.get("DELETE", False)]
         prescription = create_prescription(user=request.user, cleaned_data=form.cleaned_data, items=items)
-        messages.success(request, "Рецепт создан.")
+        messages.success(request, lang_text("Рецепт создан.", "Рецепт құрылды."))
         return redirect("staff-prescription-detail", pk=prescription.pk)
     return render(
         request,
         "documents/staff_prescription_form.html",
-        {"form": form, "formset": formset, "title": "Создание рецепта"},
+        {"form": form, "formset": formset, "title": lang_text("Создание рецепта", "Рецепт құру")},
     )
 
 
-@roles_required("Администратор системы", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_prescription_detail(request, pk: int):
     prescription = get_object_or_404(prescription_queryset_for_user(request.user), pk=pk)
     return render(request, "documents/staff_prescription_detail.html", {"prescription": prescription})
@@ -124,14 +129,18 @@ def patient_file_list(request):
     return render(request, "documents/patient_file_list.html", {"page_obj": page_obj})
 
 
-@roles_required("Администратор системы", "Регистратор", "Медработник", "Руководитель")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р РµРіРёСЃС‚СЂР°С‚РѕСЂ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
 def staff_file_upload(request):
     form = PatientFileForm(request.POST or None, request.FILES or None)
     if request.method == "POST" and form.is_valid():
         patient_file = create_patient_file(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Файл загружен.")
+        messages.success(request, lang_text("Файл загружен.", "Файл жүктелді."))
         return redirect("patient-file-detail", pk=patient_file.pk)
-    return render(request, "documents/staff_file_form.html", {"form": form, "title": "Загрузка файла"})
+    return render(
+        request,
+        "documents/staff_file_form.html",
+        {"form": form, "title": lang_text("Загрузка файла", "Файл жүктеу")},
+    )
 
 
 @patient_required
@@ -141,9 +150,13 @@ def patient_file_upload(request):
     form.fields["patient"].initial = request.user.patient_profile
     if request.method == "POST" and form.is_valid():
         patient_file = create_patient_file(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Файл загружен.")
+        messages.success(request, lang_text("Файл загружен.", "Файл жүктелді."))
         return redirect("patient-file-detail", pk=patient_file.pk)
-    return render(request, "documents/staff_file_form.html", {"form": form, "title": "Загрузка файла"})
+    return render(
+        request,
+        "documents/staff_file_form.html",
+        {"form": form, "title": lang_text("Загрузка файла", "Файл жүктеу")},
+    )
 
 
 @login_required

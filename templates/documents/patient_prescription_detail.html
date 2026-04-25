@@ -1,1 +1,31 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="page-header"><div><h1 class="page-title">{{ prescription.number }}</h1></div><div class="page-actions"><a class="btn btn-outline-secondary" href="{% url 'printable-prescription' prescription.pk %}">{% trans "Printable" %}</a></div></div><div class="card"><div class="card-body"><ul class="list-group list-group-flush">{% for item in prescription.items.all %}<li class="list-group-item">{{ item.medication_name }} - {{ item.dosage }}, {{ item.frequency }}, {{ item.duration }}</li>{% empty %}<li class="list-group-item text-muted">{% trans "No items." %}</li>{% endfor %}</ul></div></div>{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ prescription.number }}</h1>
+    <p class="page-subtitle">{% trans "Medication plan issued by the doctor with dosage and schedule." %}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-secondary" href="{% url 'printable-prescription' prescription.pk %}">{% trans "Printable" %}</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="detail-grid mb-3">
+      <div class="detail-item"><span>{% trans "Status" %}</span>{{ prescription.get_status_display }}</div>
+      <div class="detail-item"><span>{% trans "Issued" %}</span>{{ prescription.issued_at|default:"-" }}</div>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for item in prescription.items.all %}
+        <li class="list-group-item">
+          {{ item.medication_name }} - {{ item.dosage }}, {{ item.frequency }}, {{ item.duration }}
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">{% trans "No items yet." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

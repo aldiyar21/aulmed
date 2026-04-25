@@ -6,7 +6,6 @@ from django import forms
 from django.conf import settings
 from django.forms import inlineformset_factory
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 from apps.core.i18n import lang_text_lazy
 from apps.documents.models import MedicalDocument, PatientFile, Prescription, PrescriptionItem
@@ -46,6 +45,7 @@ class PrescriptionForm(forms.ModelForm):
             "notes": lang_text_lazy("Примечание", "Ескертпе"),
         }
         widgets = {"notes": forms.Textarea(attrs={"rows": 4})}
+
 
 class PrescriptionItemForm(forms.ModelForm):
     class Meta:
@@ -92,14 +92,26 @@ class PatientFileForm(forms.ModelForm):
         uploaded_file = self.cleaned_data["file"]
         suffix = Path(uploaded_file.name).suffix.lower()
         if suffix not in ALLOWED_UPLOAD_EXTENSIONS:
-            raise forms.ValidationError(_("Unsupported file extension."))
+            raise forms.ValidationError(
+                lang_text_lazy(
+                    "Неподдерживаемое расширение файла.",
+                    "Файл кеңейтімі қолдау көрсетілмейді.",
+                )
+            )
         max_size = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
         if uploaded_file.size > max_size:
-            raise forms.ValidationError(_("File is too large."))
+            raise forms.ValidationError(
+                lang_text_lazy("Файл слишком большой.", "Файл өлшемі тым үлкен.")
+            )
         return uploaded_file
 
     def clean_result_date(self):
         value = self.cleaned_data["result_date"]
         if value > timezone.localdate():
-            raise forms.ValidationError(_("Result date cannot be in the future."))
+            raise forms.ValidationError(
+                lang_text_lazy(
+                    "Дата результата не может быть в будущем.",
+                    "Нәтиже күні болашақта болмауы керек.",
+                )
+            )
         return value

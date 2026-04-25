@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.accounts.decorators import roles_required
 from apps.accounts.models import EmployeeProfile
+from apps.core.i18n import lang_text
 from apps.core.utils import export_to_csv
 from apps.patients.models import Patient
 from apps.prevention.forms import PreventionEventForm, PreventionFilterForm
@@ -18,7 +19,7 @@ from apps.prevention.services import (
     update_prevention_event,
 )
 
-ALLOWED_ROLES = ("Администратор системы", "Медработник", "Руководитель")
+ALLOWED_ROLES = ("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”", "Р В РЎС“Р С”Р С•Р Р†Р С•Р Т‘Р С‘РЎвЂљР ВµР В»РЎРЉ")
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -39,7 +40,7 @@ def prevention_overdue(request):
     return render(request, "prevention/overdue.html", {"page_obj": queryset})
 
 
-@roles_required("Администратор системы", "Медработник")
+@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
 def prevention_create(request):
     form = PreventionEventForm(request.POST or None)
     if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
@@ -48,12 +49,12 @@ def prevention_create(request):
         form.fields["assigned_employee"].queryset = EmployeeProfile.objects.filter(facility_id=facility_id, is_active=True)
     if request.method == "POST" and form.is_valid():
         create_prevention_event(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Профилактическое мероприятие создано.")
+        messages.success(request, lang_text("Профилактическое мероприятие создано.", "Профилактикалық іс-шара құрылды."))
         return redirect("prevention-list")
-    return render(request, "prevention/form.html", {"form": form, "title": "Создание мероприятия"})
+    return render(request, "prevention/form.html", {"form": form, "title": lang_text("Создание мероприятия", "Іс-шара құру")})
 
 
-@roles_required("Администратор системы", "Медработник")
+@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
 def prevention_update(request, pk: int):
     event = get_object_or_404(prevention_queryset_for_user(request.user), pk=pk)
     form = PreventionEventForm(request.POST or None, instance=event)
@@ -63,9 +64,9 @@ def prevention_update(request, pk: int):
         form.fields["assigned_employee"].queryset = EmployeeProfile.objects.filter(facility_id=facility_id, is_active=True)
     if request.method == "POST" and form.is_valid():
         update_prevention_event(user=request.user, event=event, cleaned_data=form.cleaned_data)
-        messages.success(request, "Профилактическое мероприятие обновлено.")
+        messages.success(request, lang_text("Профилактическое мероприятие обновлено.", "Профилактикалық іс-шара жаңартылды."))
         return redirect("prevention-list")
-    return render(request, "prevention/form.html", {"form": form, "title": "Редактирование мероприятия"})
+    return render(request, "prevention/form.html", {"form": form, "title": lang_text("Редактирование мероприятия", "Іс-шараны өңдеу")})
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -75,7 +76,17 @@ def prevention_export_csv(request):
     if form.is_valid():
         queryset = filter_prevention(queryset, form.cleaned_data)
     rows = [
-        [str(item.patient), item.event_type, str(item.planned_date), item.status, str(item.assigned_employee or "")]
+        [str(item.patient), item.get_event_type_display(), str(item.planned_date), item.get_status_display(), str(item.assigned_employee or "")]
         for item in queryset
     ]
-    return export_to_csv("prevention", ["Пациент", "Тип", "Плановая дата", "Статус", "Ответственный"], rows)
+    return export_to_csv(
+        "prevention",
+        [
+            lang_text("Пациент", "Пациент"),
+            lang_text("Тип", "Түрі"),
+            lang_text("Плановая дата", "Жоспарланған күн"),
+            lang_text("Статус", "Күйі"),
+            lang_text("Ответственный", "Жауапты"),
+        ],
+        rows,
+    )

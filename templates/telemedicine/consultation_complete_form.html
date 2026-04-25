@@ -1,1 +1,20 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="page-header"><div><h1 class="page-title">{% trans "Complete consultation" %}</h1></div></div><div class="card"><div class="card-body"><form method="post" class="smart-form">{% csrf_token %}{{ form.as_p }}<button class="btn btn-success mt-3" type="submit">{% trans "Complete consultation" %}</button></form></div></div>{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Complete consultation" %}</h1>
+    <p class="page-subtitle">{% trans "Record the conclusion, treatment plan and follow-up actions for the patient." %}</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="post" class="smart-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-success mt-3" type="submit">{% trans "Complete consultation" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

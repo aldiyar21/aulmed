@@ -56,7 +56,7 @@ class EncounterFilterForm(forms.Form):
     )
     encounter_type = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + Encounter.ENCOUNTER_TYPES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + Encounter.ENCOUNTER_TYPES,
         label=lang_text_lazy("Тип обращения", "Қабылдау түрі"),
     )
     patient = forms.ModelChoiceField(

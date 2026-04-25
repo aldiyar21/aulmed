@@ -27,12 +27,12 @@ class PreventionEventForm(forms.ModelForm):
 class PreventionFilterForm(forms.Form):
     event_type = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + PreventionEvent.EVENT_TYPES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + PreventionEvent.EVENT_TYPES,
         label=lang_text_lazy("Тип мероприятия", "Іс-шара түрі"),
     )
     status = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + PreventionEvent.STATUS_CHOICES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + PreventionEvent.STATUS_CHOICES,
         label=lang_text_lazy("Статус", "Күйі"),
     )
     planned_date = forms.DateField(

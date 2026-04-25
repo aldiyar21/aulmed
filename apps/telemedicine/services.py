@@ -6,14 +6,20 @@ from django.conf import settings
 from django.utils import timezone
 
 from apps.audit.services import log_action
+from apps.core.i18n import lang_text
 from apps.core.models import Notification
 from apps.telemedicine.models import OnlineConsultation, PatientConsent, Teleconsilium
 
-CONSENT_TEXT = (
-    "Я подтверждаю согласие на получение телемедицинской консультации и обработку персональных "
-    "медицинских данных в рамках системы AulMed. Я понимаю, что при экстренных состояниях "
-    "необходимо обращаться в службу 103."
-)
+
+def get_consent_text() -> str:
+    return lang_text(
+        "Я подтверждаю согласие на получение телемедицинской консультации и обработку персональных "
+        "медицинских данных в рамках системы AulMed. Я понимаю, что при экстренных состояниях "
+        "необходимо обращаться в службу 103.",
+        "Мен AulMed жүйесі аясында телемедициналық консультация алуға және жеке медициналық "
+        "деректерімді өңдеуге келісім беремін. Шұғыл жағдайларда 103 қызметіне жүгіну қажет екенін "
+        "түсінемін.",
+    )
 
 
 def ensure_online_consultation_for_appointment(*, appointment, created_by):
@@ -117,7 +123,7 @@ def accept_patient_consent(*, user, patient, consultation, ip_address: str | Non
         defaults={
             "accepted_at": timezone.now(),
             "accepted_by": user,
-            "text_snapshot": CONSENT_TEXT,
+            "text_snapshot": get_consent_text(),
             "ip_address": ip_address,
         },
     )
@@ -140,8 +146,11 @@ def create_teleconsilium(*, user, cleaned_data: dict):
         Notification.objects.create(
             user=doctor,
             notification_type="teleconsilium",
-            title=f"Teleconsilium: {teleconsilium.topic}",
-            body=f"You were invited to teleconsilium #{teleconsilium.pk}.",
+            title=lang_text(f"Телеконсилиум: {teleconsilium.topic}", f"Телеконсилиум: {teleconsilium.topic}"),
+            body=lang_text(
+                f"Вы приглашены на телеконсилиум №{teleconsilium.pk}.",
+                f"Сіз №{teleconsilium.pk} телеконсилиумына шақырылдыңыз.",
+            ),
             due_date=teleconsilium.scheduled_at.date(),
         )
     log_action(

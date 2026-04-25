@@ -1,25 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Вход | {{ APP_NAME }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign in" %} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <section class="login-shell">
   <div class="content-card login-panel">
     <div class="login-showcase">
       <span class="hero-tag">AulMed</span>
-      <h1 class="mt-3">Современная цифровая среда для сельской ПМСП</h1>
-      <p>Быстрый доступ к пациентам, маршрутам, выездам и профилактике в одном рабочем кабинете.</p>
+      <h1 class="mt-3">{% trans "Modern digital workspace for rural PHC" %}</h1>
+      <p>{% trans "Quick access to patients, care routes, home visits and prevention in one workspace." %}</p>
       <div class="login-points">
-        <div class="login-point">Единый интерфейс для регистратора, врача и руководителя.</div>
-        <div class="login-point">Понятные списки, фильтры и контроль текущей нагрузки.</div>
-        <div class="login-point">Фокус на повседневных задачах без визуального перегруза.</div>
+        <div class="login-point">{% trans "One interface for registrar, clinician and manager." %}</div>
+        <div class="login-point">{% trans "Clear lists, filters and current workload control." %}</div>
+        <div class="login-point">{% trans "Focus on daily tasks without visual overload." %}</div>
       </div>
     </div>
     <div class="login-form">
-      <h2 class="page-title fs-3">Вход в систему</h2>
-      <p class="page-subtitle mb-4">Введите учетные данные, чтобы продолжить работу с медицинскими записями.</p>
+      <h2 class="page-title fs-3">{% trans "Sign in to the system" %}</h2>
+      <p class="page-subtitle mb-4">{% trans "Enter your credentials to continue working with medical records." %}</p>
       <form method="post" class="smart-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-success w-100 mt-3" type="submit">Войти</button>
+        <button class="btn btn-success w-100 mt-3" type="submit">{% trans "Sign in" %}</button>
       </form>
     </div>
   </div>

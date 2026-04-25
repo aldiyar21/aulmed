@@ -1,1 +1,24 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="card"><div class="card-body"><h1 class="page-title">{% trans "Consultation summary" %}</h1><p>{{ consultation.patient }}</p><hr><p><strong>{% trans "Anamnesis" %}:</strong> {{ consultation.anamnesis|default:"-" }}</p><p><strong>{% trans "Diagnosis" %}:</strong> {{ consultation.diagnosis_text|default:"-" }}</p><p><strong>{% trans "Treatment plan" %}:</strong> {{ consultation.treatment_plan|default:"-" }}</p><p><strong>{% trans "Recommendations" %}:</strong> {{ consultation.doctor_recommendations|default:"-" }}</p></div></div>{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h1 class="page-title">{% trans "Consultation summary" %}</h1>
+    <p>{{ consultation.patient }}</p>
+    <hr>
+    <p><strong>{% trans "Anamnesis" %}:</strong> {{ consultation.anamnesis|default:"-" }}</p>
+    <p><strong>{% trans "Diagnosis" %}:</strong> {{ consultation.diagnosis_text|default:"-" }}</p>
+    <p><strong>{% trans "Treatment plan" %}:</strong> {{ consultation.treatment_plan|default:"-" }}</p>
+    <p><strong>{% trans "Recommendations" %}:</strong> {{ consultation.doctor_recommendations|default:"-" }}</p>
+    <p class="mb-0">
+      <strong>{% trans "Follow-up" %}:</strong>
+      {% if consultation.follow_up_required %}
+        {% blocktrans with date=consultation.follow_up_date %}Required until {{ date }}{% endblocktrans %}
+      {% else %}
+        {% trans "Not required" %}
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endblock %}

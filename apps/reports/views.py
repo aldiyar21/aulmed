@@ -4,32 +4,32 @@ from django import forms
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.decorators import roles_required
 from apps.accounts.services import user_is_manager_or_admin
+from apps.core.i18n import lang_text, lang_text_lazy
 from apps.facilities.models import Facility
 from apps.reports.services import build_telemedicine_metrics
 
 
 class TelemedicineReportFilterForm(forms.Form):
     date_from = forms.DateField(
-        label=_("Date from"),
+        label=lang_text_lazy("Дата с", "Басталу күні"),
         required=False,
         widget=forms.DateInput(attrs={"type": "date"}),
     )
     date_to = forms.DateField(
-        label=_("Date to"),
+        label=lang_text_lazy("Дата по", "Аяқталу күні"),
         required=False,
         widget=forms.DateInput(attrs={"type": "date"}),
     )
     facility = forms.ModelChoiceField(
-        label=_("Facility"),
+        label=lang_text_lazy("Учреждение", "Ұйым"),
         queryset=Facility.objects.filter(is_active=True),
         required=False,
     )
     doctor = forms.ModelChoiceField(
-        label=_("Doctor"),
+        label=lang_text_lazy("Врач", "Дәрігер"),
         queryset=User.objects.filter(employee_profile__role_code="clinician"),
         required=False,
     )
@@ -39,40 +39,40 @@ def _telemedicine_csv_response(metrics: dict) -> HttpResponse:
     response = HttpResponse(content_type="text/csv; charset=utf-8")
     response["Content-Disposition"] = 'attachment; filename="telemedicine-report.csv"'
     writer = csv.writer(response)
-    writer.writerow(["metric", "value"])
-    writer.writerow(["date_from", metrics["date_from"]])
-    writer.writerow(["date_to", metrics["date_to"]])
-    writer.writerow(["total_online_consultations", metrics["total_online_consultations"]])
-    writer.writerow(["scheduled_consultations", metrics["scheduled_consultations"]])
-    writer.writerow(["completed_consultations", metrics["completed_consultations"]])
-    writer.writerow(["cancelled_consultations", metrics["cancelled_consultations"]])
-    writer.writerow(["average_wait_time", metrics["average_wait_time"] or ""])
-    writer.writerow(["issued_medical_documents", metrics["issued_medical_documents"]])
-    writer.writerow(["issued_prescriptions", metrics["issued_prescriptions"]])
-    writer.writerow(["active_remote_monitoring_patients", metrics["active_remote_monitoring_patients"]])
-    writer.writerow(["teleconsiliums_count", metrics["teleconsiliums_count"]])
-    writer.writerow(["teleconsiliums_completed_count", metrics["teleconsiliums_completed_count"]])
+    writer.writerow([lang_text("Метрика", "Көрсеткіш"), lang_text("Значение", "Мәні")])
+    writer.writerow([lang_text("Дата с", "Басталу күні"), metrics["date_from"]])
+    writer.writerow([lang_text("Дата по", "Аяқталу күні"), metrics["date_to"]])
+    writer.writerow([lang_text("Всего онлайн-консультаций", "Барлық онлайн консультациялар"), metrics["total_online_consultations"]])
+    writer.writerow([lang_text("Назначенных консультаций", "Жоспарланған консультациялар"), metrics["scheduled_consultations"]])
+    writer.writerow([lang_text("Завершённых консультаций", "Аяқталған консультациялар"), metrics["completed_consultations"]])
+    writer.writerow([lang_text("Отменённых консультаций", "Бас тартылған консультациялар"), metrics["cancelled_consultations"]])
+    writer.writerow([lang_text("Среднее время ожидания", "Орташа күту уақыты"), metrics["average_wait_time"] or ""])
+    writer.writerow([lang_text("Выданных документов", "Берілген құжаттар"), metrics["issued_medical_documents"]])
+    writer.writerow([lang_text("Выданных рецептов", "Берілген рецепттер"), metrics["issued_prescriptions"]])
+    writer.writerow([lang_text("Пациентов на дистанционном мониторинге", "Қашықтан мониторингтегі пациенттер"), metrics["active_remote_monitoring_patients"]])
+    writer.writerow([lang_text("Всего телеконсилиумов", "Телеконсилиумдар саны"), metrics["teleconsiliums_count"]])
+    writer.writerow([lang_text("Завершённых телеконсилиумов", "Аяқталған телеконсилиумдар"), metrics["teleconsiliums_completed_count"]])
     writer.writerow([])
-    writer.writerow(["section", "label", "total"])
+    writer.writerow([lang_text("Раздел", "Бөлім"), lang_text("Показатель", "Көрсеткіш"), lang_text("Количество", "Саны")])
     for item in metrics["appointments_by_status"]:
-        writer.writerow(["appointments_by_status", item["status"], item["total"]])
+        writer.writerow([lang_text("Записи по статусу", "Жазылулар күйі бойынша"), item["status"], item["total"]])
     for item in metrics["appointments_by_type"]:
-        writer.writerow(["appointments_by_type", item["appointment_type"], item["total"]])
+        writer.writerow([lang_text("Записи по типу", "Жазылулар түрі бойынша"), item["appointment_type"], item["total"]])
     for item in metrics["consultations_by_facility"]:
-        writer.writerow(["consultations_by_facility", item["facility__name"], item["total"]])
+        writer.writerow([lang_text("Консультации по учреждениям", "Консультациялар ұйым бойынша"), item["facility__name"], item["total"]])
     for item in metrics["consultations_by_settlement"]:
-        writer.writerow(["consultations_by_settlement", item["patient__settlement_name"], item["total"]])
+        writer.writerow([lang_text("Консультации по населённым пунктам", "Консультациялар елді мекен бойынша"), item["patient__settlement_name"], item["total"]])
     for item in metrics["doctor_workload"]:
-        writer.writerow(["doctor_workload", item["doctor__username"], item["total"]])
+        writer.writerow([lang_text("Нагрузка врачей", "Дәрігер жүктемесі"), item["doctor__username"], item["total"]])
     return response
 
 
-@roles_required("Администратор системы", "Руководитель", "Медработник")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
 def reports_view(request):
     return render(request, "reports/index.html")
 
 
-@roles_required("Администратор системы", "Руководитель", "Медработник")
+@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
 def telemedicine_reports_view(request):
     if not user_is_manager_or_admin(request.user) and not hasattr(request.user, "employee_profile"):
         return render(request, "errors/403.html", status=403)

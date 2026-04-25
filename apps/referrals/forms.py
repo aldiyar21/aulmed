@@ -29,12 +29,12 @@ class ReferralForm(forms.ModelForm):
 class ReferralFilterForm(forms.Form):
     status = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + Referral.STATUS_CHOICES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + Referral.STATUS_CHOICES,
         label=lang_text_lazy("Статус", "Күйі"),
     )
     priority = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + Referral.PRIORITY_CHOICES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + Referral.PRIORITY_CHOICES,
         label=lang_text_lazy("Приоритет", "Басымдық"),
     )
     date_from = forms.DateField(

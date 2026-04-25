@@ -1,5 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block title %}{{ patient }} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div>
@@ -7,17 +10,17 @@
     <p class="page-subtitle">{{ patient.settlement_name }} | {{ patient.facility.name }}</p>
   </div>
   <div class="page-actions">
-    <a class="btn btn-outline-primary" href="{% url 'encounter-create' %}?patient={{ patient.pk }}">Новое обращение</a>
-    <a class="btn btn-success" href="{% url 'patient-update' patient.pk %}">Редактировать</a>
+    <a class="btn btn-outline-primary" href="{% url 'encounter-create' %}?patient={{ patient.pk }}">{% trans "New encounter" %}</a>
+    <a class="btn btn-success" href="{% url 'patient-update' patient.pk %}">{% trans "Edit" %}</a>
   </div>
 </div>
 
 <div class="card patient-hero mb-3">
   <div class="detail-grid">
-    <div class="detail-item"><span>ИИН</span>{{ patient.iin|default:"-" }}</div>
-    <div class="detail-item"><span>Телефон</span>{{ patient.phone|default:"-" }}</div>
-    <div class="detail-item"><span>Адрес</span>{{ patient.address|default:"-" }}</div>
-    <div class="detail-item"><span>Риск</span>{{ patient.get_risk_level_display }}</div>
+    <div class="detail-item"><span>{% trans "IIN" %}</span>{{ patient.iin|default:"-" }}</div>
+    <div class="detail-item"><span>{% trans "Phone" %}</span>{{ patient.phone|default:"-" }}</div>
+    <div class="detail-item"><span>{% trans "Address" %}</span>{{ patient.address|default:"-" }}</div>
+    <div class="detail-item"><span>{% trans "Risk" %}</span>{{ patient.get_risk_level_display }}</div>
   </div>
 </div>
 
@@ -25,18 +28,18 @@
   <div class="col-lg-8">
     <div class="card h-100">
       <div class="card-body">
-        <h2 class="section-title">Последние обращения</h2>
+        <h2 class="section-title">{% trans "Recent encounters" %}</h2>
         {% if encounters %}
           <ul class="list-group list-group-flush">
             {% for item in encounters %}
               <li class="list-group-item d-flex justify-content-between gap-3">
                 <span>{{ item.encounter_date }} - {{ item.get_encounter_type_display }}</span>
-                <a href="{% url 'encounter-update' item.pk %}">Открыть</a>
+                <a href="{% url 'encounter-update' item.pk %}">{% trans "Open" %}</a>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="section-muted mb-0">Обращений пока нет.</p>
+          <p class="section-muted mb-0">{% trans "No encounters yet." %}</p>
         {% endif %}
       </div>
     </div>
@@ -44,7 +47,7 @@
   <div class="col-lg-4">
     <div class="card h-100">
       <div class="card-body">
-        <h2 class="section-title">Хронические состояния</h2>
+        <h2 class="section-title">{% trans "Chronic conditions" %}</h2>
         {% if conditions %}
           <ul class="list-group list-group-flush">
             {% for item in conditions %}
@@ -52,7 +55,7 @@
             {% endfor %}
           </ul>
         {% else %}
-          <p class="section-muted mb-0">Записей пока нет.</p>
+          <p class="section-muted mb-0">{% trans "No records yet." %}</p>
         {% endif %}
       </div>
     </div>
@@ -60,7 +63,7 @@
   <div class="col-lg-6">
     <div class="card h-100">
       <div class="card-body">
-        <h2 class="section-title">Профилактика</h2>
+        <h2 class="section-title">{% trans "Prevention" %}</h2>
         {% if prevention_events %}
           <ul class="list-group list-group-flush">
             {% for item in prevention_events %}
@@ -71,7 +74,7 @@
             {% endfor %}
           </ul>
         {% else %}
-          <p class="section-muted mb-0">Мероприятий пока нет.</p>
+          <p class="section-muted mb-0">{% trans "No prevention events yet." %}</p>
         {% endif %}
       </div>
     </div>
@@ -79,7 +82,7 @@
   <div class="col-lg-6">
     <div class="card h-100">
       <div class="card-body">
-        <h2 class="section-title">Направления</h2>
+        <h2 class="section-title">{% trans "Referrals" %}</h2>
         {% if referrals %}
           <ul class="list-group list-group-flush">
             {% for item in referrals %}
@@ -90,7 +93,7 @@
             {% endfor %}
           </ul>
         {% else %}
-          <p class="section-muted mb-0">Направлений пока нет.</p>
+          <p class="section-muted mb-0">{% trans "No referrals yet." %}</p>
         {% endif %}
       </div>
     </div>
@@ -98,7 +101,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h2 class="section-title">Выезды на дом</h2>
+        <h2 class="section-title">{% trans "Home visits" %}</h2>
         {% if visit_links %}
           <ul class="list-group list-group-flush">
             {% for item in visit_links %}
@@ -106,7 +109,7 @@
             {% endfor %}
           </ul>
         {% else %}
-          <p class="section-muted mb-0">Выездов пока нет.</p>
+          <p class="section-muted mb-0">{% trans "No visits yet." %}</p>
         {% endif %}
       </div>
     </div>

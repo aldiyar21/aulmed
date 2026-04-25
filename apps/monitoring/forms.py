@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from django import forms
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 from apps.core.i18n import lang_text_lazy
 from apps.monitoring.models import VitalReading
@@ -41,7 +40,12 @@ class VitalReadingForm(forms.ModelForm):
     def clean_recorded_at(self):
         value = self.cleaned_data["recorded_at"]
         if value > timezone.now() + timezone.timedelta(hours=2):
-            raise forms.ValidationError(_("Recorded time is too far in the future."))
+            raise forms.ValidationError(
+                lang_text_lazy(
+                    "Время измерения слишком далеко в будущем.",
+                    "Өлшеу уақыты тым алдағы уақытқа қойылған.",
+                )
+            )
         return value
 
     def clean(self):
@@ -58,5 +62,11 @@ class VitalReadingForm(forms.ModelForm):
         for field, (min_value, max_value) in ranges.items():
             value = cleaned_data.get(field)
             if value is not None and not (min_value <= value <= max_value):
-                self.add_error(field, _("Value is outside the allowed range."))
+                self.add_error(
+                    field,
+                    lang_text_lazy(
+                        "Значение выходит за допустимый диапазон.",
+                        "Мән рұқсат етілген ауқымнан тыс.",
+                    ),
+                )
         return cleaned_data

@@ -39,6 +39,12 @@ msgstr "Онлайн-запись"
 msgid "My consultations"
 msgstr "Мои консультации"
 
+msgid "Recent consultations"
+msgstr "Последние консультации"
+
+msgid "Latest health indicators"
+msgstr "Последние показатели здоровья"
+
 msgid "My documents"
 msgstr "Мои документы"
 
@@ -281,3 +287,418 @@ msgstr "Причина отмены"
 
 msgid "Created by"
 msgstr "Создал"
+msgid "Complete consultation"
+msgstr "Завершить консультацию"
+
+msgid "Record the conclusion, treatment plan and follow-up actions for the patient."
+msgstr "Зафиксируйте заключение, план лечения и дальнейшие действия по наблюдению за пациентом."
+
+msgid "Consent to telemedicine consultation"
+msgstr "Согласие на телемедицинскую консультацию"
+
+msgid "Review the terms of remote consultation before joining the video room."
+msgstr "Ознакомьтесь с условиями дистанционной консультации перед входом в видеокомнату."
+
+msgid "Accept and continue"
+msgstr "Принять и продолжить"
+
+msgid "Start consultation"
+msgstr "Начать консультацию"
+
+msgid "Cancel consultation"
+msgstr "Отменить консультацию"
+
+msgid "Consultation"
+msgstr "Консультация"
+
+msgid "Printable summary"
+msgstr "Печатная сводка"
+
+msgid "Scheduled start"
+msgstr "Плановое начало"
+
+msgid "Scheduled end"
+msgstr "Плановое завершение"
+
+msgid "Complaint"
+msgstr "Жалоба"
+
+msgid "Anamnesis"
+msgstr "Анамнез"
+
+msgid "Treatment plan"
+msgstr "План лечения"
+
+msgid "Recommendations"
+msgstr "Рекомендации"
+
+msgid "Follow-up"
+msgstr "Повторное наблюдение"
+
+msgid "Required until %(date)s"
+msgstr "Требуется до %(date)s"
+
+msgid "Not required"
+msgstr "Не требуется"
+
+msgid "Track scheduled video consultations and open the consultation card when needed."
+msgstr "Отслеживайте назначенные видеоконсультации и при необходимости открывайте карточку консультации."
+
+msgid "No consultations yet."
+msgstr "Консультаций пока нет."
+
+msgid "If video is unavailable, the doctor may complete the consultation based on text data or phone communication outside the system."
+msgstr "Если видеосвязь недоступна, врач может завершить консультацию на основе текстовых данных или телефонного разговора вне системы."
+
+msgid "Open in new tab"
+msgstr "Открыть в новой вкладке"
+
+msgid "Consultation summary"
+msgstr "Сводка консультации"
+
+msgid "Complete teleconsilium"
+msgstr "Завершить телеконсилиум"
+
+msgid "Record the agreed conclusion after discussing the clinical case."
+msgstr "Зафиксируйте согласованное заключение после обсуждения клинического случая."
+
+msgid "Conclusion"
+msgstr "Заключение"
+
+msgid "Teleconsiliums"
+msgstr "Телеконсилиумы"
+
+msgid "Coordinate joint remote review of complex clinical cases."
+msgstr "Координируйте совместный дистанционный разбор сложных клинических случаев."
+
+msgid "Topic"
+msgstr "Тема"
+
+msgid "No teleconsiliums yet."
+msgstr "Телеконсилиумов пока нет."
+
+msgid "Teleconsilium room"
+msgstr "Комната телеконсилиума"
+
+msgid "Connect invited specialists to discuss the case in real time."
+msgstr "Подключите приглашённых специалистов для обсуждения случая в реальном времени."
+
+msgid "Primary doctor"
+msgstr "Основной врач"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Set the topic, participants and scheduled time for the teleconsilium."
+msgstr "Укажите тему, участников и время проведения телеконсилиума."
+
+msgid "Complete"
+msgstr "Завершить"
+
+msgid "Waiting patient"
+msgstr "Ожидание пациента"
+
+msgid "Waiting doctor"
+msgstr "Ожидание врача"
+
+msgid "In progress"
+msgstr "РРґС‘С‚"
+
+msgid "Draft"
+msgstr "Черновик"
+
+msgid "Telemedicine"
+msgstr "Телемедицина"
+
+msgid "Data processing"
+msgstr "Обработка данных"
+
+msgid "Review the issued medical document and print it if needed."
+msgstr "Просмотрите выданный медицинский документ и при необходимости распечатайте его."
+
+msgid "Valid until"
+msgstr "Действует до"
+
+msgid "Certificates, extracts and recommendations available in your patient profile."
+msgstr "Справки, выписки и рекомендации, доступные в вашем профиле пациента."
+
+msgid "No documents yet."
+msgstr "Документов пока нет."
+
+msgid "Open or download laboratory, imaging and attached patient results."
+msgstr "Открывайте или скачивайте лабораторные результаты, снимки и прикреплённые файлы пациента."
+
+msgid "Result date"
+msgstr "Дата результата"
+
+msgid "Files and results"
+msgstr "Файлы и результаты"
+
+msgid "Store laboratory results, scans and supporting medical files in one place."
+msgstr "Храните лабораторные результаты, снимки и сопроводительные медицинские файлы в одном месте."
+
+msgid "Upload file"
+msgstr "Загрузить файл"
+
+msgid "No files yet."
+msgstr "Файлов пока нет."
+
+msgid "Medication plan issued by the doctor with dosage and schedule."
+msgstr "План лекарственной терапии, выданный врачом с дозировкой и графиком приёма."
+
+msgid "Issued"
+msgstr "Выдан"
+
+msgid "No items yet."
+msgstr "Позиций пока нет."
+
+msgid "Track active and issued prescriptions from consultations."
+msgstr "Отслеживайте активные и выданные рецепты после консультаций."
+
+msgid "No prescriptions yet."
+msgstr "Рецептов пока нет."
+
+msgid "Prepare a certificate, extract or recommendation for the patient record."
+msgstr "Подготовьте справку, выписку или рекомендацию для медицинской карты пациента."
+
+msgid "Attach medical results and supporting files to the patient record."
+msgstr "Прикрепите медицинские результаты и сопроводительные файлы к карте пациента."
+
+msgid "Create a prescription with medicines, dosage and treatment instructions."
+msgstr "Создайте рецепт с лекарствами, дозировкой и инструкцией по лечению."
+
+msgid "Medical documents"
+msgstr "Медицинские документы"
+
+msgid "Issued certificates, extracts and recommendations for telemedicine and in-person care."
+msgstr "Выданные справки, выписки и рекомендации для телемедицины и очного приёма."
+
+msgid "Create document"
+msgstr "Создать документ"
+
+msgid "Issued at"
+msgstr "Дата выдачи"
+
+msgid "No medical documents yet."
+msgstr "Медицинских документов пока нет."
+
+msgid "Prescriptions"
+msgstr "Рецепты"
+
+msgid "Medication plans issued by doctors after consultations and follow-up reviews."
+msgstr "Лекарственные назначения, выданные врачами после консультаций и контрольных осмотров."
+
+msgid "Create prescription"
+msgstr "Создать рецепт"
+
+msgid "Track blood pressure, pulse, temperature and other home monitoring indicators."
+msgstr "Отслеживайте давление, пульс, температуру и другие показатели домашнего мониторинга."
+
+msgid "Add reading"
+msgstr "Добавить показатель"
+
+msgid "Recorded"
+msgstr "Зафиксировано"
+
+msgid "Blood pressure"
+msgstr "Артериальное давление"
+
+msgid "No readings yet."
+msgstr "Показателей пока нет."
+
+msgid "Enter the patient's current vital signs for follow-up and remote monitoring."
+msgstr "Введите текущие показатели пациента для наблюдения и дистанционного мониторинга."
+
+msgid "Reports"
+msgstr "Отчёты"
+
+msgid "Operational dashboards and exports for the internal AulMed team."
+msgstr "Операционные панели и выгрузки для внутренней команды AulMed."
+
+msgid "Core reporting"
+msgstr "Базовая отчётность"
+
+msgid "Use patient, encounter, prevention and referral lists for CSV exports and daily registries."
+msgstr "РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЃРїРёСЃРєРё РїР°С†РёРµРЅС‚РѕРІ, РѕР±СЂР°С‰РµРЅРёР№, РїСЂРѕС„РёР»Р°РєС‚РёРєРё Рё РЅР°РїСЂР°РІР»РµРЅРёР№ РґР»СЏ CSV-РІС‹РіСЂСѓР·РѕРє Рё РµР¶РµРґРЅРµРІРЅС‹С… СЂРµРµСЃС‚СЂРѕРІ."
+
+msgid "Telemedicine KPI"
+msgstr "KPI телемедицины"
+
+msgid "Appointments, online consultations, issued documents, prescriptions, teleconsiliums and remote monitoring."
+msgstr "Записи, онлайн-консультации, выданные документы, рецепты, телеконсилиумы и дистанционный мониторинг."
+
+msgid "Open telemedicine report"
+msgstr "Открыть отчёт по телемедицине"
+
+msgid "Track online appointments, video consultations, teleconsiliums, issued documents and remote monitoring activity."
+msgstr "Отслеживайте онлайн-записи, видеоконсультации, телеконсилиумы, выданные документы и активность дистанционного мониторинга."
+
+msgid "Reset"
+msgstr "Сбросить"
+
+msgid "Total online consultations"
+msgstr "Всего онлайн-консультаций"
+
+msgid "Scheduled consultations"
+msgstr "Назначенные консультации"
+
+msgid "Completed consultations"
+msgstr "Завершённые консультации"
+
+msgid "Cancelled consultations"
+msgstr "Отменённые консультации"
+
+msgid "Issued medical documents"
+msgstr "Выданные медицинские документы"
+
+msgid "Issued prescriptions"
+msgstr "Выданные рецепты"
+
+msgid "Monitoring patients"
+msgstr "Пациенты на мониторинге"
+
+msgid "Appointments by status"
+msgstr "Записи по статусу"
+
+msgid "No data."
+msgstr "Нет данных."
+
+msgid "Appointments by type"
+msgstr "Записи по типу"
+
+msgid "Consultations by facility"
+msgstr "Консультации по учреждениям"
+
+msgid "Consultations by settlement"
+msgstr "Консультации по населённым пунктам"
+
+msgid "Doctor workload"
+msgstr "Нагрузка врачей"
+
+msgid "Average wait time"
+msgstr "Среднее время ожидания"
+
+msgid "Calculated from request creation to scheduled consultation time."
+msgstr "Рассчитывается от момента создания заявки до назначенного времени консультации."
+msgid "Plan mobile care across settlements and keep route statuses under control."
+msgstr "Планируйте выездную помощь по населённым пунктам и контролируйте статусы маршрутов."
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "New visit"
+msgstr "Новый выезд"
+
+msgid "No visits found."
+msgstr "Выезды не найдены."
+
+msgid "Record the encounter in a structured form with focus on the clinical outcome."
+msgstr "Фиксируйте обращение в структурированной форме с фокусом на клинический результат."
+
+msgid "Prepare the visit plan: date, settlement, team and accompanying details."
+msgstr "Подготовьте план выезда: дата, населённый пункт, команда и сопутствующие детали."
+
+msgid "Visits for today"
+msgstr "Выезды на сегодня"
+
+msgid "No visits are planned for today."
+msgstr "На сегодня выезды не запланированы."
+
+msgid "%(count)s patient in the route"
+msgid_plural "%(count)s patients in the route"
+msgstr[0] "%(count)s пациент в маршруте"
+msgstr[1] "%(count)s пациента в маршруте"
+msgstr[2] "%(count)s пациентов в маршруте"
+
+msgid "Prevention and follow-up"
+msgstr "Профилактика и наблюдение"
+
+msgid "Quick overview of planned activities, overdue items and responsible employees."
+msgstr "Краткий обзор запланированных мероприятий, просроченных пунктов и ответственных сотрудников."
+
+msgid "Overdue"
+msgstr "Просроченные"
+
+msgid "New prevention event"
+msgstr "Новое профилактическое мероприятие"
+
+msgid "No prevention events found."
+msgstr "Профилактические мероприятия не найдены."
+
+msgid "Plan preventive activities so priorities and deadlines are visible at a glance."
+msgstr "Планируйте профилактические мероприятия так, чтобы приоритеты и сроки были видны сразу."
+
+msgid "Overdue prevention events"
+msgstr "Просроченные профилактические мероприятия"
+
+msgid "There are no overdue prevention events."
+msgstr "Просроченных профилактических мероприятий нет."
+
+msgid "Track patient routing and status of specialist care pathways."
+msgstr "Отслеживайте маршрут пациента и статус маршрутов к профильным специалистам."
+
+msgid "New referral"
+msgstr "Новое направление"
+
+msgid "No referrals found."
+msgstr "Направления не найдены."
+
+msgid "Create a referral with a clear patient route and processing priority."
+msgstr "Создайте направление с понятным маршрутом пациента и приоритетом обработки."
+
+msgid "Sign in"
+msgstr "Вход"
+
+msgid "Modern digital workspace for rural PHC"
+msgstr "Современное цифровое рабочее пространство для сельской ПМСП"
+
+msgid "Quick access to patients, care routes, home visits and prevention in one workspace."
+msgstr "Быстрый доступ к пациентам, маршрутам наблюдения, выездам на дом и профилактике в одном рабочем пространстве."
+
+msgid "One interface for registrar, clinician and manager."
+msgstr "Единый интерфейс для регистратора, медработника и руководителя."
+
+msgid "Clear lists, filters and current workload control."
+msgstr "Понятные списки, фильтры и контроль текущей нагрузки."
+
+msgid "Focus on daily tasks without visual overload."
+msgstr "Фокус на повседневных задачах без визуальной перегрузки."
+
+msgid "Sign in to the system"
+msgstr "Вход в систему"
+
+msgid "Enter your credentials to continue working with medical records."
+msgstr "Введите учетные данные, чтобы продолжить работу с медицинскими записями."
+
+msgid "New encounter"
+msgstr "Новое обращение"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Risk"
+msgstr "Риск"
+
+msgid "Recent encounters"
+msgstr "Последние обращения"
+
+msgid "No encounters yet."
+msgstr "Обращений пока нет."
+
+msgid "Chronic conditions"
+msgstr "Хронические состояния"
+
+msgid "No records yet."
+msgstr "Записей пока нет."
+
+msgid "No prevention events yet."
+msgstr "Мероприятий пока нет."
+
+msgid "No referrals yet."
+msgstr "Направлений пока нет."
+
+msgid "No visits yet."
+msgstr "Выездов пока нет."

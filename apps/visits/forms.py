@@ -53,7 +53,7 @@ class HomeVisitFilterForm(forms.Form):
     )
     status = forms.ChoiceField(
         required=False,
-        choices=[("", "Все")] + HomeVisit.STATUS_CHOICES,
+        choices=[("", lang_text_lazy("Все", "Барлығы"))] + HomeVisit.STATUS_CHOICES,
         label=lang_text_lazy("Статус", "Күйі"),
     )
     assigned_employee = forms.ModelChoiceField(

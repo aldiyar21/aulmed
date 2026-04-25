@@ -1,1 +1,27 @@
-{% extends "base.html" %}{% load i18n %}{% block content %}<div class="page-header"><div><h1 class="page-title">{{ teleconsilium.topic }}</h1><p class="page-subtitle">{{ teleconsilium.patient }}</p></div><div class="page-actions"><a class="btn btn-outline-primary" href="{% url 'teleconsilium-room' teleconsilium.pk %}">{% trans "Video consultation" %}</a><a class="btn btn-success" href="{% url 'teleconsilium-complete' teleconsilium.pk %}">{% trans "Complete" %}</a></div></div><div class="card"><div class="card-body"><p>{{ teleconsilium.description }}</p><p><strong>{% trans "Conclusion" %}:</strong> {{ teleconsilium.conclusion|default:"-" }}</p></div></div>{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ teleconsilium.topic }}</h1>
+    <p class="page-subtitle">{{ teleconsilium.patient }}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-primary" href="{% url 'teleconsilium-room' teleconsilium.pk %}">{% trans "Video consultation" %}</a>
+    <a class="btn btn-success" href="{% url 'teleconsilium-complete' teleconsilium.pk %}">{% trans "Complete" %}</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="detail-grid mb-3">
+      <div class="detail-item"><span>{% trans "Status" %}</span>{{ teleconsilium.get_status_display }}</div>
+      <div class="detail-item"><span>{% trans "Scheduled" %}</span>{{ teleconsilium.scheduled_at }}</div>
+      <div class="detail-item"><span>{% trans "Facility" %}</span>{{ teleconsilium.facility }}</div>
+      <div class="detail-item"><span>{% trans "Primary doctor" %}</span>{{ teleconsilium.primary_doctor }}</div>
+    </div>
+    <p><strong>{% trans "Description" %}:</strong> {{ teleconsilium.description|default:"-" }}</p>
+    <p class="mb-0"><strong>{% trans "Conclusion" %}:</strong> {{ teleconsilium.conclusion|default:"-" }}</p>
+  </div>
+</div>
+{% endblock %}
