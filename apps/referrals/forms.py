@@ -1,5 +1,6 @@
 from django import forms
 
+from apps.core.i18n import lang_text_lazy
 from apps.referrals.models import Referral
 
 
@@ -26,7 +27,23 @@ class ReferralForm(forms.ModelForm):
 
 
 class ReferralFilterForm(forms.Form):
-    status = forms.ChoiceField(required=False, choices=[("", "Все")] + Referral.STATUS_CHOICES)
-    priority = forms.ChoiceField(required=False, choices=[("", "Все")] + Referral.PRIORITY_CHOICES)
-    date_from = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
-    date_to = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
+    status = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + Referral.STATUS_CHOICES,
+        label=lang_text_lazy("Статус", "Күйі"),
+    )
+    priority = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + Referral.PRIORITY_CHOICES,
+        label=lang_text_lazy("Приоритет", "Басымдық"),
+    )
+    date_from = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Дата с", "Басталу күні"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    date_to = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Дата по", "Аяқталу күні"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )

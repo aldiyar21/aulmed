@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.i18n import lang_text_lazy
 from apps.prevention.models import PreventionEvent
 
 
@@ -24,7 +25,23 @@ class PreventionEventForm(forms.ModelForm):
 
 
 class PreventionFilterForm(forms.Form):
-    event_type = forms.ChoiceField(required=False, choices=[("", "Все")] + PreventionEvent.EVENT_TYPES)
-    status = forms.ChoiceField(required=False, choices=[("", "Все")] + PreventionEvent.STATUS_CHOICES)
-    planned_date = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
-    assigned_employee = forms.ModelChoiceField(queryset=EmployeeProfile.objects.filter(is_active=True), required=False)
+    event_type = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + PreventionEvent.EVENT_TYPES,
+        label=lang_text_lazy("Тип мероприятия", "Іс-шара түрі"),
+    )
+    status = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + PreventionEvent.STATUS_CHOICES,
+        label=lang_text_lazy("Статус", "Күйі"),
+    )
+    planned_date = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Плановая дата", "Жоспарланған күн"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    assigned_employee = forms.ModelChoiceField(
+        queryset=EmployeeProfile.objects.filter(is_active=True),
+        required=False,
+        label=lang_text_lazy("Ответственный сотрудник", "Жауапты қызметкер"),
+    )

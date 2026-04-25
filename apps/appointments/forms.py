@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.appointments.models import Appointment
+from apps.core.i18n import lang_text_lazy
 from apps.facilities.models import Facility
 
 
@@ -13,6 +14,12 @@ class AppointmentPatientForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ["facility", "appointment_type", "requested_datetime", "reason"]
+        labels = {
+            "facility": lang_text_lazy("Учреждение", "Ұйым"),
+            "appointment_type": lang_text_lazy("Тип записи", "Жазылу түрі"),
+            "requested_datetime": lang_text_lazy("Желаемое время", "Қажетті уақыт"),
+            "reason": lang_text_lazy("Причина обращения", "Жүгіну себебі"),
+        }
         widgets = {
             "requested_datetime": forms.DateTimeInput(attrs={"type": "datetime-local"}),
             "reason": forms.Textarea(attrs={"rows": 4}),
@@ -29,7 +36,7 @@ class AppointmentStaffUpdateForm(forms.ModelForm):
     doctor = forms.ModelChoiceField(
         queryset=User.objects.filter(employee_profile__role_code="clinician", is_active=True),
         required=False,
-        label=_("Doctor"),
+        label=lang_text_lazy("Врач", "Дәрігер"),
     )
 
     class Meta:
@@ -43,6 +50,14 @@ class AppointmentStaffUpdateForm(forms.ModelForm):
             "reason",
             "cancellation_reason",
         ]
+        labels = {
+            "status": lang_text_lazy("Статус", "Күйі"),
+            "scheduled_datetime": lang_text_lazy("Назначенное время", "Жоспарланған уақыт"),
+            "duration_minutes": lang_text_lazy("Длительность (минуты)", "Ұзақтығы (минут)"),
+            "appointment_type": lang_text_lazy("Тип записи", "Жазылу түрі"),
+            "reason": lang_text_lazy("Причина обращения", "Жүгіну себебі"),
+            "cancellation_reason": lang_text_lazy("Причина отмены", "Бас тарту себебі"),
+        }
         widgets = {
             "scheduled_datetime": forms.DateTimeInput(attrs={"type": "datetime-local"}),
             "reason": forms.Textarea(attrs={"rows": 4}),
@@ -68,17 +83,25 @@ class AppointmentFilterForm(forms.Form):
     status = forms.ChoiceField(
         required=False,
         choices=[("", _("All"))] + list(Appointment.Status.choices),
-        label=_("Status"),
+        label=lang_text_lazy("Статус", "Күйі"),
     )
     appointment_type = forms.ChoiceField(
         required=False,
         choices=[("", _("All"))] + list(Appointment.AppointmentType.choices),
-        label=_("Appointment type"),
+        label=lang_text_lazy("Тип записи", "Жазылу түрі"),
     )
-    date_from = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}), label=_("From"))
-    date_to = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}), label=_("To"))
+    date_from = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+        label=lang_text_lazy("С", "Бастап"),
+    )
+    date_to = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+        label=lang_text_lazy("По", "Дейін"),
+    )
     facility = forms.ModelChoiceField(
         queryset=Facility.objects.filter(is_active=True),
         required=False,
-        label=_("Facility"),
+        label=lang_text_lazy("Учреждение", "Ұйым"),
     )

@@ -8,6 +8,7 @@ from django.forms import inlineformset_factory
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.i18n import lang_text_lazy
 from apps.documents.models import MedicalDocument, PatientFile, Prescription, PrescriptionItem
 
 ALLOWED_UPLOAD_EXTENSIONS = {".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx"}
@@ -17,6 +18,17 @@ class MedicalDocumentForm(forms.ModelForm):
     class Meta:
         model = MedicalDocument
         fields = ["patient", "consultation", "encounter", "referral", "document_type", "title", "content", "status", "valid_until"]
+        labels = {
+            "patient": lang_text_lazy("Пациент", "Пациент"),
+            "consultation": lang_text_lazy("Консультация", "Консультация"),
+            "encounter": lang_text_lazy("Обращение", "Қабылдау"),
+            "referral": lang_text_lazy("Направление", "Жолдама"),
+            "document_type": lang_text_lazy("Тип документа", "Құжат түрі"),
+            "title": lang_text_lazy("Заголовок", "Тақырып"),
+            "content": lang_text_lazy("Содержание", "Мазмұны"),
+            "status": lang_text_lazy("Статус", "Күйі"),
+            "valid_until": lang_text_lazy("Действует до", "Жарамды мерзімі"),
+        }
         widgets = {
             "content": forms.Textarea(attrs={"rows": 8}),
             "valid_until": forms.DateInput(attrs={"type": "date"}),
@@ -27,12 +39,31 @@ class PrescriptionForm(forms.ModelForm):
     class Meta:
         model = Prescription
         fields = ["patient", "consultation", "status", "notes"]
+        labels = {
+            "patient": lang_text_lazy("Пациент", "Пациент"),
+            "consultation": lang_text_lazy("Консультация", "Консультация"),
+            "status": lang_text_lazy("Статус", "Күйі"),
+            "notes": lang_text_lazy("Примечание", "Ескертпе"),
+        }
         widgets = {"notes": forms.Textarea(attrs={"rows": 4})}
+
+class PrescriptionItemForm(forms.ModelForm):
+    class Meta:
+        model = PrescriptionItem
+        fields = ["medication_name", "dosage", "frequency", "duration", "instructions"]
+        labels = {
+            "medication_name": lang_text_lazy("Препарат", "Дәрі атауы"),
+            "dosage": lang_text_lazy("Дозировка", "Дозасы"),
+            "frequency": lang_text_lazy("Частота приёма", "Қабылдау жиілігі"),
+            "duration": lang_text_lazy("Длительность", "Ұзақтығы"),
+            "instructions": lang_text_lazy("Инструкция", "Нұсқаулық"),
+        }
 
 
 PrescriptionItemFormSet = inlineformset_factory(
     Prescription,
     PrescriptionItem,
+    form=PrescriptionItemForm,
     fields=["medication_name", "dosage", "frequency", "duration", "instructions"],
     extra=2,
     can_delete=True,
@@ -43,6 +74,15 @@ class PatientFileForm(forms.ModelForm):
     class Meta:
         model = PatientFile
         fields = ["patient", "related_consultation", "result_type", "title", "description", "file", "result_date"]
+        labels = {
+            "patient": lang_text_lazy("Пациент", "Пациент"),
+            "related_consultation": lang_text_lazy("Связанная консультация", "Байланысты консультация"),
+            "result_type": lang_text_lazy("Тип результата", "Нәтиже түрі"),
+            "title": lang_text_lazy("Название", "Атауы"),
+            "description": lang_text_lazy("Описание", "Сипаттама"),
+            "file": lang_text_lazy("Файл", "Файл"),
+            "result_date": lang_text_lazy("Дата результата", "Нәтиже күні"),
+        }
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
             "result_date": forms.DateInput(attrs={"type": "date"}),

@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.i18n import lang_text_lazy
 from apps.encounters.models import Encounter
 from apps.facilities.models import Facility
 from apps.patients.models import Patient
@@ -33,9 +34,33 @@ class EncounterForm(forms.ModelForm):
 
 
 class EncounterFilterForm(forms.Form):
-    date_from = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
-    date_to = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
-    facility = forms.ModelChoiceField(queryset=Facility.objects.filter(is_active=True), required=False)
-    clinician = forms.ModelChoiceField(queryset=EmployeeProfile.objects.filter(is_active=True), required=False)
-    encounter_type = forms.ChoiceField(required=False, choices=[("", "Все")] + Encounter.ENCOUNTER_TYPES)
-    patient = forms.ModelChoiceField(queryset=Patient.objects.active(), required=False)
+    date_from = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Дата с", "Басталу күні"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    date_to = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Дата по", "Аяқталу күні"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    facility = forms.ModelChoiceField(
+        queryset=Facility.objects.filter(is_active=True),
+        required=False,
+        label=lang_text_lazy("Учреждение", "Ұйым"),
+    )
+    clinician = forms.ModelChoiceField(
+        queryset=EmployeeProfile.objects.filter(is_active=True),
+        required=False,
+        label=lang_text_lazy("Сотрудник", "Қызметкер"),
+    )
+    encounter_type = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + Encounter.ENCOUNTER_TYPES,
+        label=lang_text_lazy("Тип обращения", "Қабылдау түрі"),
+    )
+    patient = forms.ModelChoiceField(
+        queryset=Patient.objects.active(),
+        required=False,
+        label=lang_text_lazy("Пациент", "Пациент"),
+    )

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% if LANGUAGE_CODE == 'kk' %}Пациент кабинеті{% else %}{% trans "Patient cabinet" %}{% endif %} | {{ APP_NAME }}{% endblock %}
+{% block title %}{% trans "Patient cabinet" %} | {{ APP_NAME }}{% endblock %}
 {% block content %}
 <div class="page-header">
   <div>
-    <h1 class="page-title">{% if LANGUAGE_CODE == 'kk' %}Пациент кабинеті{% else %}{% trans "Patient cabinet" %}{% endif %}</h1>
+    <h1 class="page-title">{% trans "Patient cabinet" %}</h1>
     <p class="page-subtitle">{{ patient }}</p>
   </div>
   <div class="page-actions">
-    <a class="btn btn-success" href="{% url 'patient-appointment-create' %}">{% if LANGUAGE_CODE == 'kk' %}Онлайн жазылу{% else %}{% trans "Online booking" %}{% endif %}</a>
+    <a class="btn btn-success" href="{% url 'patient-appointment-create' %}">{% trans "Online booking" %}</a>
   </div>
 </div>
 <div class="row g-3">
-  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% if LANGUAGE_CODE == 'kk' %}Менің консультацияларым{% else %}{% trans "My consultations" %}{% endif %}</div><div class="stat-value">{{ patient.online_consultations.count }}</div></div></div>
-  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% if LANGUAGE_CODE == 'kk' %}Менің құжаттарым{% else %}{% trans "My documents" %}{% endif %}</div><div class="stat-value">{{ patient.medical_documents.count }}</div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% trans "My consultations" %}</div><div class="stat-value">{{ patient.online_consultations.count }}</div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% trans "My documents" %}</div><div class="stat-value">{{ patient.medical_documents.count }}</div></div></div>
   <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% trans "My referrals" %}</div><div class="stat-value">{{ patient.referrals.count }}</div></div></div>
-  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% if LANGUAGE_CODE == 'kk' %}Денсаулық көрсеткіштері{% else %}{% trans "Health indicators" %}{% endif %}</div><div class="stat-value">{{ patient.vital_readings.count }}</div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card stat-card"><div class="stat-label">{% trans "Health indicators" %}</div><div class="stat-value">{{ patient.vital_readings.count }}</div></div></div>
 </div>
 <div class="row g-3 mt-1">
   <div class="col-lg-6"><div class="card"><div class="card-body"><h2 class="section-title">{% trans "Recent consultations" %}</h2><ul class="list-group list-group-flush">{% for item in patient.online_consultations.all|slice:":5" %}<li class="list-group-item d-flex justify-content-between"><span>{{ item.scheduled_start }}</span><a href="{% url 'consultation-detail' item.pk %}">{% trans "Open" %}</a></li>{% empty %}<li class="list-group-item text-muted">{% trans "No consultations yet." %}</li>{% endfor %}</ul></div></div></div>

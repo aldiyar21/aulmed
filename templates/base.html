@@ -27,11 +27,10 @@
             <form action="{% url 'set_language' %}" method="post" class="d-flex gap-2">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{ request.get_full_path }}">
-              <select class="form-select" name="language">
+              <select class="form-select" name="language" onchange="this.form.submit()">
                 <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>RU</option>
                 <option value="kk" {% if LANGUAGE_CODE == 'kk' %}selected{% endif %}>KK</option>
               </select>
-              <button class="btn btn-outline-secondary" type="submit">{% trans "Language" %}</button>
             </form>
             {% if request.user.is_authenticated %}
               <div class="app-userbar">
@@ -42,7 +41,10 @@
                     <small class="text-muted">{% trans "Active session" %}</small>
                   </div>
                 </div>
-                <a class="btn btn-outline-light" href="{% url 'logout' %}">{% trans "Logout" %}</a>
+                <form action="{% url 'logout' %}" method="post" class="m-0">
+                  {% csrf_token %}
+                  <button class="btn btn-outline-light" type="submit">{% trans "Logout" %}</button>
+                </form>
               </div>
             {% endif %}
           </div>
@@ -62,22 +64,22 @@
               <nav class="sidebar-nav">
                 {% if is_patient_user %}
                   <a class="sidebar-link {% if '/patients/my/dashboard/' in request.path or request.path == '/dashboard/' %}active{% endif %}" href="{% url 'patient-dashboard' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Пациент кабинеті{% else %}{% trans "Patient cabinet" %}{% endif %}</span><span>01</span>
+                    <span>{% trans "Patient cabinet" %}</span><span>01</span>
                   </a>
                   <a class="sidebar-link {% if '/patients/my/chart/' in request.path %}active{% endif %}" href="{% url 'patient-chart' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Менің картам{% else %}{% trans "My card" %}{% endif %}</span><span>02</span>
+                    <span>{% trans "My card" %}</span><span>02</span>
                   </a>
                   <a class="sidebar-link {% if '/appointments/my/' in request.path %}active{% endif %}" href="{% url 'patient-appointment-list' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Онлайн жазылу{% else %}{% trans "Online booking" %}{% endif %}</span><span>03</span>
+                    <span>{% trans "Online booking" %}</span><span>03</span>
                   </a>
                   <a class="sidebar-link {% if '/telemedicine/consultations/' in request.path %}active{% endif %}" href="{% url 'consultation-list' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Менің консультацияларым{% else %}{% trans "My consultations" %}{% endif %}</span><span>04</span>
+                    <span>{% trans "My consultations" %}</span><span>04</span>
                   </a>
                   <a class="sidebar-link {% if '/documents/my/' in request.path %}active{% endif %}" href="{% url 'patient-document-list' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Менің құжаттарым{% else %}{% trans "My documents" %}{% endif %}</span><span>05</span>
+                    <span>{% trans "My documents" %}</span><span>05</span>
                   </a>
                   <a class="sidebar-link {% if '/monitoring/my/' in request.path %}active{% endif %}" href="{% url 'patient-vital-reading-list' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Денсаулық көрсеткіштері{% else %}{% trans "Health indicators" %}{% endif %}</span><span>06</span>
+                    <span>{% trans "Health indicators" %}</span><span>06</span>
                   </a>
                 {% else %}
                   <a class="sidebar-link {% if request.path == '/' or '/dashboard/' in request.path %}active{% endif %}" href="{% url 'dashboard' %}">
@@ -90,7 +92,7 @@
                     <span>{% trans "Appointments" %}</span><span>03</span>
                   </a>
                   <a class="sidebar-link {% if '/telemedicine/' in request.path %}active{% endif %}" href="{% url 'consultation-list' %}">
-                    <span>{% if LANGUAGE_CODE == 'kk' %}Бейне консультация{% else %}{% trans "Video consultation" %}{% endif %}</span><span>04</span>
+                    <span>{% trans "Video consultation" %}</span><span>04</span>
                   </a>
                   <a class="sidebar-link {% if '/documents/' in request.path %}active{% endif %}" href="{% url 'staff-document-list' %}">
                     <span>{% trans "Documents" %}</span><span>05</span>

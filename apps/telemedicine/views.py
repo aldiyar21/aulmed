@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -53,8 +54,22 @@ def consultation_detail(request, pk: int):
         description=f"Viewed consultation detail {consultation.pk}",
         changes={"status": consultation.status},
     )
-    template = "telemedicine/patient_consultation_detail.html" if hasattr(request.user, "patient_profile") else "telemedicine/doctor_consultation_detail.html"
-    return render(request, template, {"consultation": consultation})
+    template = (
+        "telemedicine/patient_consultation_detail.html"
+        if hasattr(request.user, "patient_profile")
+        else "telemedicine/doctor_consultation_detail.html"
+    )
+    can_manage_consultation = bool(
+        request.user.is_superuser or consultation.doctor_id == request.user.pk
+    )
+    return render(
+        request,
+        template,
+        {
+            "consultation": consultation,
+            "can_manage_consultation": can_manage_consultation,
+        },
+    )
 
 
 @patient_required
@@ -95,7 +110,9 @@ def consultation_room(request, pk: int):
 
 @roles_required("Администратор системы", "Медработник", "Руководитель")
 def consultation_start(request, pk: int):
-    consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk, doctor=request.user)
+    consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk)
+    if not (request.user.is_superuser or consultation.doctor_id == request.user.pk):
+        raise PermissionDenied
     start_consultation(user=request.user, consultation=consultation)
     messages.success(request, "Консультация начата.")
     return redirect("consultation-room", pk=consultation.pk)
@@ -103,7 +120,9 @@ def consultation_start(request, pk: int):
 
 @roles_required("Администратор системы", "Медработник", "Руководитель")
 def consultation_complete(request, pk: int):
-    consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk, doctor=request.user)
+    consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk)
+    if not (request.user.is_superuser or consultation.doctor_id == request.user.pk):
+        raise PermissionDenied
     form = ConsultationCompletionForm(request.POST or None, instance=consultation)
     if request.method == "POST" and form.is_valid():
         complete_consultation(user=request.user, consultation=consultation, cleaned_data=form.cleaned_data)

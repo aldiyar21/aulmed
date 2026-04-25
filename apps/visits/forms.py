@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.i18n import lang_text_lazy
 from apps.facilities.models import Facility
 from apps.patients.models import Patient
 from apps.visits.models import HomeVisit
@@ -9,7 +10,7 @@ from apps.visits.models import HomeVisit
 class HomeVisitForm(forms.ModelForm):
     patients = forms.ModelMultipleChoiceField(
         queryset=Patient.objects.active(),
-        label="Пациенты",
+        label=lang_text_lazy("Пациенты", "Пациенттер"),
         widget=forms.SelectMultiple(attrs={"size": 8}),
     )
 
@@ -38,12 +39,34 @@ class HomeVisitForm(forms.ModelForm):
         if patients_qs is not None:
             self.fields["patients"].queryset = patients_qs
         if self.instance.pk:
-            self.fields["patients"].initial = self.instance.visit_patients.values_list("patient_id", flat=True)
+            self.fields["patients"].initial = self.instance.visit_patients.values_list(
+                "patient_id",
+                flat=True,
+            )
 
 
 class HomeVisitFilterForm(forms.Form):
-    planned_date = forms.DateField(required=False, widget=forms.DateInput(attrs={"type": "date"}))
-    status = forms.ChoiceField(required=False, choices=[("", "Все")] + HomeVisit.STATUS_CHOICES)
-    assigned_employee = forms.ModelChoiceField(queryset=EmployeeProfile.objects.filter(is_active=True), required=False)
-    settlement_name = forms.CharField(required=False)
-    facility = forms.ModelChoiceField(queryset=Facility.objects.filter(is_active=True), required=False)
+    planned_date = forms.DateField(
+        required=False,
+        label=lang_text_lazy("Дата выезда", "Шығу күні"),
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    status = forms.ChoiceField(
+        required=False,
+        choices=[("", "Все")] + HomeVisit.STATUS_CHOICES,
+        label=lang_text_lazy("Статус", "Күйі"),
+    )
+    assigned_employee = forms.ModelChoiceField(
+        queryset=EmployeeProfile.objects.filter(is_active=True),
+        required=False,
+        label=lang_text_lazy("Сотрудник", "Қызметкер"),
+    )
+    settlement_name = forms.CharField(
+        required=False,
+        label=lang_text_lazy("Населённый пункт", "Елді мекен"),
+    )
+    facility = forms.ModelChoiceField(
+        queryset=Facility.objects.filter(is_active=True),
+        required=False,
+        label=lang_text_lazy("Учреждение", "Ұйым"),
+    )

@@ -4,6 +4,7 @@ from django import forms
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.i18n import lang_text_lazy
 from apps.monitoring.models import VitalReading
 
 
@@ -21,6 +22,17 @@ class VitalReadingForm(forms.ModelForm):
             "weight",
             "comment",
         ]
+        labels = {
+            "recorded_at": lang_text_lazy("Дата и время", "Күні мен уақыты"),
+            "systolic_bp": lang_text_lazy("Систолическое давление", "Систолалық қысым"),
+            "diastolic_bp": lang_text_lazy("Диастолическое давление", "Диастолалық қысым"),
+            "pulse": lang_text_lazy("Пульс", "Пульс"),
+            "temperature": lang_text_lazy("Температура", "Температура"),
+            "spo2": lang_text_lazy("SpO2", "SpO2"),
+            "glucose": lang_text_lazy("Глюкоза", "Глюкоза"),
+            "weight": lang_text_lazy("Вес", "Салмақ"),
+            "comment": lang_text_lazy("Комментарий", "Түсініктеме"),
+        }
         widgets = {
             "recorded_at": forms.DateTimeInput(attrs={"type": "datetime-local"}),
             "comment": forms.Textarea(attrs={"rows": 3}),

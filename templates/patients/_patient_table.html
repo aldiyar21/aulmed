@@ -1,7 +1,17 @@
+{% load i18n %}
 <div class="card table-shell">
   <div class="table-responsive">
     <table class="table table-hover mb-0">
-      <thead><tr><th>ФИО</th><th>ИИН</th><th>Телефон</th><th>Населенный пункт</th><th>Учреждение</th><th>Риск</th></tr></thead>
+      <thead>
+        <tr>
+          <th>{% trans "Full name" %}</th>
+          <th>{% trans "IIN" %}</th>
+          <th>{% trans "Phone" %}</th>
+          <th>{% trans "Settlement" %}</th>
+          <th>{% trans "Facility" %}</th>
+          <th>{% trans "Risk level" %}</th>
+        </tr>
+      </thead>
       <tbody>
         {% for patient in page_obj %}
           <tr>
@@ -13,10 +23,9 @@
             <td><span class="badge bg-warning text-dark">{{ patient.get_risk_level_display }}</span></td>
           </tr>
         {% empty %}
-          <tr><td colspan="6" class="text-center text-muted py-4">Пациенты не найдены.</td></tr>
+          <tr><td colspan="6" class="text-center text-muted py-4">{% trans "No patients found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
-{% include "includes/pagination.html" %}
