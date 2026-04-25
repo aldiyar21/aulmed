@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-25 00:00+0500\n"
 "PO-Revision-Date: 2026-04-25 00:00+0500\n"
-"Last-Translator: Codex\n"
+"Last-Translator: Manual\n"
 "Language: kk\n"
 "Language-Team: kk\n"
 "MIME-Version: 1.0\n"
@@ -12,26 +12,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Patient cabinet"
-msgstr "Пациент кабинеті"
+msgid "Digital system for rural PHC"
+msgstr "Ауылдық МСАК цифрлық жүйесі"
 
-msgid "My card"
-msgstr "Менің картам"
+msgid "Active session"
+msgstr "Белсенді сессия"
 
-msgid "My consultations"
-msgstr "Менің консультацияларым"
+msgid "Logout"
+msgstr "Шығу"
 
-msgid "My documents"
-msgstr "Менің құжаттарым"
+msgid "Navigation"
+msgstr "Навигация"
 
-msgid "Health indicators"
-msgstr "Денсаулық көрсеткіштері"
+msgid "Workspace"
+msgstr "Жұмыс аймағы"
 
-msgid "Online booking"
-msgstr "Онлайн жазылу"
+msgid "Dashboard"
+msgstr "Басқару панелі"
 
-msgid "Video consultation"
-msgstr "Бейне консультация"
+msgid "Patients"
+msgstr "Пациенттер"
 
-msgid "Consent to telemedicine consultation"
-msgstr "Телемедициналық консультацияға келісім"
+msgid "Appointments"
+msgstr "Жазылулар"
+
+msgid "Documents"
+msgstr "Құжаттар"
+
+msgid "Encounters"
+msgstr "Қабылдаулар"
+
+msgid "Visits"
+msgstr "Үйге бару"
+
+msgid "Prevention"
+msgstr "Профилактика"
+
+msgid "Referrals"
+msgstr "Жолдамалар"
+
+msgid "Telemedicine reports"
+msgstr "Телемедицина есептері"
+
+msgid "Administration"
+msgstr "Әкімшілендіру"
+
+msgid "Operational dashboard"
+msgstr "Жедел панель"
+
+msgid "Manage the rural medical network in one window"
+msgstr "Ауылдық медициналық желіні бір терезеде басқару"
+
+msgid "Analytics period:"
+msgstr "Талдау кезеңі:"
+
+msgid "Track workload, home visits and prevention without switching between sections."
+msgstr "Бөлімдер арасында ауыспай-ақ жүктемені, үйге баруларды және профилактиканы бақылаңыз."
+
+msgid "Active patients"
+msgstr "Белсенді пациенттер"
+
+msgid "Current active monitoring cohort"
+msgstr "Ағымдағы белсенді бақылау тобы"
+
+msgid "All visits and episodes for the period"
+msgstr "Кезең ішіндегі барлық қабылдаулар мен эпизодтар"
+
+msgid "Home visits"
+msgstr "Үйге бару"
+
+msgid "Planned and urgent visits"
+msgstr "Жоспарлы және шұғыл үйге барулар"
+
+msgid "Overdue prevention"
+msgstr "Мерзімі өткен профилактика"
+
+msgid "Requires coordinator attention"
+msgstr "Үйлестірушінің назарын талап етеді"
+
+msgid "Active referrals"
+msgstr "Белсенді жолдамалар"
+
+msgid "Patients in the care route"
+msgstr "Бақылау бағытындағы пациенттер"
+
+msgid "Encounters by type"
+msgstr "Қабылдаулар түрлері бойынша"
+
+msgid "There are no encounters for the selected period yet."
+msgstr "Таңдалған кезеңде қабылдаулар әлі жоқ."
+
+msgid "Patients by settlement"
+msgstr "Пациенттер елді мекендер бойынша"
+
+msgid "There is not enough patient data yet."
+msgstr "Пациенттер бойынша деректер әзірге жеткіліксіз."
+
+msgid "Staff workload"
+msgstr "Қызметкерлер жүктемесі"
+
+msgid "After visits appear, workload distribution will be shown here."
+msgstr "Қабылдаулар пайда болғаннан кейін мұнда жүктеменің бөлінуі көрсетіледі."
