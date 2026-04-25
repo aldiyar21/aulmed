@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -29,6 +30,12 @@ from apps.telemedicine.services import (
     get_consent_text,
     start_consultation,
     update_teleconsilium,
+)
+
+STAFF_TELEMEDICINE_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
 )
 
 
@@ -111,7 +118,7 @@ def consultation_room(request, pk: int):
     return render(request, template, {"consultation": consultation})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def consultation_start(request, pk: int):
     consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk)
     if not (request.user.is_superuser or consultation.doctor_id == request.user.pk):
@@ -121,7 +128,7 @@ def consultation_start(request, pk: int):
     return redirect("consultation-room", pk=consultation.pk)
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def consultation_complete(request, pk: int):
     consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk)
     if not (request.user.is_superuser or consultation.doctor_id == request.user.pk):
@@ -134,7 +141,7 @@ def consultation_complete(request, pk: int):
     return render(request, "telemedicine/consultation_complete_form.html", {"form": form, "consultation": consultation})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def consultation_cancel(request, pk: int):
     consultation = get_object_or_404(consultation_queryset_for_user(request.user), pk=pk)
     cancel_consultation(user=request.user, consultation=consultation)
@@ -149,19 +156,19 @@ def printable_consultation_summary(request, pk: int):
     return render(request, "telemedicine/printable_consultation_summary.html", {"consultation": consultation})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_list(request):
     page_obj = Paginator(teleconsilium_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
     return render(request, "telemedicine/teleconsilium_list.html", {"page_obj": page_obj})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_detail(request, pk: int):
     teleconsilium = get_object_or_404(teleconsilium_queryset_for_user(request.user), pk=pk)
     return render(request, "telemedicine/teleconsilium_detail.html", {"teleconsilium": teleconsilium})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_create_view(request):
     form = TeleconsiliumForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
@@ -175,7 +182,7 @@ def teleconsilium_create_view(request):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_update_view(request, pk: int):
     teleconsilium = get_object_or_404(teleconsilium_queryset_for_user(request.user), pk=pk)
     form = TeleconsiliumForm(request.POST or None, instance=teleconsilium)
@@ -190,7 +197,7 @@ def teleconsilium_update_view(request, pk: int):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_room(request, pk: int):
     teleconsilium = get_object_or_404(teleconsilium_queryset_for_user(request.user), pk=pk)
     log_action(
@@ -204,7 +211,7 @@ def teleconsilium_room(request, pk: int):
     return render(request, "telemedicine/teleconsilium_room.html", {"teleconsilium": teleconsilium})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_TELEMEDICINE_ROLES)
 def teleconsilium_complete_view(request, pk: int):
     teleconsilium = get_object_or_404(teleconsilium_queryset_for_user(request.user), pk=pk)
     form = TeleconsiliumCompleteForm(request.POST or None, instance=teleconsilium)

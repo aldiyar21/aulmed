@@ -1,6 +1,7 @@
 import csv
 
 from django import forms
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -10,6 +11,12 @@ from apps.accounts.services import user_is_manager_or_admin
 from apps.core.i18n import lang_text, lang_text_lazy
 from apps.facilities.models import Facility
 from apps.reports.services import build_telemedicine_metrics
+
+REPORT_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_MANAGER,
+    settings.ROLE_CLINICIAN,
+)
 
 
 class TelemedicineReportFilterForm(forms.Form):
@@ -67,12 +74,12 @@ def _telemedicine_csv_response(metrics: dict) -> HttpResponse:
     return response
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
+@roles_required(*REPORT_ROLES)
 def reports_view(request):
     return render(request, "reports/index.html")
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
+@roles_required(*REPORT_ROLES)
 def telemedicine_reports_view(request):
     if not user_is_manager_or_admin(request.user) and not hasattr(request.user, "employee_profile"):
         return render(request, "errors/403.html", status=403)

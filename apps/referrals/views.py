@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -12,7 +13,17 @@ from apps.referrals.forms import ReferralFilterForm, ReferralForm
 from apps.referrals.selectors import filter_referrals, referral_queryset_for_user
 from apps.referrals.services import create_referral, update_referral
 
-ALLOWED_ROLES = ("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”", "Р В РЎС“Р С”Р С•Р Р†Р С•Р Т‘Р С‘РЎвЂљР ВµР В»РЎРЉ")
+ALLOWED_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+CREATE_UPDATE_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+)
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -25,7 +36,7 @@ def referral_list(request):
     return render(request, "referrals/list.html", {"form": form, "page_obj": page_obj})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def referral_create(request):
     form = ReferralForm(request.POST or None)
     if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
@@ -40,7 +51,7 @@ def referral_create(request):
     return render(request, "referrals/form.html", {"form": form, "title": lang_text("Создание направления", "Жолдама құру")})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def referral_update(request, pk: int):
     referral = get_object_or_404(referral_queryset_for_user(request.user), pk=pk)
     form = ReferralForm(request.POST or None, instance=referral)

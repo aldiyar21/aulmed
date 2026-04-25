@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -28,6 +29,18 @@ from apps.documents.services import (
 )
 from apps.patients.models import Patient
 
+STAFF_DOCUMENT_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+STAFF_FILE_UPLOAD_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+
 
 @patient_required
 def patient_document_list(request):
@@ -42,13 +55,13 @@ def patient_document_detail(request, pk: int):
     return render(request, "documents/patient_document_detail.html", {"document": document})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_document_list(request):
     page_obj = Paginator(medical_document_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
     return render(request, "documents/staff_document_list.html", {"page_obj": page_obj})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_document_create(request):
     form = MedicalDocumentForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
@@ -62,7 +75,7 @@ def staff_document_create(request):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_document_detail(request, pk: int):
     document = get_object_or_404(medical_document_queryset_for_user(request.user), pk=pk)
     return render(request, "documents/staff_document_detail.html", {"document": document})
@@ -88,13 +101,13 @@ def patient_prescription_detail(request, pk: int):
     return render(request, "documents/patient_prescription_detail.html", {"prescription": prescription})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_prescription_list(request):
     page_obj = Paginator(prescription_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
     return render(request, "documents/staff_prescription_list.html", {"page_obj": page_obj})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_prescription_create(request):
     form = PrescriptionForm(request.POST or None)
     formset = PrescriptionItemFormSet(request.POST or None, prefix="items")
@@ -110,7 +123,7 @@ def staff_prescription_create(request):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_prescription_detail(request, pk: int):
     prescription = get_object_or_404(prescription_queryset_for_user(request.user), pk=pk)
     return render(request, "documents/staff_prescription_detail.html", {"prescription": prescription})
@@ -129,7 +142,7 @@ def patient_file_list(request):
     return render(request, "documents/patient_file_list.html", {"page_obj": page_obj})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р РµРіРёСЃС‚СЂР°С‚РѕСЂ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_FILE_UPLOAD_ROLES)
 def staff_file_upload(request):
     form = PatientFileForm(request.POST or None, request.FILES or None)
     if request.method == "POST" and form.is_valid():

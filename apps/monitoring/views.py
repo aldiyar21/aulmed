@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,6 +12,12 @@ from apps.monitoring.models import VitalReading
 from apps.monitoring.selectors import vital_reading_queryset_for_user
 from apps.monitoring.services import create_vital_reading
 from apps.patients.models import Patient
+
+STAFF_MONITORING_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
 
 
 @patient_required
@@ -43,14 +50,14 @@ def patient_vital_reading_create(request):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_MONITORING_ROLES)
 def staff_patient_vital_list(request, patient_pk: int):
     patient = get_object_or_404(Patient, pk=patient_pk)
     page_obj = Paginator(vital_reading_queryset_for_user(request.user).filter(patient=patient), 20).get_page(request.GET.get("page"))
     return render(request, "monitoring/staff_vital_list.html", {"page_obj": page_obj, "patient": patient})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+@roles_required(*STAFF_MONITORING_ROLES)
 def staff_patient_vital_create(request, patient_pk: int):
     patient = get_object_or_404(Patient, pk=patient_pk)
     form = VitalReadingForm(request.POST or None)

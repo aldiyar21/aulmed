@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -19,7 +20,15 @@ from apps.prevention.services import (
     update_prevention_event,
 )
 
-ALLOWED_ROLES = ("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”", "Р В РЎС“Р С”Р С•Р Р†Р С•Р Т‘Р С‘РЎвЂљР ВµР В»РЎРЉ")
+ALLOWED_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+CREATE_UPDATE_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_CLINICIAN,
+)
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -40,7 +49,7 @@ def prevention_overdue(request):
     return render(request, "prevention/overdue.html", {"page_obj": queryset})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def prevention_create(request):
     form = PreventionEventForm(request.POST or None)
     if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
@@ -54,7 +63,7 @@ def prevention_create(request):
     return render(request, "prevention/form.html", {"form": form, "title": lang_text("Создание мероприятия", "Іс-шара құру")})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def prevention_update(request, pk: int):
     event = get_object_or_404(prevention_queryset_for_user(request.user), pk=pk)
     form = PreventionEventForm(request.POST or None, instance=event)

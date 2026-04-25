@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -12,7 +13,17 @@ from apps.encounters.services import create_encounter, update_encounter
 from apps.facilities.models import Facility
 from apps.patients.models import Patient
 
-ALLOWED_ROLES = ("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”", "Р В РЎС“Р С”Р С•Р Р†Р С•Р Т‘Р С‘РЎвЂљР ВµР В»РЎРЉ")
+ALLOWED_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+CREATE_UPDATE_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+)
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -25,7 +36,7 @@ def encounter_list(request):
     return render(request, "encounters/list.html", {"form": form, "page_obj": page_obj})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def encounter_create(request):
     initial = {}
     if patient_id := request.GET.get("patient"):
@@ -44,7 +55,7 @@ def encounter_create(request):
     return render(request, "encounters/form.html", {"form": form, "title": lang_text("Создание обращения", "Қабылдау құру")})
 
 
-@roles_required("Р С’Р Т‘Р СР С‘Р Р…Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚ РЎРѓР С‘РЎРѓРЎвЂљР ВµР СРЎвЂ№", "Р В Р ВµР С–Р С‘РЎРѓРЎвЂљРЎР‚Р В°РЎвЂљР С•РЎР‚", "Р СљР ВµР Т‘РЎР‚Р В°Р В±Р С•РЎвЂљР Р…Р С‘Р С”")
+@roles_required(*CREATE_UPDATE_ROLES)
 def encounter_update(request, pk: int):
     encounter = get_object_or_404(encounter_queryset_for_user(request.user), pk=pk)
     form = EncounterForm(request.POST or None, instance=encounter)

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,7 +12,17 @@ from apps.visits.forms import HomeVisitFilterForm, HomeVisitForm
 from apps.visits.selectors import filter_visits, visit_queryset_for_user, visits_for_today
 from apps.visits.services import create_home_visit, update_home_visit
 
-ALLOWED_ROLES = ("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р РµРіРёСЃС‚СЂР°С‚РѕСЂ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє", "Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ")
+ALLOWED_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+    settings.ROLE_MANAGER,
+)
+CREATE_UPDATE_ROLES = (
+    settings.ROLE_ADMIN,
+    settings.ROLE_REGISTRAR,
+    settings.ROLE_CLINICIAN,
+)
 
 
 @roles_required(*ALLOWED_ROLES)
@@ -34,7 +45,7 @@ def home_visit_today(request):
     )
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р РµРіРёСЃС‚СЂР°С‚РѕСЂ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
+@roles_required(*CREATE_UPDATE_ROLES)
 def home_visit_create(request):
     patients_qs = patient_queryset_for_user(request.user).filter(is_active=True)
     form = HomeVisitForm(request.POST or None, patients_qs=patients_qs)
@@ -51,7 +62,7 @@ def home_visit_create(request):
     return render(request, "visits/form.html", {"form": form, "title": lang_text("Создание выезда", "Үйге баруды құру")})
 
 
-@roles_required("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ СЃРёСЃС‚РµРјС‹", "Р РµРіРёСЃС‚СЂР°С‚РѕСЂ", "РњРµРґСЂР°Р±РѕС‚РЅРёРє")
+@roles_required(*CREATE_UPDATE_ROLES)
 def home_visit_update(request, pk: int):
     visit = get_object_or_404(visit_queryset_for_user(request.user), pk=pk)
     patients_qs = patient_queryset_for_user(request.user).filter(is_active=True)

@@ -7,7 +7,9 @@ from apps.documents.models import MedicalDocument, PatientFile, Prescription
 
 
 def medical_document_queryset_for_user(user) -> QuerySet[MedicalDocument]:
-    qs = MedicalDocument.objects.select_related("patient", "created_by", "consultation", "encounter", "referral")
+    qs = MedicalDocument.objects.select_related("patient", "created_by", "consultation", "encounter", "referral").order_by(
+        "-issued_at", "-created_at", "-pk"
+    )
     if user.is_superuser or user_is_manager_or_admin(user):
         return qs
     if user_is_patient(user):
@@ -19,7 +21,9 @@ def medical_document_queryset_for_user(user) -> QuerySet[MedicalDocument]:
 
 
 def prescription_queryset_for_user(user) -> QuerySet[Prescription]:
-    qs = Prescription.objects.select_related("patient", "doctor", "consultation").prefetch_related("items")
+    qs = Prescription.objects.select_related("patient", "doctor", "consultation").prefetch_related("items").order_by(
+        "-issued_at", "-created_at", "-pk"
+    )
     if user.is_superuser or user_is_manager_or_admin(user):
         return qs
     if user_is_patient(user):
@@ -31,7 +35,9 @@ def prescription_queryset_for_user(user) -> QuerySet[Prescription]:
 
 
 def patient_file_queryset_for_user(user) -> QuerySet[PatientFile]:
-    qs = PatientFile.objects.select_related("patient", "uploaded_by", "related_consultation")
+    qs = PatientFile.objects.select_related("patient", "uploaded_by", "related_consultation").order_by(
+        "-result_date", "-created_at", "-pk"
+    )
     if user.is_superuser or user_is_manager_or_admin(user):
         return qs
     if user_is_patient(user):
