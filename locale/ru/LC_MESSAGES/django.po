@@ -185,3 +185,99 @@ msgstr "Заполните карточку пациента в понятной
 
 msgid "Save"
 msgstr "Сохранить"
+
+msgid "New request"
+msgstr "Новая заявка"
+
+msgid "Create request"
+msgstr "Создать заявку"
+
+msgid "Appointment details"
+msgstr "Детали записи"
+
+msgid "Update appointment"
+msgstr "Обновить запись"
+
+msgid "My appointments"
+msgstr "Мои записи"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Update"
+msgstr "Обновить"
+
+msgid "Patient"
+msgstr "Пациент"
+
+msgid "Doctor"
+msgstr "Врач"
+
+msgid "Requested"
+msgstr "Запрошено"
+
+msgid "Scheduled"
+msgstr "Назначено"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "No appointments."
+msgstr "Записей нет."
+
+msgid "All"
+msgstr "Все"
+
+msgid "Offline"
+msgstr "Очно"
+
+msgid "Online"
+msgstr "Онлайн"
+
+msgid "Approved"
+msgstr "Одобрено"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "No show"
+msgstr "Неявка"
+
+msgid "Choose a current or future time."
+msgstr "Выберите текущее или будущее время."
+
+msgid "Scheduled time is required."
+msgstr "Необходимо указать назначенное время."
+
+msgid "Doctor is required."
+msgstr "Необходимо указать врача."
+
+msgid "Please provide a cancellation reason."
+msgstr "Укажите причину отмены."
+
+msgid "Appointment type"
+msgstr "Тип записи"
+
+msgid "Requested datetime"
+msgstr "Запрошенное время"
+
+msgid "Scheduled datetime"
+msgstr "Назначенное время"
+
+msgid "Duration (minutes)"
+msgstr "Длительность, минуты"
+
+msgid "Reason / complaint"
+msgstr "Причина обращения / жалоба"
+
+msgid "Cancellation reason"
+msgstr "Причина отмены"
+
+msgid "Created by"
+msgstr "Создал"

@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from apps.core.i18n import lang_text
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,7 +26,7 @@ def patient_appointment_create(request):
     form.fields["facility"].queryset = Facility.objects.filter(pk=patient.facility_id)
     if request.method == "POST" and form.is_valid():
         appointment = create_appointment(user=request.user, patient=patient, cleaned_data=form.cleaned_data)
-        messages.success(request, "Заявка создана.")
+        messages.success(request, lang_text("Заявка создана.", "Өтінім жасалды."))
         return redirect("patient-appointment-detail", pk=appointment.pk)
     return render(request, "appointments/patient_appointment_form.html", {"form": form})
 
@@ -69,7 +69,7 @@ def staff_appointment_update(request, pk: int):
     form = AppointmentStaffUpdateForm(request.POST or None, instance=appointment)
     if request.method == "POST" and form.is_valid():
         appointment = update_appointment(user=request.user, appointment=appointment, cleaned_data=form.cleaned_data)
-        messages.success(request, "Запись обновлена.")
+        messages.success(request, lang_text("Запись обновлена.", "Жазба жаңартылды."))
         return redirect("staff-appointment-detail", pk=appointment.pk)
     return render(
         request,
