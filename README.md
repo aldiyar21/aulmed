@@ -191,13 +191,3 @@ This allows uploaded patient files to persist locally in Docker.
 
 Tests use `config.settings.test` with SQLite for fast isolated runs.
 
-## Known limitations
-
-- eGov, eHealth, MIS and insurance integrations are not implemented
-- AI triage assistant is intentionally not implemented
-- Jitsi uses public `meet.jit.si` for local MVP/demo
-- app-level RBAC protects access to generated room links
-- for production medical use, a self-hosted or authenticated Jitsi deployment should be considered
-- PDF generation is not required in this MVP
-- mobile app is not implemented, but the web UI is responsive
-- the system does not provide automated diagnosis or medical recommendations
