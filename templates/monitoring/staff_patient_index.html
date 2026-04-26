@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Monitoring patients" %} | {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Monitoring patients" %}</h1>
+    <p class="page-subtitle">{% trans "Open the patient's measurements history or add new indicators from the doctor side." %}</p>
+  </div>
+</div>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Settlement" %}</th>
+          <th>{% trans "Facility" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item }}</td>
+            <td>{{ item.settlement_name }}</td>
+            <td>{{ item.facility.name }}</td>
+            <td><a href="{% url 'staff-patient-vital-list' item.pk %}">{% trans "Open" %}</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-center text-muted py-4">{% trans "No patients found." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ document.title }}</h1>
+    <p class="page-subtitle">{% trans "Review the issued medical document and print it if needed." %}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-secondary" href="{% url 'printable-document' document.pk %}">{% trans "Printable" %}</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="detail-grid mb-3">
+      <div class="detail-item"><span>{% trans "Number" %}</span>{{ document.number|default:"-" }}</div>
+      <div class="detail-item"><span>{% trans "Type" %}</span>{{ document.get_document_type_display }}</div>
+      <div class="detail-item"><span>{% trans "Status" %}</span>{{ document.get_status_display }}</div>
+      <div class="detail-item"><span>{% trans "Valid until" %}</span>{{ document.valid_until|default:"-" }}</div>
+    </div>
+    <p><strong>{% trans "Content" %}:</strong></p>
+    <p class="mb-0">{{ document.content|linebreaks }}</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block title %}{{ title }} | {{ APP_NAME }}{% endblock %}
 {% block content %}
 <div class="page-header">
   <div>
     <h1 class="page-title">{{ title }}</h1>
-    <p class="page-subtitle">Планируйте профилактические мероприятия так, чтобы приоритеты и сроки были видны сразу.</p>
+    <p class="page-subtitle">{% trans "Plan preventive activities so priorities and deadlines are visible at a glance." %}</p>
   </div>
 </div>
 <div class="card">
@@ -21,7 +23,7 @@
           </div>
         {% endfor %}
       </div>
-      <button class="btn btn-success mt-4" type="submit">Сохранить</button>
+      <button class="btn btn-success mt-4" type="submit">{% trans "Save" %}</button>
     </form>
   </div>
 </div>

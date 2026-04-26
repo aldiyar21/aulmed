@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Teleconsiliums" %}</h1>
+    <p class="page-subtitle">{% trans "Coordinate joint remote review of complex clinical cases." %}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-success" href="{% url 'teleconsilium-create' %}">{% trans "Create" %}</a>
+  </div>
+</div>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Topic" %}</th>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Scheduled" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item.topic }}</td>
+            <td>{{ item.patient }}</td>
+            <td>{{ item.scheduled_at }}</td>
+            <td>{{ item.get_status_display }}</td>
+            <td><a href="{% url 'teleconsilium-detail' item.pk %}">{% trans "Open" %}</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-muted py-4">{% trans "No teleconsiliums yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

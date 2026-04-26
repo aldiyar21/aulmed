@@ -1,16 +1,33 @@
 {% extends "base.html" %}
-{% block title %}Отчеты | {{ APP_NAME }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Reports" %} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div>
-    <h1 class="page-title">Отчеты</h1>
-    <p class="page-subtitle">Экспортируйте рабочие реестры и быстро делитесь данными с командой или руководством.</p>
+    <h1 class="page-title">{% trans "Reports" %}</h1>
+    <p class="page-subtitle">{% trans "Operational dashboards and exports for the internal AulMed team." %}</p>
   </div>
 </div>
-<div class="card">
-  <div class="card-body">
-    <h2 class="section-title">Доступные выгрузки</h2>
-    <p class="section-muted mb-0">CSV-экспорт доступен прямо из списков пациентов, обращений, профилактики и направлений. Такой сценарий быстрее для операционной работы и не перегружает отдельный раздел отчётности.</p>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Core reporting" %}</h2>
+        <p class="section-muted">{% trans "Use patient, encounter, prevention and referral lists for CSV exports and daily registries." %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Telemedicine KPI" %}</h2>
+        <p class="section-muted">{% trans "Appointments, online consultations, issued documents, prescriptions, teleconsiliums and remote monitoring." %}</p>
+        <a class="btn btn-primary" href="{% url 'telemedicine-reports' %}">{% trans "Open telemedicine report" %}</a>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

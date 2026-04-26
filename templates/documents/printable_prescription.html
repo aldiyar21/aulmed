@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h1 class="page-title">{{ prescription.number }}</h1>
+    <p><strong>{% trans "Patient" %}:</strong> {{ prescription.patient }}</p>
+    <ul class="list-group list-group-flush">
+      {% for item in prescription.items.all %}
+        <li class="list-group-item">
+          {{ item.medication_name }} - {{ item.dosage }}, {{ item.frequency }}, {{ item.duration }}
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">{% trans "No items yet." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

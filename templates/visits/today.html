@@ -1,4 +1,24 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block content %}
-<div class="card"><div class="card-body"><h1 class="h4">Выезды на сегодня</h1>{% if visits %}<ul class="list-group list-group-flush">{% for item in visits %}<li class="list-group-item d-flex justify-content-between"><span>{{ item.settlement_name }} - {{ item.assigned_employee }}</span><span class="badge bg-secondary">{{ item.visit_patients.count }} пациентов</span></li>{% endfor %}</ul>{% else %}<p class="text-muted mb-0">На сегодня выезды не запланированы.</p>{% endif %}</div></div>
+<div class="card">
+  <div class="card-body">
+    <h1 class="h4">{% trans "Visits for today" %}</h1>
+    {% if visits %}
+      <ul class="list-group list-group-flush">
+        {% for item in visits %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ item.settlement_name }} - {{ item.assigned_employee }}</span>
+            <span class="badge bg-secondary">
+              {% blocktrans count count=item.visit_patients.count %}{{ count }} patient{% plural %}{{ count }} patients{% endblocktrans %}
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted mb-0">{% trans "No visits are planned for today." %}</p>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

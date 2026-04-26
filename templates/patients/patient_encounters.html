@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header"><div><h1 class="page-title">{% trans "My encounters" %}</h1></div></div>
+<div class="card table-shell"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Result" %}</th></tr></thead><tbody>{% for item in page_obj %}<tr><td>{{ item.encounter_date }}</td><td>{{ item.get_encounter_type_display }}</td><td>{{ item.get_result_type_display }}</td></tr>{% empty %}<tr><td colspan="3" class="text-center text-muted py-4">{% trans "No encounters." %}</td></tr>{% endfor %}</tbody></table></div></div>{% include "includes/pagination.html" %}
+{% endblock %}

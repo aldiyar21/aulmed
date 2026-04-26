@@ -1,15 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Профилактика | {{ APP_NAME }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Prevention" %} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div>
-    <h1 class="page-title">Профилактика и диспансеризация</h1>
-    <p class="page-subtitle">Быстрый обзор плановых мероприятий, просрочек и ответственных сотрудников.</p>
+    <h1 class="page-title">{% trans "Prevention and follow-up" %}</h1>
+    <p class="page-subtitle">{% trans "Quick overview of planned activities, overdue items and responsible employees." %}</p>
   </div>
   <div class="page-actions">
-    <a class="btn btn-outline-warning" href="{% url 'prevention-overdue' %}">Просроченные</a>
-    <a class="btn btn-outline-secondary" href="{% url 'prevention-export' %}?{{ request.GET.urlencode }}">Экспорт CSV</a>
-    <a class="btn btn-success" href="{% url 'prevention-create' %}">Новое мероприятие</a>
+    <a class="btn btn-outline-warning" href="{% url 'prevention-overdue' %}">{% trans "Overdue" %}</a>
+    <a class="btn btn-outline-secondary" href="{% url 'prevention-export' %}?{{ request.GET.urlencode }}">{% trans "Export CSV" %}</a>
+    <a class="btn btn-success" href="{% url 'prevention-create' %}">{% trans "New prevention event" %}</a>
   </div>
 </div>
 <form class="card filter-card smart-form mb-3" method="get">
@@ -21,12 +24,21 @@
       </div>
     {% endfor %}
   </div>
-  <div class="mt-3"><button class="btn btn-primary" type="submit">Применить фильтры</button></div>
+  <div class="mt-3"><button class="btn btn-primary" type="submit">{% trans "Apply filters" %}</button></div>
 </form>
 <div class="card table-shell">
   <div class="table-responsive">
     <table class="table table-hover mb-0">
-      <thead><tr><th>Пациент</th><th>Тип</th><th>Дата</th><th>Статус</th><th>Ответственный</th></tr></thead>
+      <thead>
+        <tr>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Responsible employee" %}</th>
+          <th></th>
+        </tr>
+      </thead>
       <tbody>
         {% for item in page_obj %}
           <tr>
@@ -35,9 +47,10 @@
             <td>{{ item.planned_date }}</td>
             <td><span class="badge bg-{% if item.status == 'overdue' %}danger{% elif item.status == 'completed' %}success{% else %}secondary{% endif %}">{{ item.get_status_display }}</span></td>
             <td>{{ item.assigned_employee|default:"-" }}</td>
+            <td><a href="{% url 'prevention-update' item.pk %}">{% trans "Edit" %}</a></td>
           </tr>
         {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-4">Нет мероприятий.</td></tr>
+          <tr><td colspan="6" class="text-center text-muted py-4">{% trans "No prevention events found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

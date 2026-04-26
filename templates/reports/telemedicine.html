@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Telemedicine reports" %} | {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Telemedicine reports" %}</h1>
+    <p class="page-subtitle">{% trans "Track online appointments, video consultations, teleconsiliums, issued documents and remote monitoring activity." %}</p>
+  </div>
+  <a class="btn btn-outline-primary" href="?{% if request.GET.date_from %}date_from={{ request.GET.date_from }}&{% endif %}{% if request.GET.date_to %}date_to={{ request.GET.date_to }}&{% endif %}{% if request.GET.facility %}facility={{ request.GET.facility }}&{% endif %}{% if request.GET.doctor %}doctor={{ request.GET.doctor }}&{% endif %}format=csv">
+    {% trans "Export CSV" %}
+  </a>
+</div>
+
+<form class="card filter-card smart-form mb-3" method="get">
+  <div class="card-body">
+    <div class="row g-3">
+      {% for field in form %}
+        <div class="col-md-3">
+          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex gap-2 mt-3 flex-wrap">
+      <button class="btn btn-primary" type="submit">{% trans "Apply filters" %}</button>
+      <a class="btn btn-outline-secondary" href="{% url 'telemedicine-reports' %}">{% trans "Reset" %}</a>
+    </div>
+  </div>
+</form>
+
+<div class="row g-3 mb-3">
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Total online consultations" %}</div>
+      <div class="stat-value">{{ metrics.total_online_consultations }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Scheduled consultations" %}</div>
+      <div class="stat-value">{{ metrics.scheduled_consultations }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Completed consultations" %}</div>
+      <div class="stat-value">{{ metrics.completed_consultations }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Cancelled consultations" %}</div>
+      <div class="stat-value">{{ metrics.cancelled_consultations }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Issued medical documents" %}</div>
+      <div class="stat-value">{{ metrics.issued_medical_documents }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Issued prescriptions" %}</div>
+      <div class="stat-value">{{ metrics.issued_prescriptions }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Monitoring patients" %}</div>
+      <div class="stat-value">{{ metrics.active_remote_monitoring_patients }}</div>
+    </div>
+  </div>
+  <div class="col-md-4 col-xl-3">
+    <div class="card stat-card">
+      <div class="stat-label">{% trans "Teleconsiliums" %}</div>
+      <div class="stat-value">{{ metrics.teleconsiliums_count }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Appointments by status" %}</h2>
+        <ul class="list-group list-group-flush">
+          {% for item in metrics.appointments_by_status %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.status }}</span>
+              <strong>{{ item.total }}</strong>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">{% trans "No data." %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Appointments by type" %}</h2>
+        <ul class="list-group list-group-flush">
+          {% for item in metrics.appointments_by_type %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.appointment_type }}</span>
+              <strong>{{ item.total }}</strong>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">{% trans "No data." %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Consultations by facility" %}</h2>
+        <ul class="list-group list-group-flush">
+          {% for item in metrics.consultations_by_facility %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.facility__name }}</span>
+              <strong>{{ item.total }}</strong>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">{% trans "No data." %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Consultations by settlement" %}</h2>
+        <ul class="list-group list-group-flush">
+          {% for item in metrics.consultations_by_settlement %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.patient__settlement_name }}</span>
+              <strong>{{ item.total }}</strong>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">{% trans "No data." %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Doctor workload" %}</h2>
+        <ul class="list-group list-group-flush">
+          {% for item in metrics.doctor_workload %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ item.doctor__username }}</span>
+              <strong>{{ item.total }}</strong>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">{% trans "No data." %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="section-title">{% trans "Average wait time" %}</h2>
+        <p class="display-6 mb-0">
+          {% if metrics.average_wait_time %}
+            {{ metrics.average_wait_time }}
+          {% else %}
+            -
+          {% endif %}
+        </p>
+        <p class="section-muted mt-2 mb-0">{% trans "Calculated from request creation to scheduled consultation time." %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Medical documents" %} | {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Medical documents" %}</h1>
+    <p class="page-subtitle">{% trans "Issued certificates, extracts and recommendations for telemedicine and in-person care." %}</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'staff-document-create' %}">{% trans "Create document" %}</a>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Number" %}</th>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Issued at" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for document in page_obj %}
+          <tr>
+            <td>{{ document.number }}</td>
+            <td>{{ document.patient }}</td>
+            <td>{{ document.get_document_type_display }}</td>
+            <td><span class="badge text-bg-light">{{ document.get_status_display }}</span></td>
+            <td>{{ document.issued_at|date:"d.m.Y H:i"|default:"-" }}</td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'staff-document-detail' document.pk %}">{% trans "Open" %}</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">{% trans "No medical documents yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "My consultations" %}</h1>
+    <p class="page-subtitle">{% trans "Track scheduled video consultations and open the consultation card when needed." %}</p>
+  </div>
+</div>
+<form class="card filter-card smart-form mb-3" method="get">
+  {{ form.as_p }}
+  <button class="btn btn-primary mt-3" type="submit">{% trans "Apply filters" %}</button>
+</form>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Scheduled" %}</th>
+          <th>{% trans "Doctor" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item.scheduled_start }}</td>
+            <td>{{ item.doctor }}</td>
+            <td>{{ item.get_status_display }}</td>
+            <td><a href="{% url 'consultation-detail' item.pk %}">{% trans "Open" %}</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="text-center text-muted py-4">{% trans "No consultations yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

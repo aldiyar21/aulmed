@@ -1,14 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Обращения | {{ APP_NAME }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Encounters" %} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <div class="page-header">
   <div>
-    <h1 class="page-title">Обращения</h1>
-    <p class="page-subtitle">Все медицинские эпизоды с быстрым доступом к пациенту и результату приема.</p>
+    <h1 class="page-title">{% trans "Encounters" %}</h1>
+    <p class="page-subtitle">{% trans "All medical episodes with quick access to the patient and visit outcome." %}</p>
   </div>
   <div class="page-actions">
-    <a class="btn btn-outline-secondary" href="{% url 'encounter-export' %}?{{ request.GET.urlencode }}">Экспорт CSV</a>
-    <a class="btn btn-success" href="{% url 'encounter-create' %}">Новое обращение</a>
+    <a class="btn btn-outline-secondary" href="{% url 'encounter-export' %}?{{ request.GET.urlencode }}">{% trans "Export CSV" %}</a>
+    <a class="btn btn-success" href="{% url 'encounter-create' %}">{% trans "New encounter" %}</a>
   </div>
 </div>
 <form class="card filter-card smart-form mb-3" method="get">
@@ -20,12 +23,20 @@
       </div>
     {% endfor %}
   </div>
-  <div class="mt-3"><button class="btn btn-primary" type="submit">Применить фильтры</button></div>
+  <div class="mt-3"><button class="btn btn-primary" type="submit">{% trans "Apply filters" %}</button></div>
 </form>
 <div class="card table-shell">
   <div class="table-responsive">
     <table class="table table-hover mb-0">
-      <thead><tr><th>Дата</th><th>Пациент</th><th>Сотрудник</th><th>Тип</th><th>Результат</th></tr></thead>
+      <thead>
+        <tr>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Patient" %}</th>
+          <th>{% trans "Employee" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Result" %}</th>
+        </tr>
+      </thead>
       <tbody>
         {% for item in page_obj %}
           <tr>
@@ -36,7 +47,7 @@
             <td>{{ item.get_result_type_display }}</td>
           </tr>
         {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-4">Нет обращений.</td></tr>
+          <tr><td colspan="5" class="text-center text-muted py-4">{% trans "No encounters found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

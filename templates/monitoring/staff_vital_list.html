@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Health indicators" %}</h1>
+    <p class="page-subtitle">{{ patient }}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-success" href="{% url 'staff-patient-vital-create' patient.pk %}">{% trans "Add reading" %}</a>
+  </div>
+</div>
+<div class="card table-shell">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>{% trans "Recorded" %}</th>
+          <th>{% trans "Blood pressure" %}</th>
+          <th>{% trans "Pulse" %}</th>
+          <th>SpO2</th>
+          <th>{% trans "Temperature" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <td>{{ item.recorded_at }}</td>
+            <td>{{ item.systolic_bp|default:"-" }}/{{ item.diastolic_bp|default:"-" }}</td>
+            <td>{{ item.pulse|default:"-" }}</td>
+            <td>{{ item.spo2|default:"-" }}</td>
+            <td>{{ item.temperature|default:"-" }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-muted py-4">{% trans "No readings yet." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

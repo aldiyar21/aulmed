@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Consultation" %}</h1>
+    <p class="page-subtitle">{{ consultation.patient }}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-primary" href="{% url 'consultation-room' consultation.pk %}">{% trans "Video consultation" %}</a>
+    <a class="btn btn-outline-secondary" href="{% url 'printable-consultation-summary' consultation.pk %}">{% trans "Printable summary" %}</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="detail-grid">
+      <div class="detail-item"><span>{% trans "Status" %}</span>{{ consultation.get_status_display }}</div>
+      <div class="detail-item"><span>{% trans "Doctor" %}</span>{{ consultation.doctor }}</div>
+      <div class="detail-item"><span>{% trans "Scheduled start" %}</span>{{ consultation.scheduled_start }}</div>
+      <div class="detail-item"><span>{% trans "Scheduled end" %}</span>{{ consultation.scheduled_end }}</div>
+    </div>
+    <p class="mt-3"><strong>{% trans "Complaint" %}:</strong> {{ consultation.complaint|default:"-" }}</p>
+    <p><strong>{% trans "Anamnesis" %}:</strong> {{ consultation.anamnesis|default:"-" }}</p>
+    <p><strong>{% trans "Diagnosis" %}:</strong> {{ consultation.diagnosis_text|default:"-" }}</p>
+    <p><strong>{% trans "Treatment plan" %}:</strong> {{ consultation.treatment_plan|default:"-" }}</p>
+    <p><strong>{% trans "Recommendations" %}:</strong> {{ consultation.doctor_recommendations|default:"-" }}</p>
+    <p class="mb-0">
+      <strong>{% trans "Follow-up" %}:</strong>
+      {% if consultation.follow_up_required %}
+        {% blocktrans with date=consultation.follow_up_date %}Required until {{ date }}{% endblocktrans %}
+      {% else %}
+        {% trans "Not required" %}
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endblock %}

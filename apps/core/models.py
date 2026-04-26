@@ -14,7 +14,7 @@ class TimeStampedModel(models.Model):
 
 
 class ActiveQuerySet(models.QuerySet):
-    def active(self) -> "ActiveQuerySet":
+    def active(self) -> ActiveQuerySet:
         return self.filter(is_active=True)
 
 

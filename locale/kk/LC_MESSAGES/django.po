@@ -1,0 +1,682 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AulMed\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 00:00+0500\n"
+"PO-Revision-Date: 2026-04-25 00:00+0500\n"
+"Last-Translator: Manual\n"
+"Language: kk\n"
+"Language-Team: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Digital system for rural PHC"
+msgstr "Ауылдық МСАК цифрлық жүйесі"
+
+msgid "Active session"
+msgstr "Белсенді сессия"
+
+msgid "Logout"
+msgstr "Шығу"
+
+msgid "Navigation"
+msgstr "Навигация"
+
+msgid "Workspace"
+msgstr "Жұмыс аймағы"
+
+msgid "Dashboard"
+msgstr "Басқару панелі"
+
+msgid "Patients"
+msgstr "Пациенттер"
+
+msgid "Appointments"
+msgstr "Жазылулар"
+
+msgid "Documents"
+msgstr "Құжаттар"
+
+msgid "Encounters"
+msgstr "Қабылдаулар"
+
+msgid "Visits"
+msgstr "Үйге бару"
+
+msgid "Prevention"
+msgstr "Профилактика"
+
+msgid "Referrals"
+msgstr "Жолдамалар"
+
+msgid "Telemedicine reports"
+msgstr "Телемедицина есептері"
+
+msgid "Administration"
+msgstr "Әкімшілендіру"
+
+msgid "Operational dashboard"
+msgstr "Жедел панель"
+
+msgid "Manage the rural medical network in one window"
+msgstr "Ауылдық медициналық желіні бір терезеде басқару"
+
+msgid "Analytics period:"
+msgstr "Талдау кезеңі:"
+
+msgid "Track workload, home visits and prevention without switching between sections."
+msgstr "Бөлімдер арасында ауыспай-ақ жүктемені, үйге баруларды және профилактиканы бақылаңыз."
+
+msgid "Active patients"
+msgstr "Белсенді пациенттер"
+
+msgid "Current active monitoring cohort"
+msgstr "Ағымдағы белсенді бақылау тобы"
+
+msgid "All visits and episodes for the period"
+msgstr "Кезең ішіндегі барлық қабылдаулар мен эпизодтар"
+
+msgid "Home visits"
+msgstr "Үйге бару"
+
+msgid "Planned and urgent visits"
+msgstr "Жоспарлы және шұғыл үйге барулар"
+
+msgid "Overdue prevention"
+msgstr "Мерзімі өткен профилактика"
+
+msgid "Requires coordinator attention"
+msgstr "Үйлестірушінің назарын талап етеді"
+
+msgid "Active referrals"
+msgstr "Белсенді жолдамалар"
+
+msgid "Patients in the care route"
+msgstr "Бақылау бағытындағы пациенттер"
+
+msgid "Encounters by type"
+msgstr "Қабылдаулар түрлері бойынша"
+
+msgid "There are no encounters for the selected period yet."
+msgstr "Таңдалған кезеңде қабылдаулар әлі жоқ."
+
+msgid "Patients by settlement"
+msgstr "Пациенттер елді мекендер бойынша"
+
+msgid "There is not enough patient data yet."
+msgstr "Пациенттер бойынша деректер әзірге жеткіліксіз."
+
+msgid "Staff workload"
+msgstr "Қызметкерлер жүктемесі"
+
+msgid "After visits appear, workload distribution will be shown here."
+msgstr "Қабылдаулар пайда болғаннан кейін мұнда жүктеменің бөлінуі көрсетіледі."
+
+msgid "Pagination"
+msgstr "Беттер"
+
+msgid "Back"
+msgstr "Артқа"
+
+msgid "Next"
+msgstr "Келесі"
+
+msgid "Patient registry"
+msgstr "Пациенттер тізілімі"
+
+msgid "Search, filter and open patient records without extra steps."
+msgstr "Пациент карталарын артық әрекетсіз іздеңіз, сүзгілеңіз және ашыңыз."
+
+msgid "Export CSV"
+msgstr "CSV экспорттау"
+
+msgid "New patient"
+msgstr "Жаңа пациент"
+
+msgid "Apply filters"
+msgstr "Сүзгілерді қолдану"
+
+msgid "Full name"
+msgstr "Толық аты-жөні"
+
+msgid "IIN"
+msgstr "ЖСН"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Settlement"
+msgstr "Елді мекен"
+
+msgid "Facility"
+msgstr "Медициналық ұйым"
+
+msgid "Risk level"
+msgstr "Қауіп деңгейі"
+
+msgid "No patients found."
+msgstr "Пациенттер табылған жоқ."
+
+msgid "Fill out the patient card in a clear structure without unnecessary fields on one screen."
+msgstr "Пациент картасын бір экранда артық өрістерсіз түсінікті құрылыммен толтырыңыз."
+
+msgid "Save"
+msgstr "Сақтау"
+
+msgid "New request"
+msgstr "Жаңа өтінім"
+
+msgid "Create request"
+msgstr "Өтінім жасау"
+
+msgid "Appointment details"
+msgstr "Жазылу мәліметтері"
+
+msgid "Update appointment"
+msgstr "Жазылуды жаңарту"
+
+msgid "My appointments"
+msgstr "Менің жазылуларым"
+
+msgid "Open"
+msgstr "Ашу"
+
+msgid "Recent consultations"
+msgstr "Соңғы консультациялар"
+
+msgid "Latest health indicators"
+msgstr "Соңғы денсаулық көрсеткіштері"
+
+msgid "Update"
+msgstr "Жаңарту"
+
+msgid "Patient"
+msgstr "Пациент"
+
+msgid "Doctor"
+msgstr "Дәрігер"
+
+msgid "Requested"
+msgstr "Сұралған"
+
+msgid "Scheduled"
+msgstr "Жоспарланған"
+
+msgid "Type"
+msgstr "Түрі"
+
+msgid "Status"
+msgstr "Күйі"
+
+msgid "No appointments."
+msgstr "Жазылулар жоқ."
+
+msgid "All"
+msgstr "Барлығы"
+
+msgid "Offline"
+msgstr "Офлайн"
+
+msgid "Online"
+msgstr "Онлайн"
+
+msgid "Approved"
+msgstr "Мақұлданды"
+
+msgid "Completed"
+msgstr "Аяқталды"
+
+msgid "Cancelled"
+msgstr "Бас тартылды"
+
+msgid "No show"
+msgstr "Келмеді"
+
+msgid "Choose a current or future time."
+msgstr "Ағымдағы немесе болашақ уақытты таңдаңыз."
+
+msgid "Scheduled time is required."
+msgstr "Жоспарланған уақытты көрсету қажет."
+
+msgid "Doctor is required."
+msgstr "Дәрігерді көрсету қажет."
+
+msgid "Please provide a cancellation reason."
+msgstr "Бас тарту себебін көрсетіңіз."
+
+msgid "Appointment type"
+msgstr "Жазылу түрі"
+
+msgid "Requested datetime"
+msgstr "Сұралған уақыт"
+
+msgid "Scheduled datetime"
+msgstr "Жоспарланған уақыт"
+
+msgid "Duration (minutes)"
+msgstr "Ұзақтығы, минут"
+
+msgid "Reason / complaint"
+msgstr "Жүгіну себебі / шағым"
+
+msgid "Cancellation reason"
+msgstr "Бас тарту себебі"
+
+msgid "Created by"
+msgstr "Жасаған"
+msgid "Complete consultation"
+msgstr "Консультацияны аяқтау"
+
+msgid "Record the conclusion, treatment plan and follow-up actions for the patient."
+msgstr "Пациент үшін қорытындыны, емдеу жоспарын және кейінгі бақылау әрекеттерін тіркеңіз."
+
+msgid "Consent to telemedicine consultation"
+msgstr "Телемедициналық консультацияға келісім"
+
+msgid "Review the terms of remote consultation before joining the video room."
+msgstr "Бейне бөлмеге кірмес бұрын қашықтан консультация шарттарымен танысыңыз."
+
+msgid "Accept and continue"
+msgstr "Қабылдап, жалғастыру"
+
+msgid "Start consultation"
+msgstr "Консультацияны бастау"
+
+msgid "Cancel consultation"
+msgstr "Консультациядан бас тарту"
+
+msgid "Consultation"
+msgstr "Консультация"
+
+msgid "Printable summary"
+msgstr "Басып шығаруға арналған қорытынды"
+
+msgid "Scheduled start"
+msgstr "Жоспарланған басталу"
+
+msgid "Scheduled end"
+msgstr "Жоспарланған аяқталу"
+
+msgid "Complaint"
+msgstr "Шағым"
+
+msgid "Anamnesis"
+msgstr "Анамнез"
+
+msgid "Treatment plan"
+msgstr "Емдеу жоспары"
+
+msgid "Recommendations"
+msgstr "Ұсынымдар"
+
+msgid "Follow-up"
+msgstr "Қайта бақылау"
+
+msgid "Required until %(date)s"
+msgstr "%(date)s дейін қажет"
+
+msgid "Not required"
+msgstr "Қажет емес"
+
+msgid "Track scheduled video consultations and open the consultation card when needed."
+msgstr "Жоспарланған бейнеконсультацияларды қадағалап, қажет кезде консультация картасын ашыңыз."
+
+msgid "No consultations yet."
+msgstr "Консультациялар әлі жоқ."
+
+msgid "If video is unavailable, the doctor may complete the consultation based on text data or phone communication outside the system."
+msgstr "Егер бейне байланыс қолжетімсіз болса, дәрігер консультацияны мәтіндік деректер немесе жүйеден тыс телефон байланысы негізінде аяқтай алады."
+
+msgid "Open in new tab"
+msgstr "Жаңа қойындыда ашу"
+
+msgid "Consultation summary"
+msgstr "Консультация қорытындысы"
+
+msgid "Complete teleconsilium"
+msgstr "Телеконсилиумды аяқтау"
+
+msgid "Record the agreed conclusion after discussing the clinical case."
+msgstr "Клиникалық жағдай талқыланғаннан кейін келісілген қорытындыны тіркеңіз."
+
+msgid "Conclusion"
+msgstr "Қорытынды"
+
+msgid "Teleconsiliums"
+msgstr "Телеконсилиумдар"
+
+msgid "Coordinate joint remote review of complex clinical cases."
+msgstr "Күрделі клиникалық жағдайларды бірлесіп қашықтан талқылауды үйлестіріңіз."
+
+msgid "Topic"
+msgstr "Тақырып"
+
+msgid "No teleconsiliums yet."
+msgstr "Телеконсилиумдар әлі жоқ."
+
+msgid "Teleconsilium room"
+msgstr "Телеконсилиум бөлмесі"
+
+msgid "Connect invited specialists to discuss the case in real time."
+msgstr "Жағдайды нақты уақытта талқылау үшін шақырылған мамандарды қосыңыз."
+
+msgid "Primary doctor"
+msgstr "Негізгі дәрігер"
+
+msgid "Description"
+msgstr "Сипаттама"
+
+msgid "Set the topic, participants and scheduled time for the teleconsilium."
+msgstr "Телеконсилиумның тақырыбын, қатысушыларын және жоспарланған уақытын көрсетіңіз."
+
+msgid "Complete"
+msgstr "Аяқтау"
+
+msgid "Waiting patient"
+msgstr "Пациентті күту"
+
+msgid "Waiting doctor"
+msgstr "Дәрігерді күту"
+
+msgid "In progress"
+msgstr "Өтіп жатыр"
+
+msgid "Draft"
+msgstr "Нобай"
+
+msgid "Telemedicine"
+msgstr "Телемедицина"
+
+msgid "Data processing"
+msgstr "Деректерді өңдеу"
+
+msgid "Review the issued medical document and print it if needed."
+msgstr "Берілген медициналық құжатты қарап шығып, қажет болса басып шығарыңыз."
+
+msgid "Valid until"
+msgstr "Жарамды мерзімі"
+
+msgid "Certificates, extracts and recommendations available in your patient profile."
+msgstr "Пациент профиліңізде қолжетімді анықтамалар, үзінділер және ұсынымдар."
+
+msgid "No documents yet."
+msgstr "Құжаттар әлі жоқ."
+
+msgid "Open or download laboratory, imaging and attached patient results."
+msgstr "Зертханалық нәтижелерді, түсірілімдерді және тіркелген пациент файлдарын ашыңыз немесе жүктеп алыңыз."
+
+msgid "Result date"
+msgstr "Нәтиже күні"
+
+msgid "Files and results"
+msgstr "Файлдар мен нәтижелер"
+
+msgid "Store laboratory results, scans and supporting medical files in one place."
+msgstr "Зертханалық нәтижелерді, түсірілімдерді және қосымша медициналық файлдарды бір жерде сақтаңыз."
+
+msgid "Upload file"
+msgstr "Файл жүктеу"
+
+msgid "No files yet."
+msgstr "Файлдар әлі жоқ."
+
+msgid "Medication plan issued by the doctor with dosage and schedule."
+msgstr "Дәрігер берген дозасы мен қабылдау кестесі көрсетілген емдік жоспар."
+
+msgid "Issued"
+msgstr "Берілді"
+
+msgid "No items yet."
+msgstr "Тармақтар әлі жоқ."
+
+msgid "Track active and issued prescriptions from consultations."
+msgstr "Консультациялардан кейінгі белсенді және берілген рецепттерді қадағалаңыз."
+
+msgid "No prescriptions yet."
+msgstr "Рецепттер әлі жоқ."
+
+msgid "Prepare a certificate, extract or recommendation for the patient record."
+msgstr "Пациенттің медициналық картасы үшін анықтама, үзінді немесе ұсыным дайындаңыз."
+
+msgid "Attach medical results and supporting files to the patient record."
+msgstr "Медициналық нәтижелер мен қосымша файлдарды пациент картасына тіркеңіз."
+
+msgid "Create a prescription with medicines, dosage and treatment instructions."
+msgstr "Дәрілер, дозалау және емдеу нұсқаулығы көрсетілген рецепт жасаңыз."
+
+msgid "Medical documents"
+msgstr "Медициналық құжаттар"
+
+msgid "Issued certificates, extracts and recommendations for telemedicine and in-person care."
+msgstr "Телемедицина және офлайн қабылдау үшін берілген анықтамалар, үзінділер мен ұсынымдар."
+
+msgid "Create document"
+msgstr "Құжат құру"
+
+msgid "Issued at"
+msgstr "Берілген уақыты"
+
+msgid "No medical documents yet."
+msgstr "Медициналық құжаттар әлі жоқ."
+
+msgid "Prescriptions"
+msgstr "Рецепттер"
+
+msgid "Medication plans issued by doctors after consultations and follow-up reviews."
+msgstr "Консультациялар мен кейінгі қараудан соң дәрігерлер берген емдеу жоспарлары."
+
+msgid "Create prescription"
+msgstr "Рецепт құру"
+
+msgid "Track blood pressure, pulse, temperature and other home monitoring indicators."
+msgstr "Қан қысымын, пульсті, температураны және үй жағдайындағы бақылау көрсеткіштерін қадағалаңыз."
+
+msgid "Add reading"
+msgstr "Көрсеткіш қосу"
+
+msgid "Recorded"
+msgstr "Тіркелген"
+
+msgid "Blood pressure"
+msgstr "Қан қысымы"
+
+msgid "No readings yet."
+msgstr "Көрсеткіштер әлі жоқ."
+
+msgid "Enter the patient's current vital signs for follow-up and remote monitoring."
+msgstr "Бақылау және қашықтан мониторинг үшін пациенттің ағымдағы өмірлік көрсеткіштерін енгізіңіз."
+
+msgid "Reports"
+msgstr "Есептер"
+
+msgid "Operational dashboards and exports for the internal AulMed team."
+msgstr "AulMed ішкі командасына арналған жедел панельдер мен экспорттар."
+
+msgid "Core reporting"
+msgstr "Негізгі есептілік"
+
+msgid "Use patient, encounter, prevention and referral lists for CSV exports and daily registries."
+msgstr "CSV экспорттары мен күнделікті тізілімдер үшін пациенттер, қабылдаулар, профилактика және жолдамалар тізімдерін пайдаланыңыз."
+
+msgid "Telemedicine KPI"
+msgstr "Телемедицина KPI"
+
+msgid "Appointments, online consultations, issued documents, prescriptions, teleconsiliums and remote monitoring."
+msgstr "Жазылулар, онлайн консультациялар, берілген құжаттар, рецепттер, телеконсилиумдар және қашықтан мониторинг."
+
+msgid "Open telemedicine report"
+msgstr "Телемедицина есебін ашу"
+
+msgid "Track online appointments, video consultations, teleconsiliums, issued documents and remote monitoring activity."
+msgstr "Онлайн жазылуларды, бейнеконсультацияларды, телеконсилиумдарды, берілген құжаттарды және қашықтан мониторинг белсенділігін қадағалаңыз."
+
+msgid "Reset"
+msgstr "Тазарту"
+
+msgid "Total online consultations"
+msgstr "Барлық онлайн консультациялар"
+
+msgid "Scheduled consultations"
+msgstr "Жоспарланған консультациялар"
+
+msgid "Completed consultations"
+msgstr "Аяқталған консультациялар"
+
+msgid "Cancelled consultations"
+msgstr "Бас тартылған консультациялар"
+
+msgid "Issued medical documents"
+msgstr "Берілген медициналық құжаттар"
+
+msgid "Issued prescriptions"
+msgstr "Берілген рецепттер"
+
+msgid "Monitoring patients"
+msgstr "Мониторингтегі пациенттер"
+
+msgid "Appointments by status"
+msgstr "Жазылулар күйі бойынша"
+
+msgid "No data."
+msgstr "Дерек жоқ."
+
+msgid "Appointments by type"
+msgstr "Жазылулар түрі бойынша"
+
+msgid "Consultations by facility"
+msgstr "Консультациялар ұйым бойынша"
+
+msgid "Consultations by settlement"
+msgstr "Консультациялар елді мекен бойынша"
+
+msgid "Doctor workload"
+msgstr "Дәрігер жүктемесі"
+
+msgid "Average wait time"
+msgstr "Орташа күту уақыты"
+
+msgid "Calculated from request creation to scheduled consultation time."
+msgstr "Өтінім жасалған сәттен консультацияның жоспарланған уақытына дейін есептеледі."
+msgid "Plan mobile care across settlements and keep route statuses under control."
+msgstr "Елді мекендер бойынша көшпелі көмекті жоспарлап, маршруттар күйін бақылап отырыңыз."
+
+msgid "Today"
+msgstr "Бүгін"
+
+msgid "New visit"
+msgstr "Жаңа шығу"
+
+msgid "No visits found."
+msgstr "Шығулар табылмады."
+
+msgid "Record the encounter in a structured form with focus on the clinical outcome."
+msgstr "Қабылдауды клиникалық нәтижеге назар аудара отырып, құрылымды формада тіркеңіз."
+
+msgid "Prepare the visit plan: date, settlement, team and accompanying details."
+msgstr "Шығу жоспарын дайындаңыз: күні, елді мекен, топ және қосымша мәліметтер."
+
+msgid "Visits for today"
+msgstr "Бүгінгі шығулар"
+
+msgid "No visits are planned for today."
+msgstr "Бүгінге шығулар жоспарланбаған."
+
+msgid "%(count)s patient in the route"
+msgid_plural "%(count)s patients in the route"
+msgstr[0] "Бағытта %(count)s пациент бар"
+msgstr[1] "Бағытта %(count)s пациент бар"
+
+msgid "Prevention and follow-up"
+msgstr "Профилактика және бақылау"
+
+msgid "Quick overview of planned activities, overdue items and responsible employees."
+msgstr "Жоспарланған іс-шаралар, мерзімі өткен тармақтар және жауапты қызметкерлер бойынша қысқаша шолу."
+
+msgid "Overdue"
+msgstr "Мерзімі өткен"
+
+msgid "New prevention event"
+msgstr "Жаңа профилактикалық іс-шара"
+
+msgid "No prevention events found."
+msgstr "Профилактикалық іс-шаралар табылмады."
+
+msgid "Plan preventive activities so priorities and deadlines are visible at a glance."
+msgstr "Басымдықтар мен мерзімдер бірден көрінетіндей етіп профилактикалық іс-шараларды жоспарлаңыз."
+
+msgid "Overdue prevention events"
+msgstr "Мерзімі өткен профилактикалық іс-шаралар"
+
+msgid "There are no overdue prevention events."
+msgstr "Мерзімі өткен профилактикалық іс-шаралар жоқ."
+
+msgid "Track patient routing and status of specialist care pathways."
+msgstr "Пациенттің бағытын және бейінді мамандарға жолдау мәртебесін бақылаңыз."
+
+msgid "New referral"
+msgstr "Жаңа жолдама"
+
+msgid "No referrals found."
+msgstr "Жолдамалар табылмады."
+
+msgid "Create a referral with a clear patient route and processing priority."
+msgstr "Пациенттің бағыты мен өңдеу басымдығы анық көрсетілген жолдама жасаңыз."
+
+msgid "Sign in"
+msgstr "Кіру"
+
+msgid "Modern digital workspace for rural PHC"
+msgstr "Ауылдық БМСК үшін заманауи цифрлық жұмыс кеңістігі"
+
+msgid "Quick access to patients, care routes, home visits and prevention in one workspace."
+msgstr "Бір жұмыс кеңістігінде пациенттерге, күтім маршруттарына, үйге баруларға және профилактикаға жылдам қолжетімділік."
+
+msgid "One interface for registrar, clinician and manager."
+msgstr "Тіркеушіге, медицина қызметкеріне және басшыға арналған бірыңғай интерфейс."
+
+msgid "Clear lists, filters and current workload control."
+msgstr "Түсінікті тізімдер, сүзгілер және ағымдағы жүктемені бақылау."
+
+msgid "Focus on daily tasks without visual overload."
+msgstr "Көрнекі артық жүктемесіз күнделікті міндеттерге бағытталған."
+
+msgid "Sign in to the system"
+msgstr "Жүйеге кіру"
+
+msgid "Enter your credentials to continue working with medical records."
+msgstr "Медициналық жазбалармен жұмысты жалғастыру үшін есептік деректеріңізді енгізіңіз."
+
+msgid "New encounter"
+msgstr "Жаңа қабылдау"
+
+msgid "Edit"
+msgstr "Өңдеу"
+
+msgid "Address"
+msgstr "Мекенжай"
+
+msgid "Risk"
+msgstr "Тәуекел"
+
+msgid "Recent encounters"
+msgstr "Соңғы қабылдаулар"
+
+msgid "No encounters yet."
+msgstr "Қабылдаулар әлі жоқ."
+
+msgid "Chronic conditions"
+msgstr "Созылмалы жағдайлар"
+
+msgid "No records yet."
+msgstr "Жазбалар әлі жоқ."
+
+msgid "No prevention events yet."
+msgstr "Профилактикалық іс-шаралар әлі жоқ."
+
+msgid "No referrals yet."
+msgstr "Жолдамалар әлі жоқ."
+
+msgid "No visits yet."
+msgstr "Шығулар әлі жоқ."

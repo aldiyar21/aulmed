@@ -3,11 +3,12 @@ from __future__ import annotations
 from django.db.models import Q, QuerySet
 from django.utils import timezone
 
+from apps.accounts.services import get_linked_patient, user_is_patient
 from apps.patients.models import Patient
 
 
 def patient_queryset_for_user(user) -> QuerySet[Patient]:
-    qs = Patient.all_objects.select_related("facility").prefetch_related(
+    qs = Patient.all_objects.select_related("facility", "patient_user").prefetch_related(
         "conditions",
         "encounters",
         "prevention_events",
@@ -15,6 +16,9 @@ def patient_queryset_for_user(user) -> QuerySet[Patient]:
     )
     if user.is_superuser:
         return qs
+    if user_is_patient(user):
+        linked_patient = get_linked_patient(user)
+        return qs.filter(pk=linked_patient.pk) if linked_patient else qs.none()
     if hasattr(user, "employee_profile") and user.employee_profile.facility_id:
         return qs.filter(facility_id=user.employee_profile.facility_id)
     return qs

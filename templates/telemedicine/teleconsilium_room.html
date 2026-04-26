@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{% trans "Teleconsilium room" %}</h1>
+    <p class="page-subtitle">{% trans "Connect invited specialists to discuss the case in real time." %}</p>
+  </div>
+  <div class="page-actions">
+    <a class="btn btn-outline-primary" href="{{ teleconsilium.jitsi_room_url }}" target="_blank" rel="noopener">{% trans "Open in new tab" %}</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <iframe src="{{ teleconsilium.jitsi_room_url }}" width="100%" height="720" allow="camera; microphone; fullscreen; display-capture"></iframe>
+  </div>
+</div>
+{% endblock %}

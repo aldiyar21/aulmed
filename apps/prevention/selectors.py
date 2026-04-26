@@ -1,5 +1,4 @@
 from django.db.models import QuerySet
-from django.utils import timezone
 
 from apps.prevention.models import PreventionEvent
 

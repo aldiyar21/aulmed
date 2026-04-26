@@ -1,16 +1,21 @@
 from __future__ import annotations
-
+from apps.core.i18n import lang_text
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-from apps.accounts.decorators import roles_required
-from apps.facilities.models import Facility
+from apps.accounts.decorators import patient_required, roles_required
+from apps.appointments.selectors import appointment_queryset_for_user
 from apps.core.utils import export_to_csv
+from apps.documents.selectors import medical_document_queryset_for_user
+from apps.encounters.selectors import encounter_queryset_for_user
+from apps.facilities.models import Facility
+from apps.monitoring.selectors import vital_reading_queryset_for_user
 from apps.patients.forms import PatientFilterForm, PatientForm
 from apps.patients.selectors import filter_patients, patient_queryset_for_user
 from apps.patients.services import create_patient, update_patient
-
+from apps.referrals.selectors import referral_queryset_for_user
+from apps.telemedicine.selectors import consultation_queryset_for_user
 
 PATIENT_ALLOWED_ROLES = ("Администратор системы", "Регистратор", "Медработник", "Руководитель")
 
@@ -37,10 +42,12 @@ def patient_detail(request, pk: int):
     context = {
         "patient": patient,
         "encounters": patient.encounters.select_related("clinician", "facility")[:10],
+        "appointments": appointment_queryset_for_user(request.user).filter(patient=patient)[:10],
         "conditions": patient.conditions.all(),
         "prevention_events": patient.prevention_events.select_related("assigned_employee")[:10],
         "referrals": patient.referrals.select_related("created_by")[:10],
         "visit_links": patient.home_visit_links.select_related("home_visit")[:10],
+        "latest_readings": patient.vital_readings.all()[:5],
     }
     return render(request, "patients/detail.html", context)
 
@@ -53,9 +60,22 @@ def patient_create(request):
         form.fields["facility"].initial = request.user.employee_profile.facility_id
     if request.method == "POST" and form.is_valid():
         patient = create_patient(user=request.user, cleaned_data=form.cleaned_data)
-        messages.success(request, "Пациент успешно создан.")
+        messages.success(request, lang_text("Пациент успешно создан.", "Пациент сәтті құрылды."))
+        if getattr(patient, "_portal_account_created", False):
+            credentials = patient._portal_credentials
+            messages.info(
+                request,
+                lang_text(
+                    f"Создан аккаунт пациента. Логин: {credentials['username']}, пароль: {credentials['password']}",
+                    f"Пациент аккаунты құрылды. Логин: {credentials['username']}, құпиясөз: {credentials['password']}",
+                ),
+            )
         return redirect("patient-detail", pk=patient.pk)
-    return render(request, "patients/form.html", {"form": form, "title": "Создание пациента"})
+    return render(
+    request,
+    "patients/form.html",
+    {"form": form, "title": lang_text("Создание пациента", "Пациентті жасау")},
+)
 
 
 @roles_required("Администратор системы", "Регистратор", "Медработник")
@@ -66,9 +86,22 @@ def patient_update(request, pk: int):
         form.fields["facility"].queryset = Facility.objects.filter(pk=request.user.employee_profile.facility_id)
     if request.method == "POST" and form.is_valid():
         update_patient(user=request.user, patient=patient, cleaned_data=form.cleaned_data)
-        messages.success(request, "Данные пациента обновлены.")
+        messages.success(request, lang_text("Данные пациента обновлены.", "Пациент деректері жаңартылды."))
+        if getattr(patient, "_portal_account_created", False):
+            credentials = patient._portal_credentials
+            messages.info(
+                request,
+                lang_text(
+                    f"Создан аккаунт пациента. Логин: {credentials['username']}, пароль: {credentials['password']}",
+                    f"Пациент аккаунты құрылды. Логин: {credentials['username']}, құпиясөз: {credentials['password']}",
+                ),
+            )
         return redirect("patient-detail", pk=patient.pk)
-    return render(request, "patients/form.html", {"form": form, "title": "Редактирование пациента"})
+    return render(
+    request,
+    "patients/form.html",
+    {"form": form, "title": lang_text("Редактирование пациента", "Пациентті өңдеу")},
+)
 
 
 @roles_required(*PATIENT_ALLOWED_ROLES)
@@ -96,3 +129,50 @@ def patient_export_csv(request):
         ["Фамилия", "Имя", "Отчество", "ИИН", "Дата рождения", "Телефон", "НП", "Учреждение", "Активен"],
         rows,
     )
+
+
+@patient_required
+def patient_dashboard(request):
+    patient = request.user.patient_profile
+    context = {
+        "patient": patient,
+        "encounters": encounter_queryset_for_user(request.user)[:5],
+        "referrals": referral_queryset_for_user(request.user)[:5],
+        "consultations": consultation_queryset_for_user(request.user)[:5],
+        "documents": medical_document_queryset_for_user(request.user)[:5],
+        "latest_readings": vital_reading_queryset_for_user(request.user)[:5],
+    }
+    return render(request, "patients/patient_dashboard.html", context)
+
+
+@patient_required
+def patient_profile(request):
+    return render(request, "patients/patient_profile.html", {"patient": request.user.patient_profile})
+
+
+@patient_required
+def patient_chart(request):
+    patient = request.user.patient_profile
+    return render(
+        request,
+        "patients/patient_chart.html",
+        {
+            "patient": patient,
+            "conditions": patient.conditions.all(),
+            "encounters": encounter_queryset_for_user(request.user),
+            "appointments": appointment_queryset_for_user(request.user),
+            "referrals": referral_queryset_for_user(request.user),
+        },
+    )
+
+
+@patient_required
+def patient_encounter_history(request):
+    page_obj = Paginator(encounter_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
+    return render(request, "patients/patient_encounters.html", {"page_obj": page_obj})
+
+
+@patient_required
+def patient_referral_history(request):
+    page_obj = Paginator(referral_queryset_for_user(request.user), 20).get_page(request.GET.get("page"))
+    return render(request, "patients/patient_referrals.html", {"page_obj": page_obj})

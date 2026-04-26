@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header"><div><h1 class="page-title">{% trans "My card" %}</h1><p class="page-subtitle">{{ patient }}</p></div></div>
+<div class="row g-3">
+  <div class="col-lg-4"><div class="card"><div class="card-body"><h2 class="section-title">{% trans "Conditions" %}</h2><ul class="list-group list-group-flush">{% for item in conditions %}<li class="list-group-item">{{ item.condition_name }}</li>{% empty %}<li class="list-group-item text-muted">{% trans "No conditions." %}</li>{% endfor %}</ul></div></div></div>
+  <div class="col-lg-8"><div class="card"><div class="card-body"><h2 class="section-title">{% trans "Recent encounters" %}</h2><ul class="list-group list-group-flush">{% for item in encounters|slice:":10" %}<li class="list-group-item">{{ item.encounter_date }} - {{ item.get_encounter_type_display }}</li>{% empty %}<li class="list-group-item text-muted">{% trans "No encounters." %}</li>{% endfor %}</ul></div></div></div>
+  <div class="col-12"><div class="card"><div class="card-body"><h2 class="section-title">{% trans "Appointments" %}</h2><ul class="list-group list-group-flush">{% for item in appointments|slice:":10" %}<li class="list-group-item">{{ item.requested_datetime|date:"Y-m-d H:i" }} - {{ item.get_appointment_type_display }}</li>{% empty %}<li class="list-group-item text-muted">{% trans "No appointments." %}</li>{% endfor %}</ul></div></div></div>
+</div>
+{% endblock %}

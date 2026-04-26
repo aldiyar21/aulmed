@@ -1,7 +1,7 @@
-import pytest
-from django.urls import reverse
-from django.utils import timezone
 from datetime import timedelta
+
+import pytest
+from django.utils import timezone
 
 from apps.prevention.models import PreventionEvent
 from apps.prevention.services import mark_overdue_events

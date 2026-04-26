@@ -10,6 +10,10 @@ __pycache__/
 htmlcov/
 .coverage
 staticfiles/
+media/
 dist/
 build/
 *.egg-info/
+
+# Django compiled translation files
+locale/*/LC_MESSAGES/*.mo

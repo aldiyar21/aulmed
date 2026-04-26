@@ -1,111 +1,127 @@
 {% extends "base.html" %}
-{% block title %}Дашборд | {{ APP_NAME }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %} | {{ APP_NAME }}{% endblock %}
+
 {% block content %}
 <section class="hero-panel mb-4">
-  <div class="page-header mb-0">
-    <div>
-      <span class="hero-tag">Оперативная панель</span>
-      <h1 class="page-title mt-3">Управление сельской медицинской сетью в одном окне</h1>
-      <p class="page-subtitle">Период аналитики: {{ metrics.date_from }} - {{ metrics.date_to }}. Следите за нагрузкой, выездами и профилактикой без лишних переключений между разделами.</p>
+    <div class="page-header mb-0">
+        <div>
+            <span class="hero-tag">{% trans "Operational dashboard" %}</span>
+            <h1 class="page-title mt-3">{% trans "Manage the rural medical network in one window" %}</h1>
+
+            <p class="page-subtitle">
+                {% trans "Analytics period:" %} {{ metrics.date_from }} - {{ metrics.date_to }}.
+                {% trans "Track workload, home visits and prevention without switching between sections." %}
+            </p>
+        </div>
     </div>
-  </div>
 </section>
 
 <section class="row g-3 mb-4">
-  <div class="col-md-6 col-xl">
-    <div class="card stat-card">
-      <div class="stat-label">Активные пациенты</div>
-      <div class="stat-value">{{ metrics.active_patients }}</div>
-      <div class="stat-trend">Текущий активный контур наблюдения</div>
+    <div class="col-md-6 col-xl">
+        <div class="card stat-card">
+            <div class="stat-label">{% trans "Active patients" %}</div>
+            <div class="stat-value">{{ metrics.active_patients }}</div>
+            <div class="stat-trend">{% trans "Current active monitoring cohort" %}</div>
+        </div>
     </div>
-  </div>
-  <div class="col-md-6 col-xl">
-    <div class="card stat-card">
-      <div class="stat-label">Обращения</div>
-      <div class="stat-value">{{ metrics.encounters_count }}</div>
-      <div class="stat-trend">Все приемы и эпизоды за период</div>
+
+    <div class="col-md-6 col-xl">
+        <div class="card stat-card">
+            <div class="stat-label">{% trans "Encounters" %}</div>
+            <div class="stat-value">{{ metrics.encounters_count }}</div>
+            <div class="stat-trend">{% trans "All visits and episodes for the period" %}</div>
+        </div>
     </div>
-  </div>
-  <div class="col-md-6 col-xl">
-    <div class="card stat-card">
-      <div class="stat-label">Выезды на дом</div>
-      <div class="stat-value">{{ metrics.visits_count }}</div>
-      <div class="stat-trend">Плановые и срочные выезды</div>
+
+    <div class="col-md-6 col-xl">
+        <div class="card stat-card">
+            <div class="stat-label">{% trans "Home visits" %}</div>
+            <div class="stat-value">{{ metrics.visits_count }}</div>
+            <div class="stat-trend">{% trans "Planned and urgent visits" %}</div>
+        </div>
     </div>
-  </div>
-  <div class="col-md-6 col-xl">
-    <div class="card stat-card">
-      <div class="stat-label">Просроченная профилактика</div>
-      <div class="stat-value">{{ metrics.overdue_prevention }}</div>
-      <div class="stat-trend">Требует внимания координатора</div>
+
+    <div class="col-md-6 col-xl">
+        <div class="card stat-card">
+            <div class="stat-label">{% trans "Overdue prevention" %}</div>
+            <div class="stat-value">{{ metrics.overdue_prevention }}</div>
+            <div class="stat-trend">{% trans "Requires coordinator attention" %}</div>
+        </div>
     </div>
-  </div>
-  <div class="col-md-6 col-xl">
-    <div class="card stat-card">
-      <div class="stat-label">Активные направления</div>
-      <div class="stat-value">{{ metrics.active_referrals }}</div>
-      <div class="stat-trend">Пациенты в маршруте наблюдения</div>
+
+    <div class="col-md-6 col-xl">
+        <div class="card stat-card">
+            <div class="stat-label">{% trans "Active referrals" %}</div>
+            <div class="stat-value">{{ metrics.active_referrals }}</div>
+            <div class="stat-trend">{% trans "Patients in the care route" %}</div>
+        </div>
     </div>
-  </div>
 </section>
 
 <section class="row g-3">
-  <div class="col-lg-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Обращения по типам</h2>
-        {% if metrics.encounter_distribution %}
-          <div class="metric-list">
-            {% for item in metrics.encounter_distribution %}
-              <div class="metric-item">
-                <span>{{ item.encounter_type }}</span>
-                <strong>{{ item.total }}</strong>
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p class="section-muted mb-0">За выбранный период обращений пока нет.</p>
-        {% endif %}
-      </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="section-title">{% trans "Encounters by type" %}</h2>
+
+                {% if metrics.encounter_distribution %}
+                    <div class="metric-list">
+                        {% for item in metrics.encounter_distribution %}
+                            <div class="metric-item">
+                                <span>{{ item.encounter_type }}</span>
+                                <strong>{{ item.total }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="section-muted mb-0">{% trans "There are no encounters for the selected period yet." %}</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Пациенты по населенным пунктам</h2>
-        {% if metrics.patients_by_settlement %}
-          <div class="metric-list">
-            {% for item in metrics.patients_by_settlement %}
-              <div class="metric-item">
-                <span>{{ item.settlement_name }}</span>
-                <strong>{{ item.total }}</strong>
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p class="section-muted mb-0">Данных по пациентам пока недостаточно.</p>
-        {% endif %}
-      </div>
+
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="section-title">{% trans "Patients by settlement" %}</h2>
+
+                {% if metrics.patients_by_settlement %}
+                    <div class="metric-list">
+                        {% for item in metrics.patients_by_settlement %}
+                            <div class="metric-item">
+                                <span>{{ item.settlement_name }}</span>
+                                <strong>{{ item.total }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="section-muted mb-0">{% trans "There is not enough patient data yet." %}</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Нагрузка по сотрудникам</h2>
-        {% if metrics.employee_load %}
-          <div class="metric-list">
-            {% for item in metrics.employee_load %}
-              <div class="metric-item">
-                <span>{{ item.clinician__user__last_name }} {{ item.clinician__user__first_name }}</span>
-                <strong>{{ item.total }}</strong>
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p class="section-muted mb-0">После появления посещений здесь отобразится распределение нагрузки.</p>
-        {% endif %}
-      </div>
+
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="section-title">{% trans "Staff workload" %}</h2>
+
+                {% if metrics.employee_load %}
+                    <div class="metric-list">
+                        {% for item in metrics.employee_load %}
+                            <div class="metric-item">
+                                <span>{{ item.clinician__user__last_name }} {{ item.clinician__user__first_name }}</span>
+                                <strong>{{ item.total }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="section-muted mb-0">{% trans "After visits appear, workload distribution will be shown here." %}</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 {% endblock %}
