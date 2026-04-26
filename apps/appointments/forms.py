@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.appointments.models import Appointment
+from apps.core.forms import html5_date_input, html5_datetime_input
 from apps.core.i18n import lang_text_lazy
 from apps.facilities.models import Facility
 
@@ -21,7 +22,7 @@ class AppointmentPatientForm(forms.ModelForm):
             "reason": lang_text_lazy("Причина обращения", "Жүгіну себебі"),
         }
         widgets = {
-            "requested_datetime": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+            "requested_datetime": html5_datetime_input(),
             "reason": forms.Textarea(attrs={"rows": 4}),
         }
 
@@ -59,7 +60,7 @@ class AppointmentStaffUpdateForm(forms.ModelForm):
             "cancellation_reason": lang_text_lazy("Причина отмены", "Бас тарту себебі"),
         }
         widgets = {
-            "scheduled_datetime": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+            "scheduled_datetime": html5_datetime_input(),
             "reason": forms.Textarea(attrs={"rows": 4}),
             "cancellation_reason": forms.Textarea(attrs={"rows": 3}),
         }
@@ -92,12 +93,12 @@ class AppointmentFilterForm(forms.Form):
     )
     date_from = forms.DateField(
         required=False,
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
         label=lang_text_lazy("С", "Бастап"),
     )
     date_to = forms.DateField(
         required=False,
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
         label=lang_text_lazy("По", "Дейін"),
     )
     facility = forms.ModelChoiceField(

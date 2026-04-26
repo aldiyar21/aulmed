@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.facilities.models import Facility
 from apps.patients.models import Patient
@@ -27,7 +28,7 @@ class HomeVisitForm(forms.ModelForm):
             "result_summary",
         ]
         widgets = {
-            "planned_date": forms.DateInput(attrs={"type": "date"}),
+            "planned_date": html5_date_input(),
             "purpose": forms.Textarea(attrs={"rows": 3}),
             "route_notes": forms.Textarea(attrs={"rows": 2}),
             "result_summary": forms.Textarea(attrs={"rows": 2}),
@@ -49,7 +50,7 @@ class HomeVisitFilterForm(forms.Form):
     planned_date = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата выезда", "Шығу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     status = forms.ChoiceField(
         required=False,

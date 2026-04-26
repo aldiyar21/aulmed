@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.encounters.models import Encounter
 from apps.facilities.models import Facility
@@ -24,8 +25,8 @@ class EncounterForm(forms.ModelForm):
             "notes",
         ]
         widgets = {
-            "encounter_date": forms.DateInput(attrs={"type": "date"}),
-            "next_visit_date": forms.DateInput(attrs={"type": "date"}),
+            "encounter_date": html5_date_input(),
+            "next_visit_date": html5_date_input(),
             "reason_for_visit": forms.Textarea(attrs={"rows": 3}),
             "diagnosis_text": forms.Textarea(attrs={"rows": 3}),
             "services_provided": forms.Textarea(attrs={"rows": 3}),
@@ -37,12 +38,12 @@ class EncounterFilterForm(forms.Form):
     date_from = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата с", "Басталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     date_to = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата по", "Аяқталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     facility = forms.ModelChoiceField(
         queryset=Facility.objects.filter(is_active=True),

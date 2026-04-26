@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
+from apps.core.forms import html5_date_input, html5_datetime_input
 from apps.core.i18n import lang_text_lazy
 from apps.telemedicine.models import OnlineConsultation, Teleconsilium
 
@@ -36,7 +37,7 @@ class ConsultationCompletionForm(ModelForm):
     follow_up_date = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата повторного наблюдения", "Қайта бақылау күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
 
     class Meta:
@@ -54,7 +55,7 @@ class ConsultationCompletionForm(ModelForm):
             "diagnosis_text": forms.Textarea(attrs={"rows": 4}),
             "treatment_plan": forms.Textarea(attrs={"rows": 4}),
             "doctor_recommendations": forms.Textarea(attrs={"rows": 4}),
-            "follow_up_date": forms.DateInput(attrs={"type": "date"}),
+            "follow_up_date": html5_date_input(),
         }
 
     def clean(self):
@@ -83,12 +84,12 @@ class ConsultationFilterForm(forms.Form):
     date_from = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата с", "Басталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     date_to = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата по", "Аяқталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
 
 
@@ -112,7 +113,7 @@ class TeleconsiliumForm(ModelForm):
         }
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
-            "scheduled_at": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+            "scheduled_at": html5_datetime_input(),
         }
 
 

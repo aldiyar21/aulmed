@@ -8,6 +8,7 @@ from django.shortcuts import render
 
 from apps.accounts.decorators import roles_required
 from apps.accounts.services import user_is_manager_or_admin
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text, lang_text_lazy
 from apps.facilities.models import Facility
 from apps.reports.services import build_telemedicine_metrics
@@ -23,12 +24,12 @@ class TelemedicineReportFilterForm(forms.Form):
     date_from = forms.DateField(
         label=lang_text_lazy("Дата с", "Басталу күні"),
         required=False,
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     date_to = forms.DateField(
         label=lang_text_lazy("Дата по", "Аяқталу күні"),
         required=False,
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     facility = forms.ModelChoiceField(
         label=lang_text_lazy("Учреждение", "Ұйым"),

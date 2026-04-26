@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django import forms
 
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.facilities.models import Facility
 from apps.patients.models import Patient
@@ -45,8 +46,8 @@ class PatientForm(forms.ModelForm):
             "is_active": lang_text_lazy("Активен", "Белсенді"),
         }
         widgets = {
-            "birth_date": forms.DateInput(attrs={"type": "date"}),
-            "attachment_date": forms.DateInput(attrs={"type": "date"}),
+            "birth_date": html5_date_input(),
+            "attachment_date": html5_date_input(),
             "notes": forms.Textarea(attrs={"rows": 3}),
         }
 

@@ -1,5 +1,6 @@
 from django import forms
 
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.referrals.models import Referral
 
@@ -20,7 +21,7 @@ class ReferralForm(forms.ModelForm):
             "result_note",
         ]
         widgets = {
-            "referral_date": forms.DateInput(attrs={"type": "date"}),
+            "referral_date": html5_date_input(),
             "reason": forms.Textarea(attrs={"rows": 3}),
             "result_note": forms.Textarea(attrs={"rows": 3}),
         }
@@ -40,10 +41,10 @@ class ReferralFilterForm(forms.Form):
     date_from = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата с", "Басталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     date_to = forms.DateField(
         required=False,
         label=lang_text_lazy("Дата по", "Аяқталу күні"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )

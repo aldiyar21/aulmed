@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.accounts.models import EmployeeProfile
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.prevention.models import PreventionEvent
 
@@ -18,8 +19,8 @@ class PreventionEventForm(forms.ModelForm):
             "notes",
         ]
         widgets = {
-            "planned_date": forms.DateInput(attrs={"type": "date"}),
-            "completed_date": forms.DateInput(attrs={"type": "date"}),
+            "planned_date": html5_date_input(),
+            "completed_date": html5_date_input(),
             "notes": forms.Textarea(attrs={"rows": 3}),
         }
 
@@ -38,7 +39,7 @@ class PreventionFilterForm(forms.Form):
     planned_date = forms.DateField(
         required=False,
         label=lang_text_lazy("Плановая дата", "Жоспарланған күн"),
-        widget=forms.DateInput(attrs={"type": "date"}),
+        widget=html5_date_input(),
     )
     assigned_employee = forms.ModelChoiceField(
         queryset=EmployeeProfile.objects.filter(is_active=True),

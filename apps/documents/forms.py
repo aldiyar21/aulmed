@@ -7,6 +7,7 @@ from django.conf import settings
 from django.forms import inlineformset_factory
 from django.utils import timezone
 
+from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.documents.models import MedicalDocument, PatientFile, Prescription, PrescriptionItem
 
@@ -30,7 +31,7 @@ class MedicalDocumentForm(forms.ModelForm):
         }
         widgets = {
             "content": forms.Textarea(attrs={"rows": 8}),
-            "valid_until": forms.DateInput(attrs={"type": "date"}),
+            "valid_until": html5_date_input(),
         }
 
 
@@ -85,7 +86,7 @@ class PatientFileForm(forms.ModelForm):
         }
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
-            "result_date": forms.DateInput(attrs={"type": "date"}),
+            "result_date": html5_date_input(),
         }
 
     def clean_file(self):
