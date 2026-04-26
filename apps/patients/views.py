@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.accounts.decorators import patient_required, roles_required
+from apps.appointments.selectors import appointment_queryset_for_user
 from apps.core.utils import export_to_csv
 from apps.documents.selectors import medical_document_queryset_for_user
 from apps.encounters.selectors import encounter_queryset_for_user
@@ -41,6 +42,7 @@ def patient_detail(request, pk: int):
     context = {
         "patient": patient,
         "encounters": patient.encounters.select_related("clinician", "facility")[:10],
+        "appointments": appointment_queryset_for_user(request.user).filter(patient=patient)[:10],
         "conditions": patient.conditions.all(),
         "prevention_events": patient.prevention_events.select_related("assigned_employee")[:10],
         "referrals": patient.referrals.select_related("created_by")[:10],
@@ -59,6 +61,15 @@ def patient_create(request):
     if request.method == "POST" and form.is_valid():
         patient = create_patient(user=request.user, cleaned_data=form.cleaned_data)
         messages.success(request, lang_text("Пациент успешно создан.", "Пациент сәтті құрылды."))
+        if getattr(patient, "_portal_account_created", False):
+            credentials = patient._portal_credentials
+            messages.info(
+                request,
+                lang_text(
+                    f"Создан аккаунт пациента. Логин: {credentials['username']}, пароль: {credentials['password']}",
+                    f"Пациент аккаунты құрылды. Логин: {credentials['username']}, құпиясөз: {credentials['password']}",
+                ),
+            )
         return redirect("patient-detail", pk=patient.pk)
     return render(
     request,
@@ -76,6 +87,15 @@ def patient_update(request, pk: int):
     if request.method == "POST" and form.is_valid():
         update_patient(user=request.user, patient=patient, cleaned_data=form.cleaned_data)
         messages.success(request, lang_text("Данные пациента обновлены.", "Пациент деректері жаңартылды."))
+        if getattr(patient, "_portal_account_created", False):
+            credentials = patient._portal_credentials
+            messages.info(
+                request,
+                lang_text(
+                    f"Создан аккаунт пациента. Логин: {credentials['username']}, пароль: {credentials['password']}",
+                    f"Пациент аккаунты құрылды. Логин: {credentials['username']}, құпиясөз: {credentials['password']}",
+                ),
+            )
         return redirect("patient-detail", pk=patient.pk)
     return render(
     request,
@@ -140,6 +160,7 @@ def patient_chart(request):
             "patient": patient,
             "conditions": patient.conditions.all(),
             "encounters": encounter_queryset_for_user(request.user),
+            "appointments": appointment_queryset_for_user(request.user),
             "referrals": referral_queryset_for_user(request.user),
         },
     )

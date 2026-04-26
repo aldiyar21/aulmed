@@ -12,7 +12,7 @@ class HomeVisitForm(forms.ModelForm):
     patients = forms.ModelMultipleChoiceField(
         queryset=Patient.objects.active(),
         label=lang_text_lazy("Пациенты", "Пациенттер"),
-        widget=forms.SelectMultiple(attrs={"size": 8}),
+        widget=forms.CheckboxSelectMultiple(),
     )
 
     class Meta:

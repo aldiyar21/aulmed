@@ -10,11 +10,52 @@ from django.utils import timezone
 from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.documents.models import MedicalDocument, PatientFile, Prescription, PrescriptionItem
+from apps.encounters.models import Encounter
+from apps.patients.models import Patient
+from apps.referrals.models import Referral
+from apps.telemedicine.models import OnlineConsultation
 
 ALLOWED_UPLOAD_EXTENSIONS = {".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx"}
 
 
 class MedicalDocumentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        patient = None
+        patient_value = self.data.get("patient") or self.initial.get("patient")
+        if patient_value:
+            patient = Patient.objects.filter(pk=patient_value).first()
+        elif self.instance.pk:
+            patient = self.instance.patient
+
+        if patient:
+            self.fields["consultation"].queryset = OnlineConsultation.objects.filter(patient=patient)
+            self.fields["encounter"].queryset = Encounter.objects.filter(patient=patient)
+            self.fields["referral"].queryset = Referral.objects.filter(patient=patient)
+        else:
+            self.fields["consultation"].queryset = OnlineConsultation.objects.none()
+            self.fields["encounter"].queryset = Encounter.objects.none()
+            self.fields["referral"].queryset = Referral.objects.none()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        patient = cleaned_data.get("patient")
+        relations = (
+            ("consultation", cleaned_data.get("consultation")),
+            ("encounter", cleaned_data.get("encounter")),
+            ("referral", cleaned_data.get("referral")),
+        )
+        for field_name, relation in relations:
+            if relation and patient and relation.patient_id != patient.pk:
+                self.add_error(
+                    field_name,
+                    lang_text_lazy(
+                        "Можно выбрать только данные выбранного пациента.",
+                        "Тек таңдалған пациенттің деректерін таңдауға болады.",
+                    ),
+                )
+        return cleaned_data
+
     class Meta:
         model = MedicalDocument
         fields = ["patient", "consultation", "encounter", "referral", "document_type", "title", "content", "status", "valid_until"]
@@ -36,6 +77,34 @@ class MedicalDocumentForm(forms.ModelForm):
 
 
 class PrescriptionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        patient = None
+        patient_value = self.data.get("patient") or self.initial.get("patient")
+        if patient_value:
+            patient = Patient.objects.filter(pk=patient_value).first()
+        elif self.instance.pk:
+            patient = self.instance.patient
+
+        if patient:
+            self.fields["consultation"].queryset = OnlineConsultation.objects.filter(patient=patient)
+        else:
+            self.fields["consultation"].queryset = OnlineConsultation.objects.none()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        patient = cleaned_data.get("patient")
+        consultation = cleaned_data.get("consultation")
+        if consultation and patient and consultation.patient_id != patient.pk:
+            self.add_error(
+                "consultation",
+                lang_text_lazy(
+                    "Можно выбрать только консультацию выбранного пациента.",
+                    "Тек таңдалған пациенттің консультациясын таңдауға болады.",
+                ),
+            )
+        return cleaned_data
+
     class Meta:
         model = Prescription
         fields = ["patient", "consultation", "status", "notes"]
@@ -72,6 +141,34 @@ PrescriptionItemFormSet = inlineformset_factory(
 
 
 class PatientFileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        patient = None
+        patient_value = self.data.get("patient") or self.initial.get("patient")
+        if patient_value:
+            patient = Patient.objects.filter(pk=patient_value).first()
+        elif self.instance.pk:
+            patient = self.instance.patient
+
+        if patient:
+            self.fields["related_consultation"].queryset = OnlineConsultation.objects.filter(patient=patient)
+        else:
+            self.fields["related_consultation"].queryset = OnlineConsultation.objects.none()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        patient = cleaned_data.get("patient")
+        consultation = cleaned_data.get("related_consultation")
+        if consultation and patient and consultation.patient_id != patient.pk:
+            self.add_error(
+                "related_consultation",
+                lang_text_lazy(
+                    "Можно выбрать только консультацию выбранного пациента.",
+                    "Тек таңдалған пациенттің консультациясын таңдауға болады.",
+                ),
+            )
+        return cleaned_data
+
     class Meta:
         model = PatientFile
         fields = ["patient", "related_consultation", "result_type", "title", "description", "file", "result_date"]

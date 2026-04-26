@@ -28,6 +28,7 @@ from apps.documents.services import (
     create_prescription,
 )
 from apps.patients.models import Patient
+from apps.telemedicine.models import OnlineConsultation
 
 STAFF_DOCUMENT_ROLES = (
     settings.ROLE_ADMIN,
@@ -64,6 +65,12 @@ def staff_document_list(request):
 @roles_required(*STAFF_DOCUMENT_ROLES)
 def staff_document_create(request):
     form = MedicalDocumentForm(request.POST or None)
+    if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
+        facility_id = request.user.employee_profile.facility_id
+        form.fields["patient"].queryset = Patient.objects.active().filter(facility_id=facility_id)
+        form.fields["consultation"].queryset = form.fields["consultation"].queryset.filter(facility_id=facility_id)
+        form.fields["encounter"].queryset = form.fields["encounter"].queryset.filter(facility_id=facility_id)
+        form.fields["referral"].queryset = form.fields["referral"].queryset.filter(patient__facility_id=facility_id)
     if request.method == "POST" and form.is_valid():
         document = create_medical_document(user=request.user, cleaned_data=form.cleaned_data)
         messages.success(request, lang_text("Документ создан.", "Құжат құрылды."))
@@ -111,6 +118,10 @@ def staff_prescription_list(request):
 def staff_prescription_create(request):
     form = PrescriptionForm(request.POST or None)
     formset = PrescriptionItemFormSet(request.POST or None, prefix="items")
+    if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
+        facility_id = request.user.employee_profile.facility_id
+        form.fields["patient"].queryset = Patient.objects.active().filter(facility_id=facility_id)
+        form.fields["consultation"].queryset = form.fields["consultation"].queryset.filter(facility_id=facility_id)
     if request.method == "POST" and form.is_valid() and formset.is_valid():
         items = [item for item in formset.cleaned_data if item and not item.get("DELETE", False)]
         prescription = create_prescription(user=request.user, cleaned_data=form.cleaned_data, items=items)
@@ -145,6 +156,10 @@ def patient_file_list(request):
 @roles_required(*STAFF_FILE_UPLOAD_ROLES)
 def staff_file_upload(request):
     form = PatientFileForm(request.POST or None, request.FILES or None)
+    if not request.user.is_superuser and hasattr(request.user, "employee_profile") and request.user.employee_profile.facility_id:
+        facility_id = request.user.employee_profile.facility_id
+        form.fields["patient"].queryset = Patient.objects.active().filter(facility_id=facility_id)
+        form.fields["related_consultation"].queryset = OnlineConsultation.objects.filter(facility_id=facility_id)
     if request.method == "POST" and form.is_valid():
         patient_file = create_patient_file(user=request.user, cleaned_data=form.cleaned_data)
         messages.success(request, lang_text("Файл загружен.", "Файл жүктелді."))

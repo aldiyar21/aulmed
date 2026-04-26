@@ -35,6 +35,7 @@
           <th>{% trans "Employee" %}</th>
           <th>{% trans "Status" %}</th>
           <th>{% trans "Patients" %}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -44,10 +45,11 @@
             <td>{{ item.settlement_name }}</td>
             <td>{{ item.assigned_employee }}</td>
             <td><span class="badge bg-secondary">{{ item.get_status_display }}</span></td>
-            <td>{{ item.visit_patients.count }}</td>
+            <td>{{ item.visit_patients.count }}{% if item.visit_patients.all %}: {% for link in item.visit_patients.all %}{{ link.patient }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</td>
+            <td><a href="{% url 'visit-update' item.pk %}">{% trans "Edit" %}</a></td>
           </tr>
         {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-4">{% trans "No visits found." %}</td></tr>
+          <tr><td colspan="6" class="text-center text-muted py-4">{% trans "No visits found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

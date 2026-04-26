@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -11,13 +12,24 @@ from apps.monitoring.forms import VitalReadingForm
 from apps.monitoring.models import VitalReading
 from apps.monitoring.selectors import vital_reading_queryset_for_user
 from apps.monitoring.services import create_vital_reading
-from apps.patients.models import Patient
+from apps.patients.selectors import patient_queryset_for_user
 
 STAFF_MONITORING_ROLES = (
     settings.ROLE_ADMIN,
     settings.ROLE_CLINICIAN,
     settings.ROLE_MANAGER,
 )
+
+
+@login_required
+def monitoring_root(request):
+    if hasattr(request.user, "patient_profile"):
+        return redirect("patient-vital-reading-list")
+    if request.user.is_superuser or request.user.groups.filter(name__in=STAFF_MONITORING_ROLES).exists():
+        queryset = patient_queryset_for_user(request.user).order_by("last_name", "first_name")
+        page_obj = Paginator(queryset, 20).get_page(request.GET.get("page"))
+        return render(request, "monitoring/staff_patient_index.html", {"page_obj": page_obj})
+    return redirect("dashboard")
 
 
 @patient_required
@@ -52,14 +64,14 @@ def patient_vital_reading_create(request):
 
 @roles_required(*STAFF_MONITORING_ROLES)
 def staff_patient_vital_list(request, patient_pk: int):
-    patient = get_object_or_404(Patient, pk=patient_pk)
+    patient = get_object_or_404(patient_queryset_for_user(request.user), pk=patient_pk)
     page_obj = Paginator(vital_reading_queryset_for_user(request.user).filter(patient=patient), 20).get_page(request.GET.get("page"))
     return render(request, "monitoring/staff_vital_list.html", {"page_obj": page_obj, "patient": patient})
 
 
 @roles_required(*STAFF_MONITORING_ROLES)
 def staff_patient_vital_create(request, patient_pk: int):
-    patient = get_object_or_404(Patient, pk=patient_pk)
+    patient = get_object_or_404(patient_queryset_for_user(request.user), pk=patient_pk)
     form = VitalReadingForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         create_vital_reading(

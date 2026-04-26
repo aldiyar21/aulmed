@@ -1,11 +1,41 @@
 from django import forms
 
+from apps.encounters.models import Encounter
+from apps.patients.models import Patient
 from apps.core.forms import html5_date_input
 from apps.core.i18n import lang_text_lazy
 from apps.referrals.models import Referral
 
 
 class ReferralForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        patient = None
+        patient_value = self.data.get("patient") or self.initial.get("patient")
+        if patient_value:
+            patient = Patient.objects.filter(pk=patient_value).first()
+        elif self.instance.pk:
+            patient = self.instance.patient
+
+        if patient:
+            self.fields["source_encounter"].queryset = Encounter.objects.filter(patient=patient)
+        else:
+            self.fields["source_encounter"].queryset = Encounter.objects.none()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        patient = cleaned_data.get("patient")
+        source_encounter = cleaned_data.get("source_encounter")
+        if source_encounter and patient and source_encounter.patient_id != patient.pk:
+            self.add_error(
+                "source_encounter",
+                lang_text_lazy(
+                    "Можно выбрать только обращение выбранного пациента.",
+                    "Тек таңдалған пациенттің қабылдауын ғана таңдауға болады.",
+                ),
+            )
+        return cleaned_data
+
     class Meta:
         model = Referral
         fields = [

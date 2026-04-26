@@ -35,6 +35,7 @@
           <th>{% trans "Destination" %}</th>
           <th>{% trans "Priority" %}</th>
           <th>{% trans "Status" %}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -45,9 +46,10 @@
             <td>{{ item.destination_org }} / {{ item.destination_specialist }}</td>
             <td><span class="badge bg-warning text-dark">{{ item.get_priority_display }}</span></td>
             <td><span class="badge bg-info">{{ item.get_status_display }}</span></td>
+            <td><a href="{% url 'referral-update' item.pk %}">{% trans "Edit" %}</a></td>
           </tr>
         {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-4">{% trans "No referrals found." %}</td></tr>
+          <tr><td colspan="6" class="text-center text-muted py-4">{% trans "No referrals found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

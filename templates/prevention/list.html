@@ -36,6 +36,7 @@
           <th>{% trans "Date" %}</th>
           <th>{% trans "Status" %}</th>
           <th>{% trans "Responsible employee" %}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -46,9 +47,10 @@
             <td>{{ item.planned_date }}</td>
             <td><span class="badge bg-{% if item.status == 'overdue' %}danger{% elif item.status == 'completed' %}success{% else %}secondary{% endif %}">{{ item.get_status_display }}</span></td>
             <td>{{ item.assigned_employee|default:"-" }}</td>
+            <td><a href="{% url 'prevention-update' item.pk %}">{% trans "Edit" %}</a></td>
           </tr>
         {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-4">{% trans "No prevention events found." %}</td></tr>
+          <tr><td colspan="6" class="text-center text-muted py-4">{% trans "No prevention events found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
